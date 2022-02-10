@@ -1,0 +1,56 @@
+{% import '/macro/form.html.twig' as form %}
+<!-- Login-->
+<div class="login-modal modal fade" id="login" tabindex="-1" aria-labelledby="login" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
+                    aria-label="Close"></button></div>
+            <div class="modal-body text-center pb-5 mb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <!-- Login Section Heading-->
+                            <h2 class="page-section-heading text-center text-uppercase text-primary">Mon compte</h2>
+                            <!-- Icon Divider-->
+                            <div class="divider-custom divider-secondary">
+                                <div class="divider-custom-line"></div>
+                                <div class="divider-custom-icon"><i class="fas fa-user-circle"></i></div>
+                                <div class="divider-custom-line"></div>
+                            </div>
+                            <div class="container">
+                                <form id="formLogin" method="post">
+                                    <div id="alertLogin"></div>
+
+                                    <div class="row mb-4 justify-content-center">
+                                        {{ form.input('emailLogin','Email', {class:'col',other:'maxlength=255 required',
+                                        type:'email'})}}
+
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        {{ form.input('passwordLogin','Mot de passe', {class:'col',other:'required autocomplete=off',
+                                        type:'password'})}}
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col d-flex justify-content-end"><a href="/#lostpassword"
+                                                data-bs-toggle="modal" data-bs-target="#lostpassword" rel="noopener">Mot
+                                                de passe oublié</a></div>
+                                    </div>
+
+                                    <div class="row mb-4 justify-content-center">
+                                        <button id="buttonLogin" class="btn btn-primary w-100 btn-lg" type="submit">Se connecter</button>
+                                    </div>
+
+                                </form>
+
+                                <div class="col">Vous n’avez pas de compte ? <a href="/#register"
+                                        data-bs-toggle="modal" data-bs-target="#register" rel="noopener">Inscription</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+{% import '/macro/section.html.twig' as section %}
+<!-- Masthead-->
+<header class="masthead text-primary text-center">
+    
+    <div class="container d-flex align-items-center flex-column">
+        <div class="row px-0 mx-0 d-flex align-items-stretch flex-lg-row">
+            <div class="col-lg-4 mx-0 mb-5 p-3 bg-primary text-white max-height-hero rounded SlidInLeftAnimation">
+                <!-- Masthead Avatar Image-->
+                <img class="masthead-avatar mt-4 mb-3 rounded-pill" src="/img/avatar.png" alt="Photo Siaka MANSALY" />
+                <!-- Masthead Heading-->
+                <h1 class="masthead-heading text-uppercase mb-0">Siaka MANSALY</h1>
+                <p class="age">{{ section.age('1985','06','05') }}</p>
+                <p><i class="fas fa-map-marker-alt"></i>  Athis-Mons (Ile-de-France)</p>
+                <a href="/img/CV.pdf" target="_blank" role="button" class="btn btn-light btn-block my-2 text-primary"><i
+                        class="fas fa-download"></i>  Mon
+                    CV (version PDF)</a>
+                <div class="row m-3">
+                    <div class="col">
+                        {{section.reseauxSociaux()}}
+                    </div>
+                </div>
+            </div>
+            <div class="col d-flex align-items-center justify-content-center flex-column text-center mt-0 SlidInRightAnimation">
+                <h1 class="masthead-subheading font-weight-bold text-uppercase">Développeur PHP</h1>
+                <p class="catchphrase mb-0 p-0">(Ouvert aux opportunités)</p>
+                <!-- Icon Divider-->
+                <div class="divider-custom divider-secondary">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-code"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <p class="catchphrase">Bonjour, je m'appelle Siaka et je suis un passionné d'informatique depuis mon
+                    plus jeune âge. <br /><br />Après 15 ans de service dans le domaine de l'administration système et réseaux dans différents secteurs d'activité, je
+                    me suis reconverti en tant que Développeur PHP.<br /><br />
+                    De nature autonome, je profite aujourd’hui du temps dont je dispose pour continuer d’apprendre de nouvelles technologies et notamment enrichir mes connaissances en développement.<br /><br />
+                    <b>Pourquoi ce blog ?</b> Tout simplement
+                    pour
+                    vous partager mon profil (expériences, compétences et réalisations) ainsi que ma passion pour
+                    l'informatique.
+                    <br /><br />
+                    <b>Vous souhaitez échanger ou collaborer avec moi ?</b> N'hésitez pas à me <a
+                        href="/#contact" rel="noopener" class="text-danger">contacter</a> et surtout
+                    <a href="/#register" data-bs-toggle="modal" data-bs-target="#register" rel="noopener"
+                        class="text-danger">inscrivez-vous</a> afin de pouvoir être informé des nouvelles
+                    actualités de mon blog !
+                </p>
+            </div>
+        </div>
+    </div>
+</header>

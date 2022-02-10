@@ -1,0 +1,28 @@
+{% import '/macro/section.html.twig' as section %}
+<div class="row">
+    {% for post in posts %}
+
+
+    <div class="col-lg-4 mb-4 d-flex justify-content-start flex-row align-tems-stretch">
+        <div class="card text-primary">
+            {% if option.sidebar is empty %}
+            <img src="/img/blog/posts/{{post.picture}}" class="card-img-top w-100" alt="{{post.title}}" style="min-height: 256px;max-height: 256px;min-width:414px">
+    
+            <div class="card-header bg-dark text-light">
+                Featured
+            </div>
+            {% endif %}
+            <div class="card-body">
+                <h3 class="h5 card-title mb-0">{{post.title}}</h3>
+                <div class="card-author mb-3 text-muted fst-italic">par <b>{{ post.firstName|capitalize ~ " " ~ post.lastName|capitalize | default('Anonyme') }}</b>, posté le <b>{{post.dateAddPost|date("d/m/Y")}}</b> {% if post.dateModifyPost %}{{', mise à jour le ' ~ post.dateModifyPost|date("d/m/Y")}} {% endif %}</div>
+                <div class="card-text mb-3 justify">
+                    <div class="card-chapo card-text fw-bold mb-3">{{post.chapo|slice(0, 100) ~ '...'}}</div>{{post.content|slice(0, 200) ~ '...'}}
+                </div>
+                <div class="d-flex justify-content-center"><a href="/post/{{post.slug}}" class="btn btn-outline-primary w-50">Lire la suite...</a></div>
+    
+            </div>
+        </div>
+    </div>
+   
+    {% endfor %}
+</div>

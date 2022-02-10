@@ -1,0 +1,26 @@
+{% import '/macro/form.html.twig' as form %}
+
+<div class="row my-2">
+    <div class="col my-2"><span class="fw-bold">Ecrit par</span> {{ comments.firstName ~ " " ~  comments.lastName}}</div>
+</div>
+
+<div class="row my-2 d-inline-flex">
+    <div class="col-12 my-2 fw-bold">Statut
+    </div>
+    <div class="col"><select name="status" id="status" class="form-select" aria-label="Status selected">
+        <option value="0" {% if comments.status==0 %} selected {% endif %}>En attente de validation</option>
+        <option value="1" {% if comments.status==1 %} selected {% endif %}>Approuvé</option>
+        <option value="2" {% if comments.status==2 %} selected {% endif %}>Désapprouvé</option>
+      </select>
+    </div>
+</div>
+
+<div class="row my-2">
+    <div class="col-12 my-2 fw-bold"><span class="text-danger">* </span>Contenu du commentaire
+    </div>
+    {{ form.textarea('comment','Contenu', {class:'col mb-3',
+    placeholder:'Tapez votre texte ici...', other:'required', rows:10,value:comments.content})}}
+</div>
+
+
+

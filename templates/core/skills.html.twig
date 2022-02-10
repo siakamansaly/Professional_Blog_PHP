@@ -1,0 +1,124 @@
+{% import '/macro/section.html.twig' as section %}
+{{section.sectionstart("Compétences",{id:'competences',bgColor:'text-primary',color:'text-primary',dividerColor:'divider-secondary',
+divider:'fas fa-laptop-code'})}}
+<!-- Skills Section Content-->
+<div class="row mt-5 d-flex justify-content-center SlidInBottomAnimation">
+    <div class="col-12 col-lg-6 col-xl-4 mb-5 px-5">
+        <div class="h6 text-center mb-4 bg-primary text-light p-2 rounded"><i
+                class="fas fa-laptop"></i>  Front-end</div>
+        {{section.ratings('Bootstrap','5')}}
+        {{section.ratings('CSS3','5')}}
+        {{section.ratings('HTML5','5')}}
+        {{section.ratings('Javascript','3')}}
+        {{section.ratings('Sass','4')}}
+        {{section.ratings('Twig','5')}}
+    </div>
+    <div class="col-12 col-lg-6 col-xl-4 mb-5 px-5">
+        <div class="h6 text-center mb-4 bg-primary text-light p-2 rounded"><i
+                class="fas fa-laptop-code"></i>  Back-end</div>
+        {{section.ratings('Design patterns','3')}}
+        {{section.ratings('MVC','4')}}
+        {{section.ratings('PHP','5')}}
+        {{section.ratings('POO','4')}}
+
+
+    </div>
+
+    <div class="col-12 col-lg-6 col-xl-4 mb-5 px-5">
+        <div class="h6 text-center mb-4 bg-primary text-light p-2 rounded"><i
+                class="fas fa-database"></i>  Conception / Base de données</div>
+        {{section.ratings('Maria DB','5')}}
+        {{section.ratings('MySQL','5')}}
+        {{section.ratings('UML','4')}}
+    </div>
+
+    <div class="col-12 col-lg-6 col-xl-4 mb-5 px-5 animated fadeIn">
+        <div class="h6 text-center mb-4 bg-primary text-light p-2 rounded"><i
+                class="fab fa-joomla"></i>  CMS  <i class="fab fa-wordpress-simple"></i></div>
+        {{section.ratings('Joomla','3')}}
+        {{section.ratings('Magento','2')}}
+        {{section.ratings('Prestashop','2')}}
+        {{section.ratings('WordPress','5')}}
+
+    </div>
+
+    <div class="col-12 col-lg-6 col-xl-4 mb-5 px-5">
+
+        <div class="h6 text-center mb-4 bg-primary text-light p-2 rounded"><i
+                class="fas fa-tasks"></i>  Gestion de projet</div>
+        {{section.ratings('Git / GitHub','4')}}
+        {{section.ratings('Kanban','4')}}
+        {{section.ratings('Scrum','5')}}
+        {{section.ratings('Waterfall','4')}}
+    </div>
+
+    <div class="col-12 col-lg-6 col-xl-4 mb-5 px-5">
+        <p class="h6 text-center mb-4 bg-primary text-light p-2 rounded"><i
+                class="fas fa-laptop-house"></i>  Environnement de travail</p>
+
+        <div class="item desc end px-2 justify">
+            <p><i class="fas fa-desktop"></i>  <b class="h6">Système d'exploitation :</b> Windows 10</p>
+            <p><i class="fas fa-terminal"></i>  <b class="h6">Workflow :</b> Git, Chrome, FileZilla,
+                Composer, Live Sass Compiler, MySQL&nbsp;Workbench, Diagrams.net, Trello</p>
+            <p><i class="fas fa-code"></i>  <b class="h6">Editeur de code :</b> Visual Studio Code</p>
+        </div>
+    </div>
+
+</div>
+
+
+    
+<div class="row center d-flex justify-content-center SlidInLeftAnimation">    
+    <div class="col-12 col-lg-8 mb-5 px-5 ">
+        <div class="h6 text-center mb-4 border border-primary text-primary p-2 rounded"><i
+                class="fas fa-network-wired"></i>  Autres compétences </div>
+
+        {{section.ratings('Installation et configuration PC & logiciels','5')}}
+        {{section.ratings('Résolution incidents matériels & logiciels','5')}}
+        {{section.ratings('Assistance et conseil aux utilisateurs','5')}}
+        {{section.ratings('Active Directory','5')}}
+        {{section.ratings('Exchange','4')}}
+        {{section.ratings('Téléphonie IP','5')}}
+        {{section.ratings('Microsoft 365','5')}}
+        {{section.ratings('Windows','5')}}
+        {{section.ratings('Windows Server','4')}}
+        
+        
+        
+        
+        
+    </div>
+
+</div>
+
+<div class="row SlidInRightAnimation">
+    <div class="col-12 col-lg-4 mb-5 px-5 text-center">
+        <div class="h6 text-center mb-4 bg-secondary text-primary p-2 rounded"><i
+                class="fas fa-user-cog"></i>  Softs Skills</div>
+        <ul class="nav flex-column px-3">
+            <li class="nav-item mb-2">Capacité d'adaptation, Sociable</li>
+            <li class="nav-item mb-2">Organisation, Rigueur</li>
+            <li class="nav-item mb-2">Sens du service</li>
+        </ul>
+    </div>
+    <div class="col-12 col-lg-4 mb-5 px-5 text-center">
+        <div class="h6 text-center mb-4 bg-secondary text-primary p-2 rounded"><i
+                class="fas fa-gamepad"></i>  Centre d'intérêts</div>
+        <ul class="nav flex-column px-3">
+            <li class="nav-item mb-2">Course à pied, Football</li>
+            <li class="nav-item mb-2">OpenClassRooms</li>
+            <li class="nav-item mb-2">Grafikart, StackOverFlow</li>
+        </ul>
+
+    </div>
+    <div class="col-12 col-lg-4 mb-5 px-5 text-center">
+        <div class="h6 text-center mb-4 bg-secondary text-primary p-2 rounded"><i
+                class="fas fa-globe"></i>  Langues</div>
+        <ul class="nav flex-column px-3">
+            <li class="nav-item mb-2">Français</li>
+            <li class="nav-item mb-2">Anglais (technique)</li>
+        </ul>
+
+    </div>
+</div>
+{{section.sectionend()}}

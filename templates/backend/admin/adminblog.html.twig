@@ -1,0 +1,78 @@
+{% import '/macro/form.html.twig' as form %}
+{% extends "layout.html.twig" %}
+{% block navbar %}{% set urlblog = "/" %} {% set url = "/" %} {{ parent() }}{% endblock
+%}
+{% block content %}
+{% if session.login.userType == 'admin' %}
+<header id="adminBlog" class="page-section bg-light border-bottom mb-4 hero_adminblog">
+    <div class="container">
+        <div class="text-center mt-5">
+            <h1 class="fw-bolder text-light">Administration Blog</h1>
+
+        </div>
+    </div>
+</header>
+
+
+<div class="container my-4 text-primary">
+    <div class="row d-flex align-item-center justify-content-center">
+        <div class="col-12 col-md-8 col-lg-5">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header h5 d-flex align-items-center justify-content-between">Articles <span class="badge badge-light">{{AllPostsCounterActive + AllPostsCounterDisable}}</span></div>
+                <div class="card-body">
+                    <p class="card-text">Créer, modifier ou supprimer un article</p>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="/postManager">Administrer</a>
+                    <div class="small"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-8 col-lg-5">
+            <div class="card bg-light mb-3">
+                <div class="card-header h5 d-flex align-items-center justify-content-between">Commentaires <span class="badge badge-primary">{{AllCommentsCounter}}</span></div>
+                <div class="card-body">
+                    <p class="card-text">Valider, modifier ou supprimer un commentaire</p>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-primary stretched-link" href="/commentManager">Administrer</a>
+                    <div class="small"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="row d-flex align-item-center justify-content-center">
+        <div class="col-12 col-md-8 col-lg-5">
+            <div class="card bg-dark text-white mb-3">
+                <div class="card-header h5 d-flex align-items-center justify-content-between">Utilisateurs <span class="badge badge-light">{{AllUsersCounter}}</span></div>
+                <div class="card-body">
+                    <p class="card-text">Valider, modifier ou supprimer un utilisateur</p>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="/userManager">Administrer</a>
+                    <div class="small"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-8 col-lg-5">
+            <div class="card bg-secondary  mb-3">
+                <div class="card-header h5 d-flex align-items-center justify-content-between">Catégories <span class="badge badge-primary">{{AllCategoriesCounter}}</span></div>
+                <div class="card-body">
+                  <p class="card-text">Valider, modifier ou supprimer une catégorie</p>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-primary stretched-link" href="/categoryManager">Administrer</a>
+                    <div class="small"><i class="fas fa-angle-right"></i></div>
+                </div>
+              </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+{% endif %}
+{% endblock %}

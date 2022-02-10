@@ -1,0 +1,20 @@
+{% import '/macro/form.html.twig' as form %}
+
+
+<div class="row my-2">
+    <div class="col-12 my-2 fw-bold"><span class="text-danger">* </span>Nom catégorie
+    </div>
+    {{ form.input('name','Nom catégorie', {class:'col',other:'
+    maxlength=70 required title="Nom catégorie"',
+    type:'text',value:category.name})}}
+</div>
+
+<div class="row my-2">
+    <div class="col-12 my-2 fw-bold">Description
+    </div>
+    {{ form.textarea('description','Description', {class:'col mb-3',
+    placeholder:'Tapez votre texte ici...', rows:10,value:category.description})}}
+</div>
+
+
+

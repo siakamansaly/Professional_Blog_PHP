@@ -1,0 +1,39 @@
+{
+    "name": "siaka/blog",
+    "description": "Blog personnel Siaka MANSALY - Projet OpenClassRooms",
+    "keywords": ["php","mvc","twig"],
+    "license": "MIT",
+    "readme": "",
+    "time": "",
+    "support": {
+        "issues": "https://github.com/siakamansaly/Blog_PHP_MVC/issues",
+        "source": "https://github.com/siakamansaly/Blog_PHP_MVC",
+        "wiki": "https://github.com/siakamansaly/Blog_PHP_MVC/wiki"
+    },
+    "autoload": {
+        "psr-4": {
+            "Blog\\": "libraries"
+        }
+    },
+    "authors": [
+        {
+            "name": "Siaka MANSALY",
+            "email": "siaka.mansaly@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "twig/twig": "3.0",
+        "vlucas/phpdotenv": "^5.4",
+        "altorouter/altorouter": "^2.0",
+        "symfony/http-foundation": "^5.4",
+        "symfony/routing": "^5.4",
+        "symfony/http-kernel": "^5.4",
+        "phpmailer/phpmailer": "^6.5",
+        "cocur/slugify": "^4.1"
+    },
+    "require-dev": {
+        "filp/whoops": "^2.14",
+        "phpunit/phpunit": "^9.5"
+    }
+}

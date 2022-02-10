@@ -1,0 +1,193 @@
+{% import '/macro/section.html.twig' as section %}
+{% import '/macro/form.html.twig' as form %}
+{% extends "layout.html.twig" %}
+{% block navbar %}{% set urlblog = "" %}{% set url = "/" %} {{ parent() }}{% endblock %}
+{% block content %}
+<div id="blog" class="page-section container text-primary">
+    
+    <div class="row">
+        <div class="col-lg-8 px-5">
+            <div class="mb-4 text-left d-flex justify-content-between">
+                <a href="/blog" class="btn btn-outline-primary" role="button" rel="noopener"><i
+                        class="fas fa-angle-double-left"></i>  Accueil du Blog</a>
+                           
+            </div>
+            <!-- Post content-->
+            <article>
+                <!-- Post header-->
+                <header class="mb-4">
+                    {% if post.status == -1 %}  <div class="bg-dark text-light text-center fs-4">//////////  Article archivé //////////</div>    {% endif %}
+                    <!-- Post title-->
+                    <h1 class="fw-bolder mb-1 text-primary">{{post.title}}</h1>
+                    <!-- Post meta content-->
+                    <div class="text-muted fst-italic mb-2">Posté le {{post.dateAddPost|date("d/m/Y")}} {% if post.dateModifyPost %}{{', mise à jour le ' ~ post.dateModifyPost|date("d/m/Y")}} {% endif %} {{'par ' ~ post.firstName|capitalize ~ " " ~ post.lastName|capitalize | default('Anonyme')}}</div>
+                    <!-- Post categories-->
+                    {% for postCategory in postsCategory %}
+                    <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{postCategory.name}}</a>
+                    {% endfor %}
+                    
+                </header>
+                <!-- Preview image figure-->
+                <figure class="mb-4 text-center"><img class="img-fluid rounded img-single" src="/img/blog/posts/{{post.picture}}"
+                        alt="{{post.title}}" /></figure>
+                <!-- Post content-->
+                <section class="mb-5 justify">
+                    <p class="fs-5 fw-bold mb-4">{{post.chapo|raw|nl2br}}</p>
+                    <hr/>
+                    <p class="fs-5 mb-4">{{post.content|raw|nl2br}}</p>
+                </section>
+            </article>
+            <!-- Comments section-->
+            <section class="mb-5">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <div id="buttonNewComment" class="col mb-4 text-center">
+                            <button class="btn btn-primary-other w-25 reply" type="submit" data-id="0">Nouveau commentaire</button>
+                            
+                        </div>
+                        <div id="alertComment-0"></div>
+                        <div id="comment-0"></div>
+                        <!-- Comment form-->
+                        
+                        <form id="formComment" method="post" class="mb-4">
+                            <input type="hidden" id="parent_id" name="parent_id" value="0"/>
+                            <input type="hidden" id="post_id" name="post_id" value="{{post.id}}"/>
+                            <input type="hidden" id="slug" name="slug" value="{{post.slug}}"/>
+                                <div class="row justify-content-center mb-2">
+                                    {{ form.textarea('comment','Ecrire un nouveau commentaire', {placeholder:'Tapez votre commentaire ici...',rows:'3',label:'top',classLabel:'m-2 fw-bold'})}}
+                                </div>
+                                <div class="row justify-content-center mb-4">
+                                    <div class="col">
+                                        <button class="btn btn-primary-other" type="submit">Valider</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            
+                        <!-- Comment with nested comments-->
+                        {% for commentParent in commentsParent %}
+                        <div class="d-flex mb-4">
+                            <!-- Parent comment-->
+                            <div class="flex-shrink-0">{% if commentParent.picture
+                                %}<img class="rounded-circle"
+                                    src="/img/blog/profiles/{{commentParent.picture}}" alt="{{commentParent.firstName ~ " " ~ commentParent.lastName}}" style="width:50px;height: 50px;" />
+                                   {% else %}<i
+                                            class="fas fa-user-circle fa-3x"></i>{% endif %}
+                                </div>
+                            <div class="ms-3 w-100">
+                                <div class="fw-bold">{{commentParent.firstName ~ " " ~ commentParent.lastName}}</div>
+                                {{commentParent.content|raw}}
+                                <div class="row justify-content-center mb-4">
+                                    <div class="col">
+                                        <a href="#" class="reply mb-4" type="submit" data-id="{{commentParent.id}}">Répondre</a>
+                                        <div id="alertComment-{{commentParent.id}}"></div>
+                                        <div id="comment-{{commentParent.id}}"></div>
+                                        
+                                    </div>
+                                </div>
+
+
+                                <!-- Child comment 1-->
+                                {% for commentChild in commentsChild %}
+                                {% if commentChild.parentId == commentParent.id %}
+                                <div class="d-flex mt-4">
+                                    <div class="flex-shrink-0">
+                                        
+                                            {% if commentChild.picture
+                                                %}<img class="rounded-circle"
+                                                src="/img/blog/profiles/{{commentChild.picture|default('avatar.png')}}" alt="{{commentChild.firstName ~ " " ~ commentChild.lastName}}" style="width:50px;height: 50px;" />
+                                                   {% else %}<i
+                                                            class="fas fa-user-circle fa-3x"></i>{% endif %}</div>
+                                    <div class="ms-3">
+                                        <div class="fw-bold">{{commentChild.firstName ~ " " ~ commentChild.lastName}}</div>
+                                        {{commentChild.content|raw}}
+                                        
+                                    </div>
+                                </div>
+                                {% endif  %}
+                                {% endfor  %}
+                               
+                            </div>
+                            
+                        </div>
+                        {% endfor  %}
+                        <!-- Single comment-->
+                        <!--<div class="d-flex">
+                            <div class="flex-shrink-0"><img class="rounded-circle"
+                                    src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                            <div class="ms-3">
+                                <div class="fw-bold">Commenter Name</div>
+                                When I look at the universe and all the ways the universe wants to kill us, I find it
+                                hard to reconcile that with statements of beneficence.
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- Side widgets-->
+        <div class="col-lg-4 mt-4 px-5">
+            
+                           
+                {% if session.login.userType == 'admin' %}
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-light">Administration des articles</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row  px-4">
+                                    <a href="/postManagerEdit/{{post.id}}" type="button" class="btn btn-secondary mb-4" rel="noopener"><i
+                                        class="fas fa-edit"></i>  Modifier cet article</a>
+                                        <button class="formPostDelete btn btn-danger" type="submit" value="{{post.id}}"><i
+                                            class="far fa-trash-alt" title="Supprimer cet article"></i>  Supprimer cet article</button>
+                                        </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+            <!-- Side widget-->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-light">Articles récents</div>
+                <div class="card-body">
+                    {% for recentPost in recentPosts %}
+                    <div class="col mb-4">
+                        <div class="card text-primary">
+                            <div class="card-body">
+                                <h3 class="h5 card-title mb-3">{{recentPost.title}}</h3>
+                                <div class="card-author mb-3">{{'Par ' ~ recentPost.firstName|capitalize ~ " " ~ recentPost.lastName|capitalize | default('Anonyme') ~ ', '}} Modifiée le {{recentPost.dateAddPost|date("d/m/Y")}}</div>
+                                <div class="card-text mb-3 justify">
+                                    <div class="card-chapo card-text fw-bold mb-3">{{recentPost.chapo|slice(0, 100) ~ '...'}}</div>
+                                </div>
+                                <div class="d-flex justify-content-center"><a href="/post/{{recentPost.slug}}" class="btn btn-outline-primary w-50">Lire la suite...</a></div>
+                    
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+            <!-- Categories widget-->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-light">Catégories</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                {% for postAllCategory in postsAllCategory %}
+                                <div class="col-sm-6"><a href="/blog?category={{postAllCategory.id}}">{{postAllCategory.name}}</a></div>
+                    {% endfor %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

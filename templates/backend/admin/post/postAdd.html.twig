@@ -1,0 +1,45 @@
+{% if session.login.userType == 'admin' %}
+
+<!-- Comments user-->
+<div class="postAdd-modal modal fade" id="postAdd" tabindex="-1" aria-labelledby="postAdd" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
+                    aria-label="Close"></button></div>
+            <div class="modal-body pb-5 mb-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 ">
+                            <div class="card text-primary mb-4">
+                                <h5 class="fw-bolder text-light bg-primary py-3 rounded text-center">Ajouter un article
+                                </h5>
+
+                                <div class="card-body">
+                                    <form id="formPostAdd" method="post" enctype="multipart/form-data">
+                                        <div id="alertPostAdd"></div>
+
+                                        {% include "/backend/admin/post/postForm.html.twig" %}
+
+                                        <div class="row my-4 justify-content-center">
+                                            <div class="col"><button id="buttonPostAdd" class="btn btn-primary w-100 "
+                                                    type="submit">Valider</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endif %}
