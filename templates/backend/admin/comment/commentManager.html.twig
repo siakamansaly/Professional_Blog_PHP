@@ -78,8 +78,11 @@
           </td>
           <td>
 
-            <button class="formCommentDelete btn btn-outline-danger" type="submit" value="{{comment.id}}"
-              title="Supprimer ce commentaire"><i class="far fa-trash-alt" title="Supprimer ce commentaire"></i></button>
+            <!--<button class="formCommentDelete btn btn-outline-danger" type="submit" value="{{comment.id}}"
+              title="Supprimer ce commentaire"><i class="far fa-trash-alt" title="Supprimer ce commentaire"></i></button>-->
+
+              <button type="button" class="deleteButton btn btn-outline-danger" href="/#delete" data-bs-toggle="modal" data-bs-target="#delete" data-id="{{comment.id}}" data-title="{{'#' ~ comment.id ~ ' - '~  comment.firstName | capitalize ~ " " ~ comment.lastName | upper }}" value="{{comment.id}}" ><i
+                class="far fa-trash-alt" title="{{delete.title}}"></i></button>
           </td>
         </tr>
         {% endfor %}
@@ -112,7 +115,7 @@
 
 </div>
 
-
+{% include "/backend/admin/delete.html.twig" %}
 {% endif %}
 
 {% endblock %}

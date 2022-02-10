@@ -55,8 +55,12 @@
           </td>
           <td>
 
-              <button class="formPostDelete btn btn-outline-danger" type="submit" value="{{post.id}}" title="Supprimer cet article"><i
+              <!--<button class="formPostDelete btn btn-outline-danger" type="submit" value="{{post.id}}" title="Supprimer cet article"><i
+                  class="far fa-trash-alt" title="Supprimer cet article"></i></button>-->
+
+                  <button type="button" class="deleteButton btn btn-outline-danger" href="/#delete" data-bs-toggle="modal" data-bs-target="#delete" data-id="{{post.id}}" data-title="{{post.title}}" value="{{post.id}}" ><i
                   class="far fa-trash-alt" title="Supprimer cet article"></i></button>
+                  
           </td>
         </tr>
         {% endfor %}
@@ -91,6 +95,7 @@
 
 
 {% include "/backend/admin/post/postAdd.html.twig" %}
+{% include "/backend/admin/delete.html.twig" %}
 
 {% endif %}
 

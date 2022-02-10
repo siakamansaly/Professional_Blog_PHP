@@ -278,10 +278,20 @@ $(document).ready(function () {
         });
     });
 
+    $(".deleteButton").on('click', function (event) {
+        event.preventDefault();
+        var $this = $(this);
+        var parent_id = $this.data('id');
+        var title = $this.data('title');
+        $('#deleteButtonConfirmation').val(parent_id);
+        $('#deleteTitleConfirmation').html(title);
+        
+    });
+
     $('#alertPostDelete').hide();
     $(".formPostDelete").on('click', function (event) {
         event.preventDefault();
-        if (confirm("Êtes-vous sûr de vouloir supprimer cet article ?")) {
+
             var id = $(this).val();
             values = { 'idPostDelete': id };
             $.ajax({
@@ -294,12 +304,12 @@ $(document).ready(function () {
                     $('#alertPostDelete').html(response.message);
                     $('#alertPostDelete').show("2000");
                     $('#post-'+ id).hide("slow");
+                    $('#delete').modal('hide');
                 },
                 error: function (response) {
                     $('#alertPostDelete').text('Une erreur inattendue est survenue...');
                 },
             });
-        }
 
     });
 
@@ -412,7 +422,7 @@ $(document).ready(function () {
 
     $(".formCommentDelete").on('click', function (event) {
         event.preventDefault();
-        if (confirm("Êtes-vous sûr de vouloir supprimer ce commentaire ?")) {
+        
             var id = $(this).val();
             values = { 'idCommentDelete': id };
             $.ajax({
@@ -424,6 +434,7 @@ $(document).ready(function () {
                     response = JSON.parse(response);
                     $('#alertComment').html(response.message);
                     $('#alertComment').show("2000");
+                    $('#delete').modal('hide');
                     $('#comment-'+ id).hide("slow");
                     
                 },
@@ -431,7 +442,7 @@ $(document).ready(function () {
                     $('#alertComment').text('Une erreur inattendue est survenue...');
                 },
             });
-        }
+        
 
     });
 
@@ -491,7 +502,7 @@ $(document).ready(function () {
 
     $(".formCategoryDelete").on('click', function (event) {
         event.preventDefault();
-        if (confirm("Êtes-vous sûr de vouloir supprimer cette catégorie ?")) {
+        
             var id = $(this).val();
             values = { 'idCategoryDelete': id };
             $.ajax({
@@ -503,6 +514,7 @@ $(document).ready(function () {
                     response = JSON.parse(response);
                     $('#alertCategory').html(response.message);
                     $('#alertCategory').show("2000");
+                    $('#delete').modal('hide');
                     $('#category-'+ id).hide("slow");
                     
                 },
@@ -510,7 +522,7 @@ $(document).ready(function () {
                     $('#alertCategory').text('Une erreur inattendue est survenue...');
                 },
             });
-        }
+        
 
     });
 
@@ -593,7 +605,7 @@ $(document).ready(function () {
 
     $(".formUserDelete").on('click', function (event) {
         event.preventDefault();
-        if (confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")) {
+        
             var id = $(this).val();
             values = { 'idUserDelete': id };
             $.ajax({
@@ -605,6 +617,7 @@ $(document).ready(function () {
                     response = JSON.parse(response);
                     $('#alertUser').html(response.message);
                     $('#alertUser').show("2000");
+                    $('#delete').modal('hide');
                     if(response.success==true)
                     {
                         $('#user-'+ id).hide("slow");
@@ -616,7 +629,7 @@ $(document).ready(function () {
                     $('#alertUser').text('Une erreur inattendue est survenue...');
                 },
             });
-        }
+        
 
     });
 

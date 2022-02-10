@@ -91,8 +91,11 @@
           </td>
           <td>
 
-            <button class="formUserDelete btn btn-outline-danger" type="submit" value="{{user.id}}"
-              title="Supprimer cet utilisateur"><i class="far fa-trash-alt" title="Supprimer cet utilisateur"></i></button>
+            <!--<button class="formUserDelete btn btn-outline-danger" type="submit" value="{{user.id}}"
+              title="Supprimer cet utilisateur"><i class="far fa-trash-alt" title="Supprimer cet utilisateur"></i></button>-->
+
+              <button type="button" class="deleteButton btn btn-outline-danger" href="/#delete" data-bs-toggle="modal" data-bs-target="#delete" data-id="{{user.id}}" data-title="{{ user.firstName ~ " " ~ user.lastName }}" value="{{user.id}}" ><i
+                class="far fa-trash-alt" title="Supprimer cet article"></i></button>
           </td>
         </tr>
         
@@ -125,7 +128,7 @@
   </div>
 
 </div>
-
+{% include "/backend/admin/delete.html.twig" %}
 
 {% endif %}
 
