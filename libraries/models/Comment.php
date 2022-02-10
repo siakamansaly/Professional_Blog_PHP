@@ -72,7 +72,7 @@ class Comment extends Model {
      */
     public function readAllCommentsParent(?int $id=0, ?string $where = "", ?string $order = "dateAddComment DESC"): array
     {
-        $query = "SELECT comment.id,comment.datePublishComment,comment.dateAddComment,comment.content,comment.status,        comment.parentId,comment.User_id,comment.Post_id,post.title, user.firstName, user.lastName, user.picture FROM {$this->table} JOIN post on {$this->table}.Post_id = post.id JOIN user on comment.User_id = user.id WHERE parentId = 0 ";
+        $query = "SELECT comment.id,comment.datePublishComment,comment.dateAddComment,comment.content,comment.status,        comment.parentId,comment.User_id,comment.Post_id,post.title, user.firstName, user.lastName, user.picture FROM {$this->table} JOIN post on {$this->table}.Post_id = post.id JOIN user on comment.User_id = user.id WHERE parentId = 0 AND comment.status = 1 ";
         if($id<>0){
             $query .="AND  comment.Post_id=$id";
         }
@@ -90,7 +90,7 @@ class Comment extends Model {
      */
     public function readAllCommentsChild(?int $id=0, ?string $where = "", ?string $order = "parentId ASC, dateAddComment DESC"): array
     {
-        $query = "SELECT comment.id,comment.datePublishComment,comment.dateAddComment,comment.content,comment.status,        comment.parentId,comment.User_id,comment.Post_id,post.title, user.firstName, user.lastName, user.picture FROM {$this->table} JOIN post on {$this->table}.Post_id = post.id JOIN user on comment.User_id = user.id WHERE parentId <>0 ";
+        $query = "SELECT comment.id,comment.datePublishComment,comment.dateAddComment,comment.content,comment.status,        comment.parentId,comment.User_id,comment.Post_id,post.title, user.firstName, user.lastName, user.picture FROM {$this->table} JOIN post on {$this->table}.Post_id = post.id JOIN user on comment.User_id = user.id WHERE parentId <>0 AND comment.status = 1 ";
         if($id<>0){
             $query .="AND  comment.Post_id=$id";
         }
