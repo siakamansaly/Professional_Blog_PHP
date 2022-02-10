@@ -1,0 +1,46 @@
+{% import '/macro/section.html.twig' as section %}
+{{section.sectionstart("Compétences",{id:'competences',bgColor:'text-primary',color:'text-primary',dividerColor:'divider-secondary', divider:'fas fa-laptop-code'})}}
+        <!-- Skills Section Content-->
+        <div class="row mt-5">
+            <div class="col-12 col-lg-6 mb-5 px-5">
+                <p class="h3 text-center mb-4">Soft Skills</p>  
+                {{section.progressbar('Intelligence émotionnelle', '50')}}
+                {{section.progressbar('Organisation', '75')}}
+                {{section.progressbar("Capacité d'apprentissage", '100')}}
+                {{section.progressbar('Communication', '50')}}
+                {{section.progressbar('Collaboration', '75')}}
+                {{section.progressbar('Sens du service', '100')}}
+                {{section.progressbar('Créativité', '50')}}
+                {{section.progressbar('Esprit critique', '50')}}
+                {{section.progressbar('Prise de décision', '75')}}
+            </div>
+
+            <div class="col-12 col-lg-6 mb-5 px-5">
+                <p class="h3 text-center mb-4">Hard Skills</p>
+
+                <div class="mt-2 h6">Langages de programmation / Frameworks / CMS :</div>
+                {{section.badges('HTML 5,CSS 3,PHP,JavaScript,Sass,Bootstrap,Twig, WordPress,Joomla')}}
+
+                <div class="mt-2 h6">Conception / Base de données :</div>
+                {{section.badges('UML,MySQL,Maria DB')}}
+                
+                <div class="mt-2 h6">Architecture logicielle / Méthodologies / Gestion de projet :</div>
+                {{section.badges('POO,MVC,Design patterns,Waterfall,Scrum,Kanban,Git/GitHub')}}
+
+                <div class="mt-2 h6">Administration système et réseaux : </div>
+                {{section.badges('Windows,Windows Server,Active Directory,Exchange,Téléphonie IP,Microsoft 365')}}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-lg-6 mt-5 text-center">
+                <p class="h3 text-center mb-4 ">Centre d'intérêts</p>
+                {{section.badges('Course à pied,Football,Voyages,OpenClassRooms,StackOverFlow,Grafikart')}}
+            </div>
+            <div class="col-12 col-lg-6 mt-5 text-center">
+                <p class="h3 text-center mb-4 ">Langues</p>
+                {{section.badges('Français,Anglais (technique)')}}
+
+            </div>
+        </div>
+{{section.sectionend()}}

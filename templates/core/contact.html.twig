@@ -1,0 +1,30 @@
+{% import '/macro/section.html.twig' as section %}
+{% import '/macro/form.html.twig' as form %}
+
+{{section.sectionstart('Contact',{bgColor:'bg-secondary
+portfolio',color:'text-primary',dividerColor:'divider-primary',divider:'fas fa-address-card'})}}
+<!-- Contact Section Form-->
+<form id="formContact" method="post" class="SlidInBottomAnimation">
+
+    <div class="row justify-content-center" >
+        <div id="alertContact" class="col-8 mx-2"></div>
+    </div>
+    <div class="row justify-content-center">
+        {{ form.input('prenom','Prénom', {class:'col-md-4 mb-3', other:'pattern=[a-zA-Z]+ maxlength=45 required',
+        label:'false'}) }}
+        {{ form.input('name','Nom', {class:'col-md-4 mb-3', other:'pattern=[a-zA-Z]+ maxlength=45 required'})}}
+    </div>
+    <div class="row justify-content-center">
+        {{ form.input('email','Email', {type:'email', class:'col-md-8 mb-3', other:'maxlength=255 required'})}}
+    </div>
+    <div class="row justify-content-center">
+        {{ form.textarea('message','Message', {class:'col-md-8 mb-3',
+        placeholder:'Tapez votre message ici...', other:'required'})}}
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8 mb-3">
+            <button id="buttonContact" class="btn btn-primary btn-primary-other w-100" type="submit">Envoyer</button>
+        </div>
+    </div>
+</form>
+{{section.sectionend()}}

@@ -1,0 +1,14 @@
+{% import '/macro/section.html.twig' as section %}
+{% extends "layout.html.twig" %}
+{% block navbar %}{% set urlblog = "/" %}{% set url = "/" %} {{ parent() }}{% endblock %}
+{% block content %}
+{{section.sectionstart("404",{color:"error text-primary", heading:"false"})}}
+        <p class="h3 text-primary text-center">Cette page n'existe pas ou est invalide.</p>
+        <!-- 404 Section Button-->
+        <div class="text-center mt-4">
+            <a class="btn btn-xl btn-primary" href="/" rel="noopener">
+                Revenir à la page d'accueil
+            </a>
+        </div>
+{{section.sectionend()}}
+{% endblock %}

@@ -1,0 +1,172 @@
+{% import '/macro/form.html.twig' as form %}
+{% extends "layout.html.twig" %}
+{% block navbar %}{% set urlblog = "/" %} {% set url = "/" %}{{ parent() }}{% endblock %}
+{% block content %}
+{% if session %}
+<header id="dashboard" class="page-section bg-light border-bottom mb-4 hero_dashboard">
+    <div class="container">
+        <div class="text-center mt-5">
+            <h1 class="fw-bolder text-light">Mon compte</h1>
+
+        </div>
+    </div>
+</header>
+
+<div class="container px-4 my-4 text-primary">
+    <div class="row my-4">
+        <div class="col h4">Bienvenue {{user.firstName ~ " " ~ user.lastName ~ ", " }}</div>
+    </div>
+
+    <div class="row d-flex">
+        <div class="col-12 col-lg-6">
+
+            <div class="col card text-primary mb-4">
+                <div class="card-body">
+                    <div class="row my-2">
+                        <div  class="col d-flex align-items-center justify-content-center">{% if user.picture
+                            %}<img id='image_profile' src="./img/blog/profiles/{{user.picture}}"
+                                class="profile_user rounded-circle" />{% else %}<i
+                                class="fas fa-user-circle fa-9x"></i>{% endif %}</div>
+
+                    </div>
+                </div>
+                <div class="card-footer bg-primary d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="/#picture" data-bs-toggle="modal"
+                        data-bs-target="#picture">Modifier ma photo</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+            <div class="card bg-primary text-white mb-4">
+
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Mes préférences</h5>
+                    <div class="row my-2">
+                        <div class="col">E-mail :</div>
+                        <div class="col">{{user.email }}</div>
+                    </div>
+                    <div class="row my-2">
+                        <div class="col">Téléphone : </div>
+                        <div class="col">{{user.phone }}</div>
+                    </div>
+                    <div class="row my-2">
+                        <div class="col">Prénom, Nom : </div>
+                        <div class="col">{{user.firstName ~ " " ~ user.lastName }}</div>
+                    </div>
+                    <div class="row my-2">
+                        <div class="col">Profil : </div>
+                        <div class="col">{{user.userType }}</div>
+                    </div>
+                    <div class="row my-2">
+                        <div class="col">Lien CV : </div>
+                        <div class="col">{{user.cvLink }}</div>
+                    </div>
+                    <div class="row my-2">
+                        <div class="col">Twitter : </div>
+                        <div class="col">{{user.twitter }}</div>
+                    </div>
+                    <div class="row my-2">
+                        <div class="col">GitHub : </div>
+                        <div class="col">{{user.gitHub }}</div>
+                    </div>
+                    <div class="row my-2">
+                        <div class="col">LinkedIn : </div>
+                        <div class="col">{{user.linkedIn }}</div>
+                    </div>
+
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="/#profile" data-bs-toggle="modal"
+                        data-bs-target="#profile">Modifier mon profil</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+
+            <div class="card text-white mb-4 bg-primary">
+                <div class="card-body">
+                    <div class="row my-2">
+                        <div class="col">Mot de passe</div>
+                        <div class="col">••••••••••••</div>
+                    </div>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="/#changePassword" data-bs-toggle="modal"
+                        data-bs-target="#changePassword">Modifier mon mot de passe</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6 ">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    {% if user.userType =='admin' %}
+                    <div class="card bg-secondary text-primary px-4">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Administrer le blog</h5>
+                                
+                        </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-primary stretched-link" href="/adminBlog">Administrer</a>
+                            <div class="small text-primary"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                    {% else %}
+
+                    <div class="card bg-secondary text-primary px-4 d-flex align-items-center justify-content-center">
+                        <div class="card-body">
+                            <div class="row my-2">
+                                <a class="small text-primary stretched-link text-decoration-none" href="/blog">
+                                    <h5 class="card-title">Accéder au blog</h5>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row px-2">
+                <div class="card border border-secondary text-primary mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Mes commentaires</h5>
+                        <div class="row my-2">
+                            <div class="col fw-bold">Nombre : {{commentsCounter}}</div>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-primary stretched-link" href="/#userComments" data-bs-toggle="modal"
+                            data-bs-target="#userComments">Derniers commentaires en détail</a>
+                        <div class="small text-primary"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row px-2">
+                <div class="card text-primary mb-4 border border-secondary">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Mes infos de connexion</h5>
+                        <div class="row my-2">
+                            <div class="col fw-bold">Date d'inscription :</div>
+                            <div class="col">{{user.regitrationDate | date("d/m/Y H:i:s") }}</div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col fw-bold">Dernière connexion :</div>
+                            <div class="col">{{user.lastConnectionDate | date("d/m/Y H:i:s") }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+{% include "/backend/dashboard/editProfile.html.twig" %}
+{% include "/backend/dashboard/editPicture.html.twig" %}
+{% include "/backend/dashboard/editPassword.html.twig" %}
+{% include "/backend/dashboard/userComments.html.twig" %}
+
+
+{% endif %}
+{% endblock %}

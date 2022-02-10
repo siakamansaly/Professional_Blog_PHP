@@ -1,0 +1,23 @@
+{% macro input(name, label, options = []) %}
+<div class="form-group {{options.class | default('col')}}">
+    {% if options.label == 'top' %}<label for="{{name}}" class="m-2">{{label|raw}}</label>{% endif %}
+    <input type="{{options.type | default('text')}}" class="{{options.class_input | default('form-control')}}"
+        id="{{name}}" name="{{name}}" value="{{options.value}}" {% if options.type != 'date' and options.type != 'checkbox' %} placeholder="{{options.placeholder | default(label)}}" {% endif %} {{options.other|raw}}>
+    {% if options.label == 'bottom' %}<label for="{{name}}">{{label|raw}}</label>{% endif %}
+</div>
+{% endmacro %}
+
+{% macro textarea(name, label, options = []) %}
+<div class="form-group {{options.class | default('col')}}">
+    {% if options.label == 'top' %}<label for="{{name}}" class="{{options.classLabel | default('')}}">{{label}}</label>{% endif %}
+    <textarea class="form-control" name="{{name}}" id="{{name}}" rows="{{options.rows | default(5)}}"
+        placeholder="{{options.placeholder}}" {{options.other}}>{{options.value}}</textarea>
+    {% if options.label == 'bottom' %}<label for="{{name}}">{{label}}</label>{% endif %}
+</div>
+{% endmacro %}
+{% macro button(label, options = []) %}
+<div class="{{options.class | default('col')}}">
+    <button class="btn {{options.class_btn  | default('btn-primary w-100')}}"
+        type="{{options.type | default('submit')}}" {{options.other}}>{{label}}</button>
+</div>
+{% endmacro %}

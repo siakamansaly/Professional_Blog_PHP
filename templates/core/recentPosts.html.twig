@@ -1,0 +1,18 @@
+{% import '/macro/section.html.twig' as section %}
+{% set nbPosts = 3 %}
+
+{% block content %}
+{{section.sectionstart("Blog",{dividerColor:'divider-secondary', divider:'fas fa-book'})}}
+<div class="row">
+    <div class="col d-flex justify-content-center fs-5 m-4 text-primary">
+        <blockquote class="blockquote fw-bold">Retrouvez les dernières actualités et publications de mon blog.</blockquote>
+    </div>
+</div>
+{% include "/core/posts.html.twig" %}
+<div class="row mt-4">
+    <div class="col d-flex justify-content-center">
+        <a class="btn btn-primary w-50" href="/blog" rel="noopener">Voir tous les posts de mon Blog</a>
+    </div>
+</div>
+{{section.sectionend()}}
+{% endblock %}

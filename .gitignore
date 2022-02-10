@@ -1,0 +1,5 @@
+/vendor/
+/phpMyAdmin/
+/node_modules/
+/.vscode/
+.env

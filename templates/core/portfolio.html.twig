@@ -1,0 +1,53 @@
+{% import '/macro/section.html.twig' as section %}
+{{section.sectionstart("Portfolio",{id:'portfolio',bgColor:'bg-primary
+portfolio',color:'text-white',dividerColor:'divider-light', divider:'fa fa-briefcase'})}}
+<!-- Portfolio Grid Items-->
+<div class="row justify-content-center mt-5 SlidInBottomAnimation">
+
+    {{ section.portfolio("Films de Plein Air","portfolioModal1", "/img/portfolio/films_plein_air.png") }}
+    {{ section.portfolio("Express Food","portfolioModal2", "/img/portfolio/express_food.png") }}
+    {{ section.portfolio("Chalets Caviar","portfolioModal3", "/img/portfolio/chalets_caviar.png") }}
+    {{ section.portfolio("Banana Design","portfolioModal4", "/img/portfolio/banana_design.png") }}
+    {{ section.portfolio("FitActive","portfolioModal5", "/img/portfolio/fitactive.png") }}
+
+</div>
+
+
+
+<!-- Portfolio Modals-->
+{{ section.portfolioModal("Les Films de Plein Air (Maquette)","portfolioModal1",
+"/img/portfolio/films_plein_air.png", "Maquette pour l'association Films de Plein Air<br />Le but de ce projet
+étant d'analyser les besoins du client et de réaliser un cahier des charges ainsi q'une maquette.<br />Maquette réalisée
+en HTML/CSS et implémentée avec Bootstrap 5 et SASS.",{buttonSrc:"https://filmpleinair.s-mansaly.fr/",buttonLabel:"Voir
+la maquette"}) }}
+
+{{ section.portfolioModal("Express Food (Conception UML)","portfolioModal2", "/img/portfolio/express_food.png",
+"Conception solution technique d'une application de restauration en ligne<br />Le but de ce projet étant de modéliser
+les besoins du client de manière structurée grâce à des diagrammes UML, et de concevoir la base de données SQL de
+l'application.<br /> Diagrammes UML réalisés : Diagrammes de cas d'utilisation, Diagrammes de séquences, Diagramme de
+classes.<br /> Autres réalisations : Modèle Physique de données, Base de données avec son jeu de données.<br />
+Plateformes utilisées : Diagrams.net, MySQL Workbench et WAMP
+Server.",{buttonSrc:"https://github.com/siakamansaly/Conception_UML_SQL",buttonLabel:"Voir Diagrammes UML"}) }}
+
+{{ section.portfolioModal("Chalets et caviar (Integration WordPress)","portfolioModal3",
+"/img/portfolio/chalets_caviar.png", "Intégrer un thème Wordpress pour l'agence immobilière \"Chalets et caviar\"
+spécialisé dans la vente et la location de chalets de luxe<br />Le but de ce projet étant de sélectionner et d'adapter
+un thème Wordpress pour respecter les besoins et les exigences du client, de rédiger une <a
+    href='https://github.com/siakamansaly/P2-OCR-CC/blob/master/PCHALET_03_notice.pdf' target='_blank'
+    rel='noopener'>documentation</a> à l'intention d'utilisateurs non spécialistes.<br /> Spécificités : Thème Wordpress
+personnalisé avec un design clair et épuré, qui montre la ligne luxe de l’agence. Système d'administration des chalets
+(ajout, suppression et modification de chalets)",{buttonSrc:"https://chaletscaviar.s-mansaly.fr",buttonLabel:"Voir le
+site"}) }}
+
+{{ section.portfolioModal("Banana Design (Integration WordPress)","portfolioModal4",
+"/img/portfolio/banana_design.png", "Intégrer un thème Wordpress pour l'agence Web Design \"Banana
+Design\"<br />Le but de ce projet était de créer un site moderne et professionnel pour une agence Web
+Design.",{buttonSrc:"https://banana-design.s-mansaly.fr/",buttonLabel:"Voir le site"}) }}
+
+{{ section.portfolioModal("Fit Active (Integration WordPress)","portfolioModal5", "./img/portfolio/fitactive.png",
+"Intégrer un thème Wordpress pour le club de sport \"Fit Active\"<br /> Le but de ce projet étant de créer un site
+vitrine pour le club de sport \"Fit Active\". Ce site vitrine est destiné à promouvoir le club sur Internet et à
+communiquer sur ses actualités et événements.",{buttonSrc:"https://fitactive.s-mansaly.fr/",buttonLabel:"Voir le site"})
+}}
+
+{{section.sectionend()}}
