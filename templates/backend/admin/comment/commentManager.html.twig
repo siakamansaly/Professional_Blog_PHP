@@ -20,7 +20,8 @@
         class="fas fa-angle-double-left"></i> Administration du Blog</a>
 
         <form action="" method="get" class="form-inline">
-          <div class="d-inline-flex justify-content-center">
+          <div class="d-inline-flex justify-content-center align-items-center">
+            <label>Statut</label>
               <select name="status" id="status" class="form-select mx-2" aria-label="Status selected" onchange="this.form.submit()">
                 <option value="0" {% if status==0 %} selected {% endif %}>En attente de validation</option>
                 <option value="1" {% if status==1 %} selected {% endif %}>Approuvé</option>
