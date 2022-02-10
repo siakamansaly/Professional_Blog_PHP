@@ -66,7 +66,7 @@
                             
                         <!-- Comment with nested comments-->
                         {% for commentParent in commentsParent %}
-                        <div class="d-flex mb-4">
+                        <div class="d-flex mb-4 bg-white rounded p-4">
                             <!-- Parent comment-->
                             <div class="flex-shrink-0">{% if commentParent.picture
                                 %}<img class="rounded-circle"
@@ -75,7 +75,7 @@
                                             class="fas fa-user-circle fa-3x"></i>{% endif %}
                                 </div>
                             <div class="ms-3 w-100">
-                                <div class="fw-bold">{{commentParent.firstName ~ " " ~ commentParent.lastName}}</div>
+                                <div class="fw-bold">{{commentParent.firstName ~ " " ~ commentParent.lastName}} <span class="badge badge-light text-primary mx-2">{{commentParent.dateAddComment|date("d/m/Y H:i")}}</span></div>
                                 {{commentParent.content|raw}}
                                 <div class="row justify-content-center mb-4">
                                     <div class="col">
@@ -99,7 +99,7 @@
                                                    {% else %}<i
                                                             class="fas fa-user-circle fa-3x"></i>{% endif %}</div>
                                     <div class="ms-3">
-                                        <div class="fw-bold">{{commentChild.firstName ~ " " ~ commentChild.lastName}}</div>
+                                        <div class="fw-bold">{{commentChild.firstName ~ " " ~ commentChild.lastName}} <span class="badge badge-light text-primary mx-2">{{commentChild.dateAddComment|date("d/m/Y H:i")}}</span></div>
                                         {{commentChild.content|raw}}
                                         
                                     </div>
