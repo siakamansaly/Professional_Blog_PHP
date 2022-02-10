@@ -19,8 +19,8 @@
     <a href="/adminBlog" class="btn btn-outline-dark" role="button" rel="noopener"><i
         class="fas fa-angle-double-left"></i> Administration du Blog</a>
         <form action="" method="get" class="form-inline">
-          <div class="d-inline-flex justify-content-center">
-              <select name="status" id="status" class="form-select mx-2" aria-label="Status selected" onchange="this.form.submit()">
+          <div class="d-inline-flex justify-content-center align-items-center">
+              <label>Statut</label><select name="status" id="status" class="form-select mx-2" aria-label="Status selected" onchange="this.form.submit()">
                 <option value="" {% if status=='' %} selected {% endif %}>&nbsp;</option>
                 <option value="1" {% if status=='1' %} selected {% endif %}>Actif</option>
                 <option value="0" {% if status=='0' %} selected {% endif %}>Inactif</option>
@@ -28,7 +28,7 @@
 
               </select>
 
-              <select name="type" id="type" class="form-select mx-2" aria-label="Status selected" onchange="this.form.submit()">
+              <label>Type</label><select name="type" id="type" class="form-select mx-2" aria-label="Status selected" onchange="this.form.submit()">
                 <option value="" {% if type=='' %} selected {% endif %}>&nbsp;</option>
                 <option value="member" {% if type=='member' %} selected {% endif %}>Membre</option>
                 <option value="admin" {% if type=='admin' %} selected {% endif %}>Administrateur</option>
