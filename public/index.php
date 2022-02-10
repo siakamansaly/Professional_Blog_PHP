@@ -58,7 +58,6 @@ $router->addRoutes(array(
     array('GET', '/commentManager', ROOT_CONTROLLER . 'HomeController#commentManager', 'commentManager'),
     array('GET', '/commentManagerEdit/[*:id]', ROOT_CONTROLLER . 'HomeController#commentManagerEdit', 'commentManagerEdit'),
 
-    array('POST', '/userEdit', ROOT_CONTROLLER . 'UserController#userEdit', 'userEdit'),
     array('POST', '/userValidate', ROOT_CONTROLLER . 'UserController#userValidate', 'userValidate'),
     array('POST', '/userDisable', ROOT_CONTROLLER . 'UserController#userDisable', 'userDisable'),
     array('POST', '/userDelete', ROOT_CONTROLLER . 'UserController#userDelete', 'userDelete'),

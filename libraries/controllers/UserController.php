@@ -44,7 +44,10 @@ class UserController extends Controller
         $error = 0;
         $id = "";
         $this->errorMessage = "";
-        $id = $this->sanitize($this->var->request->get('id'));
+        $emailOld = "";
+        
+        $id = (int) $this->sanitize($this->var->request->get('id'));
+        $emailOld = $this->userModel->read($id);
         $this->data['firstName'] = $this->sanitize($this->var->request->get('firstNameProfile'));
         $this->data['lastName'] = $this->sanitize($this->var->request->get('lastNameProfile'));
         $this->data['email'] = $this->sanitize($this->var->request->get('email'));
@@ -54,9 +57,9 @@ class UserController extends Controller
         $this->data['gitHub'] = $this->sanitize($this->var->request->get('gitHub'));
         $this->data['linkedIn'] = $this->sanitize($this->var->request->get('linkedIn'));
 
-        if ($this->data['email'] <> SessionController::get('email', 'login')) {
+        if ($this->data['email'] <> $emailOld['email']) {
             if ($this->userModel->getEmail($this->data['email']) == 1) {
-                $this->errorMessage .= $this->li_alert("L'adresse email renseignée est déja inscrite !");
+                $this->errorMessage .= $this->li_alert("L'adresse email renseignée est déja inscrite ! ");
                 $error++;
             }
         }
@@ -202,7 +205,7 @@ class UserController extends Controller
         $countPost = $this->postModel->count('User_id', $id_user);
 
         if ($countPost == 0) {
-            
+
             $commentsUpdate = $this->commentModel->readAllCommentsByUser($id_user, "comment.id");
 
             // Update child comments user with value 0
