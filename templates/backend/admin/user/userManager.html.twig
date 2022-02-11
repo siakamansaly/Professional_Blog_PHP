@@ -4,7 +4,7 @@
 %}
 {% block content %}
 {% if session.login.userType == 'admin' %}
-<header id="adminBlog" class="page-section bg-dark border-bottom mb-4 ">
+<header id="adminBlog" class="page-section bg-steel border-bottom mb-4 ">
   <div class="container">
     <div class="text-center mt-5">
       <h1 class="fw-bolder text-light">Administration des utilisateurs</h1>
@@ -16,10 +16,11 @@
 <div class="container my-4 text-primary">
 
   <div class="mb-4 text-left d-flex justify-content-between">
-    <a href="/adminBlog" class="btn btn-outline-dark" role="button" rel="noopener"><i
+    <a href="/adminBlog" class="btn btn-outline-steel" role="button" rel="noopener"><i
         class="fas fa-angle-double-left"></i> Administration du Blog</a>
         <form action="" method="get" class="form-inline">
           <div class="d-inline-flex justify-content-center align-items-center">
+            <span class="fw-bold mx-4">Filtrer&nbsp;par&nbsp;:&nbsp;&nbsp;</span>
               <label>Statut</label><select name="status" id="status" class="form-select mx-2" aria-label="Status selected" onchange="this.form.submit()">
                 <option value="" {% if status=='' %} selected {% endif %}>&nbsp;</option>
                 <option value="1" {% if status=='1' %} selected {% endif %}>Actif</option>
@@ -46,7 +47,7 @@
   <div class="table-responsive mb-2">
     <table class="table ">
       <thead>
-        <tr class="table-dark text-light">
+        <tr class="table-steel text-light">
           <th scope="col">#</th>
           <th scope="col">Utilisateur</th>
           <th scope="col">Email</th>

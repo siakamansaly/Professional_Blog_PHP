@@ -14,13 +14,18 @@
 </header>
 
 
-<div class="container my-4 text-primary">
-    <div class="row d-flex align-item-center justify-content-center">
-        <div class="col-12 col-md-8 col-lg-5">
-            <div class="card text-white bg-primary mb-3">
-                <div class="card-header h5 d-flex align-items-center justify-content-between">Articles <span class="badge badge-light">{{AllPostsCounterActive + AllPostsCounterDisable}}</span></div>
+<div class="container-fluid my-5 text-primary d-flex align-item-center justify-content-center">
+    
+    <div class="row d-flex align-item-center justify-content-center mb-1">
+        <div class="col d-flex align-item-center justify-content-center">
+            <div class="card text-white bg-primary mb-3" style="width: 24rem;">
+                <div class="card-header h5 d-flex align-items-center justify-content-between"><i class="far fa-newspaper fa-2x"></i>Articles <span>&nbsp;</span></div>
                 <div class="card-body">
-                    <p class="card-text">Créer, modifier ou supprimer un article</p>
+                    <!--<p class="card-text mb-1">Créer, modifier ou supprimer un article</p>-->
+                    <p class="card-text mb-1"><span class="badge badge-light h5 mx-4">{{AllPostsCounterActive}}</span>  articles publiés</p>
+                    <p class="card-text mb-1"><span class="badge badge-light h5 mx-4">{{AllPostsCounterDisable}}</span>  articles en brouillon</p>
+                    <p class="card-text mb-1"><span class="badge badge-light h5 mx-4">{{AllPostsCounterArchived}}</span>  articles archivés</p>
+                    <p class="card-text mb-1"><span class="badge badge-light h5 mx-4">{{AllCategoriesCounter}}</span> catégories</p>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
                     <a class="small text-white stretched-link" href="/postManager">Administrer</a>
@@ -28,11 +33,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-8 col-lg-5">
-            <div class="card bg-light mb-3">
-                <div class="card-header h5 d-flex align-items-center justify-content-between">Commentaires <span class="badge badge-primary">{{AllCommentsCounter}}</span></div>
+        <div class="col d-flex align-item-center justify-content-center">
+            <div class="card bg-light mb-3" style="width: 24rem;">
+                <div class="card-header h5 d-flex align-items-center justify-content-between"><i class="far fa-comments fa-2x"></i>Commentaires <span>&nbsp;</span></div>
                 <div class="card-body">
-                    <p class="card-text">Valider, modifier ou supprimer un commentaire</p>
+                    <!--<p class="card-text mb-1">Valider, modifier ou supprimer un commentaire</p>-->
+                    
+                    <p class="card-text mb-1"><span class="badge badge-primary h5 mx-2">{{AllCommentsCounterActive}}</span>  commentaires approuvés</p>
+                    
+                    <p class="card-text mb-1"><span class="badge badge-primary h5 mx-2">{{AllCommentsCounterPending}}</span>  commentaires en attente validation</p>
+                    <p class="card-text mb-1"><span class="badge badge-primary h5 mx-2">{{AllCommentsCounterDisable}}</span>  commentaires désapprouvés</p>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
                     <a class="small text-primary stretched-link" href="/commentManager">Administrer</a>
@@ -40,13 +50,15 @@
                 </div>
             </div>
         </div>
-    </div>
-        <div class="row d-flex align-item-center justify-content-center">
-        <div class="col-12 col-md-8 col-lg-5">
-            <div class="card bg-dark text-white mb-3">
-                <div class="card-header h5 d-flex align-items-center justify-content-between">Utilisateurs <span class="badge badge-light">{{AllUsersCounter}}</span></div>
+    
+        <div class="col d-flex align-item-center justify-content-center">
+            <div class="card bg-steel text-white mb-3" style="width: 24rem;">
+                <div class="card-header h5 d-flex align-items-center justify-content-between"><i class="fa fa-users fa-2x"></i>Utilisateurs <span>&nbsp;</span></div>
                 <div class="card-body">
-                    <p class="card-text">Valider, modifier ou supprimer un utilisateur</p>
+                    <!--<p class="card-text mb-1">Valider, modifier ou supprimer un utilisateur</p>-->
+
+                    <p class="card-text mb-1"><span class="badge badge-light h5 mx-4">{{AllUsersCounterAdmin}}</span>  Administrateurs</p>
+                    <p class="card-text mb-1"><span class="badge badge-light h5 mx-4">{{AllUsersCounterMember}}</span>  Membres</p>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
                     <a class="small text-white stretched-link" href="/userManager">Administrer</a>
@@ -54,11 +66,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-8 col-lg-5">
-            <div class="card bg-secondary  mb-3">
-                <div class="card-header h5 d-flex align-items-center justify-content-between">Catégories <span class="badge badge-primary">{{AllCategoriesCounter}}</span></div>
+        <!--<div class="col d-flex align-item-center justify-content-center">
+            <div class="card bg-secondary  mb-3" style="width: 24rem;">
+                <div class="card-header h5 d-flex align-items-center justify-content-between"><i class="fa fa-sitemap fa-2x"></i>Catégories <span class="badge badge-primary">{{AllCategoriesCounter}}</span></div>
                 <div class="card-body">
-                  <p class="card-text">Valider, modifier ou supprimer une catégorie</p>
+                  <p class="card-text mb-1">Valider, modifier ou supprimer une catégorie</p>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
                     <a class="small text-primary stretched-link" href="/categoryManager">Administrer</a>
@@ -66,7 +78,7 @@
                 </div>
               </div>
 
-        </div>
+        </div>-->
     </div>
 
 </div>

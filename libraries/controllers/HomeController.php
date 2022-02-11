@@ -172,15 +172,20 @@ class HomeController extends Controller
         AuthController::force_login();
         AuthController::is_admin();
 
-        $AllCommentsCounter = $this->commentsModel->count('', '');
-        $AllUsersCounter = $this->userModel->count('', '');
+        $AllCommentsCounterActive = $this->commentsModel->count('comment.status', '1');
+        $AllCommentsCounterPending = $this->commentsModel->count('comment.status', '0');
+        $AllCommentsCounterDisable = $this->commentsModel->count('comment.status', '2');
+
+        $AllUsersCounterAdmin = $this->userModel->count('user.userType', 'admin');
+        $AllUsersCounterMember = $this->userModel->count('user.userType', 'member');
+
         $AllPostsCounterActive = $this->postModel->count('post.status', '1');
         $AllPostsCounterDisable = $this->postModel->count('post.status', '0');
         $AllPostsCounterArchived = $this->postModel->count('post.status', '-1');
         $AllCategoriesCounter = $this->categoryModel->count('', '');
 
         $this->path = '\backend\admin\adminblog.html.twig';
-        $this->data = ['head' => ['title' => 'Administration Blog'], 'AllCommentsCounter' => $AllCommentsCounter, 'AllUsersCounter' => $AllUsersCounter, 'AllPostsCounterActive' => $AllPostsCounterActive, 'AllPostsCounterDisable' => $AllPostsCounterDisable, 'AllPostsCounterArchived' => $AllPostsCounterArchived, 'AllCategoriesCounter' => $AllCategoriesCounter];
+        $this->data = ['head' => ['title' => 'Administration Blog'], 'AllCommentsCounterActive' => $AllCommentsCounterActive, 'AllCommentsCounterPending' => $AllCommentsCounterPending, 'AllCommentsCounterDisable' => $AllCommentsCounterDisable, 'AllUsersCounterAdmin' => $AllUsersCounterAdmin, 'AllUsersCounterMember' => $AllUsersCounterMember, 'AllPostsCounterActive' => $AllPostsCounterActive, 'AllPostsCounterDisable' => $AllPostsCounterDisable, 'AllPostsCounterArchived' => $AllPostsCounterArchived, 'AllCategoriesCounter' => $AllCategoriesCounter];
         $this->setResponseHttp(200);
         $this->render($this->path, $this->data);
     }
