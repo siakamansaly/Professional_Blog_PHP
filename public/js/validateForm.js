@@ -363,6 +363,7 @@ $(document).ready(function () {
                     $('#alertPostDelete').show("2000");
                     $('#post-'+ id).hide("slow");
                     $('#delete').modal('hide');
+                    location.reload();
                 },
                 error: function (response) {
                     $('#alertPostDelete').text('Une erreur inattendue est survenue...');

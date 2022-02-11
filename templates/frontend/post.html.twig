@@ -1,5 +1,8 @@
 {% import '/macro/section.html.twig' as section %}
 {% import '/macro/form.html.twig' as form %}
+{% if session.login.userType == 'admin' %}
+{% import '/macro/admin.html.twig' as admin %}
+{% endif %}
 {% extends "layout.html.twig" %}
 {% block navbar %}{% set urlblog = "" %}{% set url = "/" %} {{ parent() }}{% endblock %}
 {% block content %}
@@ -138,8 +141,8 @@
                                 <div class="row  px-4">
                                     <a href="/postManagerEdit/{{post.id}}" type="button" class="btn btn-secondary mb-4" rel="noopener"><i
                                         class="fas fa-edit"></i>  Modifier cet article</a>
-                                        <button class="formPostDelete btn btn-danger" type="submit" value="{{post.id}}"><i
-                                            class="far fa-trash-alt" title="Supprimer cet article"></i>  Supprimer cet article</button>
+                                            <button type="button" class="deleteButton btn btn-danger" href="/#delete" data-bs-toggle="modal" data-bs-target="#delete" data-id="{{post.id}}" data-title="{{post.title}}" value="{{post.id}}" ><i
+                                                class="far fa-trash-alt" title="Supprimer cet article"></i>  Supprimer cet article</button>
                                         </div>
                                     
                                 </div>
@@ -190,4 +193,7 @@
         </div>
     </div>
 </div>
+{% if session.login.userType == 'admin' %}
+{{ admin.confirmationModal("delete","Supprimer cet article","Êtes-vous sûr de vouloir supprimer cet article ?", "formPostDelete","deleteButtonConfirmation", {reponse:"deleteTitleConfirmation"}) }}
+{% endif %}
 {% endblock %}
