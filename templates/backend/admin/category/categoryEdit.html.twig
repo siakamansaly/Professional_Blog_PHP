@@ -7,16 +7,16 @@
 {% endblock %}
 {% block content %}
 {% if session.login.userType == 'admin' %}
-<header id="adminBlog" class="page-section bg-secondary border-bottom mb-4">
+<header id="adminBlog" class="page-section hero_categoryManager border-bottom mb-4">
   <div class="container">
     <div class="text-center mt-5">
-      <h1 class="fw-bolder text-primary">Modifier une catégorie</h1>
+      <h1 class="fw-bolder text-light">Modifier une catégorie</h1>
     </div>
   </div>
 </header>
 <div class="container my-4 text-primary">
   <div class="mb-4 text-left d-flex justify-content-between">
-    <a href="/categoryManager" class="btn btn-outline-primary" role="button" rel="noopener"><i
+    <a href="/categoryManager" class="btn btn-outline-secondary text-primary" role="button" rel="noopener"><i
         class="fas fa-angle-double-left"></i> Administration des catégories</a>
   </div>
   <form id="formCategoryEdit" method="post">

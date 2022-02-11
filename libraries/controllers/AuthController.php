@@ -10,47 +10,51 @@ $dotenv->load();
 
 class AuthController extends Controller
 {
-
     private $userModel;
-
     protected $modelName = \Models\User::class;
     private $data = [];
     private string $password;
-    public $post;
+    public $var;
     public $errorMessage = "";
-
 
     public function __construct()
     {
         $this->userModel = new \Blog\Models\User;
-        $this->post = Request::createFromGlobals();
+        $this->var = Request::createFromGlobals();
     }
 
-
-    public function is_login()
+    /**
+     * Checks if the user is logged in
+     * @return bool
+     */
+    public function is_login(): bool
     {
         if (isset($_SESSION['login']['auth'])) {
             return true;
         }
+        return false;
     }
 
-
+    /**
+     * Checks if the user is an administrator
+     * @return true or redirect to homepage
+     */
     public static function is_admin()
     {
         if (isset($_SESSION['login']['userType'])) {
-            if($_SESSION['login']['userType']=='admin')
-            {
+            if ($_SESSION['login']['userType'] == 'admin') {
                 return true;
-            }
-            else
-            {
+            } else {
                 Controller::redirect('/');
             }
         }
         Controller::redirect('/');
     }
 
-
+    /**
+     * Redirects user if not logged in
+     * @return void
+     */
     public static function force_login()
     {
         if (empty($_SESSION['login']['auth'])) {
@@ -58,28 +62,31 @@ class AuthController extends Controller
         }
     }
 
-
+    /**
+     * Function allowing (or not) the user to log in
+     * @return json object
+     */
     public function login()
     {
-        if (empty($this->post->request->all())) {
+        if (empty($this->var->request->all())) {
             $this->redirect('/?login=true');
         }
         $this->data = [];
         $user = "";
         $error = 0;
-        $password = "";
+        $this->password = "";
         $json = [];
         $success = "";
         $message = "";
-        $this->errorMessage ="";
+        $this->errorMessage = "";
 
-        $this->data['email'] = $this->sanitize($this->post->request->get('emailLogin'));
-        $this->data['password'] = $this->sanitize($this->post->request->get('passwordLogin'));
+        $this->data['email'] = $this->sanitize($this->var->request->get('emailLogin'));
+        $this->data['password'] = $this->sanitize($this->var->request->get('passwordLogin'));
 
         // Check if values not empty
         if (empty($this->data['email']) || empty($this->data['password'])) {
             $this->errorMessage .= $this->li_alert("Merci de renseigner tous les champs obligatoire !");
-            
+
             $error++;
         }
 
@@ -146,7 +153,7 @@ class AuthController extends Controller
     public function register()
     {
         //print_r($_POST);die;
-        if (empty($this->post->request->all())) {
+        if (empty($this->var->request->all())) {
             $this->redirect('/?register=true');
         }
         $this->data = [];
@@ -155,14 +162,14 @@ class AuthController extends Controller
         $success = "";
         $message = "";
         $error = 0;
-        $this->errorMessage ="";
+        $this->errorMessage = "";
 
-        $this->data['firstName'] = $this->sanitize($this->post->request->get('firstName'));
-        $this->data['lastName'] = $this->sanitize($this->post->request->get('lastName'));
-        $this->data['email'] = $this->sanitize($this->post->request->get('emailRegister'));
-        $this->data['password'] = $this->sanitize($this->post->request->get('passwordRegister'));
+        $this->data['firstName'] = $this->sanitize($this->var->request->get('firstName'));
+        $this->data['lastName'] = $this->sanitize($this->var->request->get('lastName'));
+        $this->data['email'] = $this->sanitize($this->var->request->get('emailRegister'));
+        $this->data['password'] = $this->sanitize($this->var->request->get('passwordRegister'));
         $this->data['regitrationDate'] = date('Y-m-d H:i:s');
-        $passwordRepeat = $this->sanitize($this->post->request->get('passwordRepeat'));
+        $passwordRepeat = $this->sanitize($this->var->request->get('passwordRepeat'));
 
         if ($this->userModel->getEmail($this->data['email']) == 1) {
             $this->errorMessage .= $this->li_alert("L'adresse email renseignée est déja inscrite !");
@@ -199,25 +206,25 @@ class AuthController extends Controller
      */
     public function lostPassword()
     {
-        if (empty($this->post->request->all())) {
+        if (empty($this->var->request->all())) {
             $this->redirect('/');
         }
         $emailLostPassword = "";
-        $this->data=[];
+        $this->data = [];
         $json = [];
         $success = "";
         $message = "";
         $error = 0;
-        $this->errorMessage ="";
+        $this->errorMessage = "";
 
-        $emailLostPassword = $this->sanitize($this->post->request->get('emailLostPassword'));
+        $emailLostPassword = $this->sanitize($this->var->request->get('emailLostPassword'));
 
         if ($this->userModel->getEmail($emailLostPassword) == 0) {
             $this->errorMessage .= $this->li_alert("L'adresse email renseignée n'est pas inscrite !");
             $error++;
         }
         $this->errorMessage = $this->ul_alert($this->errorMessage);
-        
+
 
         if ($error > 0) {
             $message = $this->div_alert($this->errorMessage, "danger");
@@ -226,21 +233,20 @@ class AuthController extends Controller
             $message = $this->div_alert("Un lien de réinitialisation de mot de passe a été envoyé sur votre boite mail.", "success");
             $success = true;
             $this->data['token'] = uniqid('', false);
-            $this->userModel->update($emailLostPassword,$this->data, 'email');
+            $this->userModel->update($emailLostPassword, $this->data, 'email');
 
             $this->data['subject'] = $_ENV['TITLE_WEBSITE'] . " - Réinitialisation mot de passe";
-            $this->data['message'] = "Voici un lien pour réinitialiser votre mot de passe : ".$_SERVER['HTTP_REFERER']."renew/".$this->data['token'];
+            $this->data['message'] = "Voici un lien pour réinitialiser votre mot de passe : " . $_SERVER['HTTP_REFERER'] . "renew/" . $this->data['token'];
             $this->data['email'] = $emailLostPassword;
-            $this->data['firstName']="";
-            $this->data['lastName']="";
+            $this->data['firstName'] = "";
+            $this->data['lastName'] = "";
             $this->sendMessage($this->data);
-
         }
         $json['success'] = $success;
         $json['message'] = $message;
         echo json_encode($json);
     }
-    
+
     /**
      * Function lostPassword
      * 
@@ -248,26 +254,25 @@ class AuthController extends Controller
      */
     public function savePassword()
     {
-        if (empty($this->post->request->all())) {
+        if (empty($this->var->request->all())) {
             $this->redirect('/');
         }
-        $this->data=[];
+        $this->data = [];
         $json = [];
         $success = "";
         $message = "";
         $error = 0;
         $passwordOld = "";
         $passwordRepeat = "";
-        $id="";
-        $this->errorMessage ="";
+        $id = "";
+        $this->errorMessage = "";
 
-        $this->data['password'] = $this->sanitize($this->post->request->get('passwordRenew'));
-        $id = $this->sanitize($this->post->request->get('id'));
-        $passwordRepeat = $this->sanitize($this->post->request->get('passwordRepeatRenew'));
+        $this->data['password'] = $this->sanitize($this->var->request->get('passwordRenew'));
+        $id = $this->sanitize($this->var->request->get('id'));
+        $passwordRepeat = $this->sanitize($this->var->request->get('passwordRepeatRenew'));
         $user = $this->userModel->read($id);
-        if(!empty($this->post->request->get('passwordOldChange')))
-        {
-            $passwordOld = $this->post->request->get('passwordOldChange');
+        if (!empty($this->var->request->get('passwordOldChange'))) {
+            $passwordOld = $this->var->request->get('passwordOldChange');
             $this->password = $user['password'];
 
             // Check password
@@ -277,11 +282,11 @@ class AuthController extends Controller
             }
         }
         if ($this->data['password'] <> $passwordRepeat) {
-            $this->errorMessage .= $this->li_alert("Les mots de passe saisies ne sont pas identique !");    
+            $this->errorMessage .= $this->li_alert("Les mots de passe saisies ne sont pas identique !");
             $error++;
         }
         $this->errorMessage = $this->ul_alert($this->errorMessage);
-        
+
 
         if ($error > 0) {
             $message = $this->div_alert($this->errorMessage, "danger");
@@ -291,23 +296,18 @@ class AuthController extends Controller
             $success = true;
             $this->data['password'] = password_hash($this->data['password'], PASSWORD_DEFAULT);
             $this->data['token'] = NULL;
-            $this->userModel->update($id,$this->data);
+            $this->userModel->update($id, $this->data);
 
             $this->data['subject'] = $_ENV['TITLE_WEBSITE'] . " - Votre mot de passe a bien été changé";
             $this->data['message'] = "Votre mot de passe a bien été changé.";
-            
-            $this->data['email'] = $user['email'];
-            $this->data['firstName']=$user['firstName'];
-            $this->data['lastName']=$user['lastName'];
-            $this->sendMessage($this->data);
 
+            $this->data['email'] = $user['email'];
+            $this->data['firstName'] = $user['firstName'];
+            $this->data['lastName'] = $user['lastName'];
+            $this->sendMessage($this->data);
         }
         $json['success'] = $success;
         $json['message'] = $message;
         echo json_encode($json);
     }
-
-
-
-    
 }

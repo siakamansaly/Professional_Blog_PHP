@@ -156,7 +156,7 @@ class CommentController extends Controller
         $json = [];
         $success = "";
         $message = "";
-
+        
         $id_comment = $this->sanitize($this->post->request->get('idCommentDelete'));
 
         $this->commentModel->update($id_comment, ['parentId' => 0], 'parentId');

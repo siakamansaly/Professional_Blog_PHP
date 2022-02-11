@@ -3096,6 +3096,28 @@ textarea.form-control-lg {
   background-color: var(--bs-primary);
   border-color: var(--bs-primary);
 }
+
+.btn-steel {
+  color: #fff;
+  background-color: var(--bs-steel);
+  border-color: var(--bs-primary);
+}
+.btn-steel:hover {
+  color: #fff;
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+}
+
+.btn-gray {
+  color: var(--bs-primary);
+  background-color: var(--bs-gray-300);
+  border-color: var(--bs-primary);
+}
+.btn-gray:hover {
+  color: var(--bs-light);
+  background-color: var(--bs-primary);
+  border-color: var(--bs-gray-300);
+}
 .btn-check:focus + .btn-secondary, .btn-secondary:focus {
   color: #fff;
   background-color: #253544;

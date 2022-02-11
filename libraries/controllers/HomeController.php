@@ -387,7 +387,7 @@ class HomeController extends Controller
     
         // if post exist
         if (!empty($user)) {
-            $this->data = ['head' => ['title' => "Modifier un commentaire"], 'user' => $user];
+            $this->data = ['head' => ['title' => "Modifier un utilisateur"], 'user' => $user];
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
         } else { // if no post 
