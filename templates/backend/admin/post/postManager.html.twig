@@ -1,4 +1,5 @@
 {% import '/macro/form.html.twig' as form %}
+{% import '/macro/admin.html.twig' as admin %}
 {% extends "layout.html.twig" %}
 {% block navbar %}{% set urlblog = "/" %} {% set url = "/" %} {{ parent() }}{% endblock
 %}
@@ -96,7 +97,8 @@
 
 
 {% include "/backend/admin/post/postAdd.html.twig" %}
-{% include "/backend/admin/delete.html.twig" %}
+
+{{ admin.confirmationModal("delete","Supprimer cet article","Êtes-vous sûr de vouloir supprimer cet article ?", "formPostDelete","deleteButtonConfirmation", {reponse:"deleteTitleConfirmation"}) }}
 
 {% endif %}
 

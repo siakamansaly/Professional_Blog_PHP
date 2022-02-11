@@ -216,7 +216,7 @@ class HomeController extends Controller
         $posts = $this->postModel->readAllPosts("0,1", "id DESC","$firstPage,$this->itemsByPage");
 
         $this->path = '\backend\admin\post\postManager.html.twig';
-        $this->data = ['head' => ['title' => 'Administration des articles'], 'posts' => $posts, 'users' => $users, 'categories' => $categories, 'AllPostsCounterActive' => $AllPostsCounterActive, 'AllPostsCounterDisable' => $AllPostsCounterDisable, 'AllPage' => $AllPage, 'currentPage' => $currentPage, 'delete'=>['title'=>'Supprimer cet article','class'=>'formPostDelete','subtitle'=>'Êtes-vous sûr de vouloir supprimer cet article ?']];
+        $this->data = ['head' => ['title' => 'Administration des articles'], 'posts' => $posts, 'users' => $users, 'categories' => $categories, 'AllPostsCounterActive' => $AllPostsCounterActive, 'AllPostsCounterDisable' => $AllPostsCounterDisable, 'AllPage' => $AllPage, 'currentPage' => $currentPage];
         $this->setResponseHttp(200);
         $this->render($this->path, $this->data);
     }
@@ -250,7 +250,7 @@ class HomeController extends Controller
         
         $comments = $this->commentsModel->readAllCommentsByStatus("$status", "id DESC","$firstPage,$this->itemsByPage");
         $this->path = '\backend\admin\comment\commentManager.html.twig';
-        $this->data = ['head' => ['title' => 'Administration des commentaires'], 'comments' => $comments, 'AllCommentCounter' => $AllCommentCounter, 'AllPage' => $AllPage, 'currentPage' => $currentPage, 'status' => $status, 'delete'=>['title'=>'Supprimer ce commentaire','class'=>'formCommentDelete','subtitle'=>'Êtes-vous sûr de vouloir supprimer ce commentaire ?']];
+        $this->data = ['head' => ['title' => 'Administration des commentaires'], 'comments' => $comments, 'AllCommentCounter' => $AllCommentCounter, 'AllPage' => $AllPage, 'currentPage' => $currentPage, 'status' => $status];
         $this->setResponseHttp(200);
         $this->render($this->path, $this->data);
         
@@ -298,7 +298,7 @@ class HomeController extends Controller
         
         $categories = $this->categoryModel->readAll("","id ASC LIMIT $firstPage,$this->itemsByPage");
         $this->path = '\backend\admin\category\categoryManager.html.twig';
-        $this->data = ['head' => ['title' => 'Administration des catégories'], 'categories' => $categories, 'AllCategoryCounter' => $AllCategoryCounter, 'AllPage' => $AllPage, 'currentPage' => $currentPage, 'delete'=>['title'=>'Supprimer cette catégorie','class'=>'formCategoryDelete','subtitle'=>'Êtes-vous sûr de vouloir supprimer cette catégorie ?']];
+        $this->data = ['head' => ['title' => 'Administration des catégories'], 'categories' => $categories, 'AllCategoryCounter' => $AllCategoryCounter, 'AllPage' => $AllPage, 'currentPage' => $currentPage];
         $this->setResponseHttp(200);
         $this->render($this->path, $this->data);
     }
@@ -368,7 +368,7 @@ class HomeController extends Controller
         //print_r($requete);die;
         
         $this->path = '\backend\admin\user\userManager.html.twig';
-        $this->data = ['head' => ['title' => 'Administration des utilisateurs'], 'users' => $users, 'AllUserCounter' => $AllUserCounter, 'AllPage' => $AllPage, 'currentPage' => $currentPage, 'status' => $status, 'type' => $type, 'delete'=>['title'=>'Supprimer cet utilisateur','class'=>'formUserDelete','subtitle'=>'Êtes-vous sûr de vouloir supprimer cet utilisateur ?']];
+        $this->data = ['head' => ['title' => 'Administration des utilisateurs'], 'users' => $users, 'AllUserCounter' => $AllUserCounter, 'AllPage' => $AllPage, 'currentPage' => $currentPage, 'status' => $status, 'type' => $type];
         $this->setResponseHttp(200);
         $this->render($this->path, $this->data);
     }

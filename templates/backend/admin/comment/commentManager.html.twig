@@ -1,4 +1,5 @@
 {% import '/macro/form.html.twig' as form %}
+{% import '/macro/admin.html.twig' as admin %}
 {% extends "layout.html.twig" %}
 {% block navbar %}{% set urlblog = "/" %} {% set url = "/" %} {{ parent() }}{% endblock
 %}
@@ -64,14 +65,20 @@
             <td>{% if comment.status == 1 %}<span class="badge badge-primary">Approuvé</span>{% elseif comment.status == 0 %}<span class="badge badge-secondary">En attente validation</span>{% else %}<span class="badge badge-danger">Désapprouvé</span>{% endif %}</td>
           <td>
             {% if comment.status == 0 %}
-            <button class="formCommentValidate btn btn-outline-dark" type="submit" value="{{comment.id}}"
-              title="Valider ce commentaire"><i class="fas fa-check" title="Valider ce commentaire"></i></button>
+            <!--<button class="formCommentValidate btn btn-outline-dark" type="submit" value="{{comment.id}}"
+              title="Valider ce commentaire"><i class="fas fa-check" title="Valider ce commentaire"></i></button>-->
+
+              <button type="button" class="validateButton btn btn-outline-success" href="/#validate" data-bs-toggle="modal" data-bs-target="#validate" data-id="{{comment.id}}" data-title="{{'#' ~ comment.id ~ ' - '~  comment.firstName | capitalize ~ " " ~ comment.lastName | upper }}" value="{{comment.id}}" ><i
+                class="fas fa-check" title="Valider ce commentaire"></i></button>
               {% endif %}
           </td>
           <td>
             {% if comment.status == 0 %}
-            <button class="formCommentDisable btn btn-outline-dark" type="submit" value="{{comment.id}}"
-              title="Désapprouver ce commentaire"><i class="fas fa-ban" title="Désapprouver ce commentaire"></i></button>
+            <!--<button class="formCommentDisable btn btn-outline-dark" type="submit" value="{{comment.id}}"
+              title="Désapprouver ce commentaire"><i class="fas fa-ban" title="Désapprouver ce commentaire"></i></button>-->
+
+              <button type="button" class="disableButton btn btn-outline-dark" href="/#disable" data-bs-toggle="modal" data-bs-target="#disable" data-id="{{comment.id}}" data-title="{{'#' ~ comment.id ~ ' - '~  comment.firstName | capitalize ~ " " ~ comment.lastName | upper }}" value="{{comment.id}}" ><i
+                class="fas fa-ban" title="Désapprouver ce commentaire"></i></button>
               {% endif %}
           </td>
           <td><a href="/commentManagerEdit/{{comment.id}}" type="button" class="btn btn-outline-secondary text-center"
@@ -84,7 +91,7 @@
               title="Supprimer ce commentaire"><i class="far fa-trash-alt" title="Supprimer ce commentaire"></i></button>-->
 
               <button type="button" class="deleteButton btn btn-outline-danger" href="/#delete" data-bs-toggle="modal" data-bs-target="#delete" data-id="{{comment.id}}" data-title="{{'#' ~ comment.id ~ ' - '~  comment.firstName | capitalize ~ " " ~ comment.lastName | upper }}" value="{{comment.id}}" ><i
-                class="far fa-trash-alt" title="{{delete.title}}"></i></button>
+                class="far fa-trash-alt" title="Supprimer ce commentaire"></i></button>
           </td>
         </tr>
         {% endfor %}
@@ -117,7 +124,12 @@
 
 </div>
 
-{% include "/backend/admin/delete.html.twig" %}
+{{ admin.confirmationModal("delete","Supprimer ce commentaire","Êtes-vous sûr de vouloir supprimer ce commentaire ?", "formCommentDelete","deleteButtonConfirmation", {reponse:"deleteTitleConfirmation"}) }}
+
+{{ admin.confirmationModal("validate","Valider ce commentaire","Êtes-vous sûr de vouloir valider ce commentaire ?", "formCommentValidate","validateButtonConfirmation", {reponse:"validateTitleConfirmation", bgColor:"text-light bg-success", btn:"success"}) }}
+
+{{ admin.confirmationModal("disable","Désapprouver ce commentaire","Êtes-vous sûr de vouloir désapprouver ce commentaire ?", "formCommentDisable","disableButtonConfirmation", {reponse:"disableTitleConfirmation", bgColor:"text-light bg-dark", btn:"dark"}) }}
+
 {% endif %}
 
 {% endblock %}

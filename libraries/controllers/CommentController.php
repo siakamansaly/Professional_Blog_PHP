@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CommentController extends Controller
 {
     private $postModel;
-    private $commentsModel;
+    private $commentModel;
     private $postcategoryModel;
     private $categoryModel;
     protected $modelName = \Models\Post::class;
@@ -21,7 +21,7 @@ class CommentController extends Controller
     public function __construct()
     {
         $this->postModel = new \Blog\Models\Post;
-        $this->commentsModel = new \Blog\Models\Comment;
+        $this->commentModel = new \Blog\Models\Comment;
         $this->postcategoryModel = new \Blog\Models\Post_PostCategory;
         $this->categoryModel = new \Blog\Models\PostCategory;
         $this->post = Request::createFromGlobals();
@@ -55,7 +55,7 @@ class CommentController extends Controller
             $this->data['status'] = 0;
         }
 
-        $this->commentsModel->insert($this->data);
+        $this->commentModel->insert($this->data);
     
         $json['success'] = true;
         $json['message'] = $this->div_alert("Commentaire ajouté avec succès et en attente de modération par l'administrateur.", "success");
@@ -81,7 +81,7 @@ class CommentController extends Controller
         $this->data['content'] = $this->sanitize($this->post->request->get('comment'));
         $this->data['status'] = $this->sanitize($this->post->request->get('status'));
 
-        $this->commentsModel->update($id_comment, $this->data);
+        $this->commentModel->update($id_comment, $this->data);
 
         $message = $this->div_alert("Commentaire mis à jour avec succès.", "success");
         $success = true;
@@ -108,7 +108,7 @@ class CommentController extends Controller
         $id_comment = $this->sanitize($this->post->request->get('idCommentValidate'));
 
         $this->data['status'] = 1;
-        $this->commentsModel->update($id_comment, $this->data);
+        $this->commentModel->update($id_comment, $this->data);
 
         $message = $this->div_alert("Commentaire validé avec succès.", "success");
         $success = true;
@@ -134,7 +134,7 @@ class CommentController extends Controller
         $id_comment = $this->sanitize($this->post->request->get('idCommentDisable'));
 
         $this->data['status'] = 2;
-        $this->commentsModel->update($id_comment, $this->data);
+        $this->commentModel->update($id_comment, $this->data);
 
         $message = $this->div_alert("Le commentaire a bien été désapprouvé.", "success");
         $success = true;
@@ -159,7 +159,8 @@ class CommentController extends Controller
 
         $id_comment = $this->sanitize($this->post->request->get('idCommentDelete'));
 
-        $this->commentsModel->delete($id_comment, 'id');
+        $this->commentModel->update($id_comment, ['parentId' => 0], 'parentId');
+        $this->commentModel->delete($id_comment, 'id');
 
         $message = $this->div_alert("Le commentaire a bien été supprimé.", "success");
         $success = true;

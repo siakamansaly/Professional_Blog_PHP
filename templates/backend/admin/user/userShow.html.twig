@@ -1,7 +1,5 @@
-{% if session.login.userType == 'admin' %}
-
 <!-- Comments user-->
-<div class="userShow-{{user.id }}-modal modal fade" id="userShow-{{user.id }}" tabindex="-1" aria-labelledby="userShow-{{user.id }}" aria-hidden="true">
+<div class="userShow-modal modal fade" id="userShow" tabindex="-1" aria-labelledby="userShow" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
@@ -13,67 +11,53 @@
                             <div class="card text-primary mb-4">
                                 <h5 class="fw-bolder text-light bg-primary py-3 rounded text-center">Détail utilisateur
                                 </h5>
-
                                 <div class="card-body">
                                     <div class="row my-2">
                                         <div class="col">Utilisateur :</div>
-                                        <div class="col">{{ user.firstName|capitalize ~ " " ~ user.lastName|upper }}</div>
+                                        <div id="detailName" class="col">&nbsp;</div>
+                                    </div>
+                                    <div class="row my-2">
+                                        <div class="col">Type :</div>
+                                        <div id="detailType" class="col">&nbsp;</div>
+                                    </div>
+                                    <div class="row my-2">
+                                        <div class="col">Inscrit le :</div>
+                                        <div id="detailRegistration" class="col">&nbsp;</div>
+                                    </div>
+                                    <div class="row my-2">
+                                        <div class="col">Dernière connexion :</div>
+                                        <div id="detailLastConnection" class="col">&nbsp;</div>
                                     </div>
 
-
-
-          <div class="row my-2">
-            <div class="col">Type :</div>
-            <div class="col">{{ user.userType|capitalize }}</div>
-        </div>
-
-        <div class="row my-2">
-            <div class="col">Inscrit le :</div>
-            <div class="col">{% if user.regitrationDate %}{{user.regitrationDate|date("d/m/Y H:i")}}{% endif %}</div>
-        </div>
-
-        <div class="row my-2">
-            <div class="col">Dernière connexion :</div>
-            <div class="col">{% if user.lastConnectionDate %}{{user.lastConnectionDate|date("d/m/Y H:i")}}{% endif %}</div>
-        </div>
-
-        <div class="row my-2">
-            <div class="col">Statut :</div>
-            <div class="col">{% if user.status == 1 %}<span class="badge badge-primary">Actif</span>{% else %}<span class="badge badge-danger">Inactif</span>{% endif %}</div>
-        </div>
+                                    <div class="row my-2">
+                                        <div class="col">Statut :</div>
+                                        <div id="detailStatus" class="col">&nbsp;</div>
+                                    </div>
                                     <div class="row my-2">
                                         <div class="col">E-mail :</div>
-                                        <div class="col">{{user.email }}</div>
+                                        <div id="detailEmail" class="col">&nbsp;</div>
                                     </div>
                                     <div class="row my-2">
                                         <div class="col">Téléphone : </div>
-                                        <div class="col">{{user.phone }}</div>
+                                        <div id="detailPhone" class="col">&nbsp;</div>
                                     </div>
-                                
                                     <div class="row my-2">
                                         <div class="col">Lien CV : </div>
-                                        <div class="col">{{user.cvLink }}</div>
+                                        <div id="detailCV" class="col">&nbsp;</div>
                                     </div>
                                     <div class="row my-2">
                                         <div class="col">Twitter : </div>
-                                        <div class="col">{{user.twitter }}</div>
+                                        <div id="detailTwitter" class="col">&nbsp;</div>
                                     </div>
                                     <div class="row my-2">
                                         <div class="col">GitHub : </div>
-                                        <div class="col">{{user.gitHub }}</div>
+                                        <div id="detailGitHub" class="col">&nbsp;</div>
                                     </div>
                                     <div class="row my-2">
                                         <div class="col">LinkedIn : </div>
-                                        <div class="col">{{user.linkedIn }}</div>
+                                        <div id="detailLinkedIn" class="col">&nbsp;</div>
                                     </div>
-
-
                                 </div>
-
-
-
-
-
                             </div>
                         </div>
                     </div>
@@ -82,6 +66,3 @@
         </div>
     </div>
 </div>
-
-
-{% endif %}

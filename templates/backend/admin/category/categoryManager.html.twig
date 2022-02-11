@@ -1,4 +1,5 @@
 {% import '/macro/form.html.twig' as form %}
+{% import '/macro/admin.html.twig' as admin %}
 {% extends "layout.html.twig" %}
 {% block navbar %}{% set urlblog = "/" %} {% set url = "/" %} {{ parent() }}{% endblock
 %}
@@ -86,7 +87,7 @@
 </div>
 
 {% include "/backend/admin/category/categoryAdd.html.twig" %}
-{% include "/backend/admin/delete.html.twig" %}
+{{ admin.confirmationModal("delete","Supprimer cette catégorie","Êtes-vous sûr de vouloir supprimer cette catégorie ?", "formCategoryDelete","deleteButtonConfirmation", {reponse:"deleteTitleConfirmation"}) }}
 {% endif %}
 
 {% endblock %}

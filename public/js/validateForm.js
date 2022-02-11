@@ -288,6 +288,64 @@ $(document).ready(function () {
         
     });
 
+    $(".userShow").on('click', function (event) {
+        event.preventDefault();
+        var $this = $(this);
+        var name = $this.data('name');
+        var type = $this.data('type');
+        var registration = $this.data('registration');
+        var connection = $this.data('connection');
+        var status = $this.data('status');
+        var email = $this.data('email');
+        var phone = $this.data('phone');
+        var cv = $this.data('cv');
+        var twitter = $this.data('twitter');
+        var github = $this.data('github');
+        var linkedin = $this.data('linkedin');
+
+        if(status==1) 
+        {
+            status = "<span class='badge badge-primary'>Actif</span>";
+        }
+        else
+        {
+            status = "<span class='badge badge-danger'>Inactif</span>";
+        }
+        
+        $('#detailName').html(name);
+        $('#detailType').html(type);
+        $('#detailRegistration').html(registration);
+        $('#detailLastConnection').html(connection);
+        $('#detailStatus').html(status);
+        $('#detailEmail').html(email);
+        $('#detailPhone').html(phone);
+        $('#detailCV').html(cv);
+        $('#detailTwitter').html(twitter);
+        $('#detailGitHub').html(github);
+        $('#detailLinkedIn').html(linkedin);
+        
+    });
+
+    $(".validateButton").on('click', function (event) {
+        event.preventDefault();
+        var $this = $(this);
+        var parent_id = $this.data('id');
+        var title = $this.data('title');
+        $('#validateButtonConfirmation').val(parent_id);
+        $('#validateTitleConfirmation').html(title);
+        
+    });
+
+    $(".disableButton").on('click', function (event) {
+        event.preventDefault();
+        var $this = $(this);
+        var parent_id = $this.data('id');
+        var title = $this.data('title');
+        $('#disableButtonConfirmation').val(parent_id);
+        $('#disableTitleConfirmation').html(title);
+        
+    });
+
     $('#alertPostDelete').hide();
     $(".formPostDelete").on('click', function (event) {
         event.preventDefault();
@@ -374,7 +432,7 @@ $(document).ready(function () {
     $('#alertComment').hide();
     $(".formCommentValidate").on('click', function (event) {
         event.preventDefault();
-        if (confirm("Êtes-vous sûr de vouloir valider ce commentaire ?")) {
+        
             var id = $(this).val();
             values = { 'idCommentValidate': id };
             $.ajax({
@@ -386,19 +444,20 @@ $(document).ready(function () {
                     response = JSON.parse(response);
                     $('#alertComment').html(response.message);
                     $('#alertComment').show("2000");
+                    $('#validate').modal('hide');
                     $('#comment-'+ id).hide("slow");
                 },
                 error: function (response) {
                     $('#alertComment').text('Une erreur inattendue est survenue...');
                 },
             });
-        }
+        
 
     });
 
     $(".formCommentDisable").on('click', function (event) {
         event.preventDefault();
-        if (confirm("Êtes-vous sûr de vouloir désactiver ce commentaire ?")) {
+        
             var id = $(this).val();
             values = { 'idCommentDisable': id };
             $.ajax({
@@ -410,13 +469,14 @@ $(document).ready(function () {
                     response = JSON.parse(response);
                     $('#alertComment').html(response.message);
                     $('#alertComment').show("2000");
+                    $('#disable').modal('hide');
                     $('#comment-'+ id).hide("slow");
                 },
                 error: function (response) {
                     $('#alertComment').text('Une erreur inattendue est survenue...');
                 },
             });
-        }
+        
 
     });
 
@@ -556,7 +616,7 @@ $(document).ready(function () {
     $('#alertUser').hide();
     $(".formUserValidate").on('click', function (event) {
         event.preventDefault();
-        if (confirm("Êtes-vous sûr de vouloir valider cet utilisateur ?")) {
+
             var id = $(this).val();
             values = { 'idUserValidate': id };
             $.ajax({
@@ -568,19 +628,20 @@ $(document).ready(function () {
                     response = JSON.parse(response);
                     $('#alertUser').html(response.message);
                     $('#alertUser').show("2000");
+                    $('#validate').modal('hide');
                     location.reload();
                 },
                 error: function (response) {
                     $('#alertUser').text('Une erreur inattendue est survenue...');
                 },
             });
-        }
+        
 
     });
 
     $(".formUserDisable").on('click', function (event) {
         event.preventDefault();
-        if (confirm("Êtes-vous sûr de vouloir désactiver cet utilisateur ?")) {
+
             var id = $(this).val();
             values = { 'idUserDisable': id };
             $.ajax({
@@ -592,6 +653,7 @@ $(document).ready(function () {
                     response = JSON.parse(response);
                     $('#alertUser').html(response.message);
                     $('#alertUser').show("2000");
+                    $('#disable').modal('hide');
                     location.reload();
                     
                 },
@@ -599,7 +661,7 @@ $(document).ready(function () {
                     $('#alertUser').text('Une erreur inattendue est survenue...');
                 },
             });
-        }
+        
 
     });
 

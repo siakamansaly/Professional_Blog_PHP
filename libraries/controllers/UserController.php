@@ -56,6 +56,10 @@ class UserController extends Controller
         $this->data['twitter'] = $this->sanitize($this->var->request->get('twitter'));
         $this->data['gitHub'] = $this->sanitize($this->var->request->get('gitHub'));
         $this->data['linkedIn'] = $this->sanitize($this->var->request->get('linkedIn'));
+        if($this->var->request->get('userType')<>"")
+        {
+            $this->data['userType'] = $this->sanitize($this->var->request->get('userType'));
+        }
 
         if ($this->data['email'] <> $emailOld['email']) {
             if ($this->userModel->getEmail($this->data['email']) == 1) {

@@ -1,4 +1,5 @@
 {% import '/macro/form.html.twig' as form %}
+{% import '/macro/admin.html.twig' as admin %}
 {% extends "layout.html.twig" %}
 {% block navbar %}{% set urlblog = "/" %} {% set url = "/" %} {{ parent() }}{% endblock
 %}
@@ -72,17 +73,23 @@
           <td>
             <!--<a href="/user/{{user.id}}" type="button" class="btn btn-outline-primary text-center"
             rel="noopener" target="_blank" title="Voir cet utilisateur"><i class="far fa-eye" title="Voir cet utilisateur"></i></a>-->
-            <a class="userShow btn btn-outline-primary text-center" href="/#userShow-{{user.id}}" data-bs-toggle="modal"
-                        data-bs-target="#userShow-{{user.id}}"><i class="far fa-eye" title="Voir cet utilisateur"></i></a>
-                        {% include "/backend/admin/user/userShow.html.twig" %}
-        </td>
+            <a class="userShow btn btn-outline-primary text-center" href="/#userShow" data-bs-toggle="modal"
+                        data-bs-target="#userShow" data-id="{{user.id}}" data-name="{{user.firstName | capitalize ~ " " ~ user.lastName | upper }}" data-type="{{user.userType}}" data-registration="{{user.regitrationDate|date("d/m/Y H:i")}}" data-connection="{{user.lastConnectionDate|date("d/m/Y H:i")}}" data-status="{{user.status}}" data-email="{{user.email}}" data-phone="{{user.phone}}" data-cv="{{user.cvLink}}" data-twitter="{{user.twitter}}" data-github="{{user.gitHub}}" data-linkedin="{{user.linkedIn}}"><i class="far fa-eye" title="Voir cet utilisateur"></i></a>
+                      </td>
           <td id="active-{{user.id}}">
             {% if user.status == 0 %}
-            <button class="formUserValidate btn btn-outline-dark" type="submit" value="{{user.id}}"
-              title="Valider cet utilisateur"><i class="fas fa-check" title="Valider cet utilisateur"></i></button>
+            <!--<button class="formUserValidate btn btn-outline-dark" type="submit" value="{{user.id}}"
+              title="Valider cet utilisateur"><i class="fas fa-check" title="Valider cet utilisateur"></i></button>-->
+
+              <button type="button" class="validateButton btn btn-outline-success" href="/#validate" data-bs-toggle="modal" data-bs-target="#validate" data-id="{{user.id}}" data-title="{{'#' ~ user.id ~ ' - ' ~  user.firstName | capitalize ~ " " ~ user.lastName | upper }}" value="{{user.id}}" ><i
+                class="fas fa-check" title="Valider cet utilisateur"></i></button>
+
               {% else %}
-              <button class="formUserDisable btn btn-outline-dark" type="submit" value="{{user.id}}"
-              title="Désactiver cet utilisateur"><i class="fas fa-ban" title="Désactiver cet utilisateur"></i></button>
+              <!--<button class="formUserDisable btn btn-outline-dark" type="submit" value="{{user.id}}"
+              title="Désactiver cet utilisateur"><i class="fas fa-ban" title="Désactiver cet utilisateur"></i></button>-->
+
+              <button type="button" class="disableButton btn btn-outline-dark" href="/#disable" data-bs-toggle="modal" data-bs-target="#disable" data-id="{{user.id}}" data-title="{{'#' ~ user.id ~ ' - ' ~  user.firstName | capitalize ~ " " ~ user.lastName | upper }}" value="{{user.id}}" ><i
+                class="fas fa-ban" title="Désactiver cet utilisateur"></i></button>
               {% endif %}
           </td>
           
@@ -95,7 +102,7 @@
             <!--<button class="formUserDelete btn btn-outline-danger" type="submit" value="{{user.id}}"
               title="Supprimer cet utilisateur"><i class="far fa-trash-alt" title="Supprimer cet utilisateur"></i></button>-->
 
-              <button type="button" class="deleteButton btn btn-outline-danger" href="/#delete" data-bs-toggle="modal" data-bs-target="#delete" data-id="{{user.id}}" data-title="{{ user.firstName ~ " " ~ user.lastName }}" value="{{user.id}}" ><i
+              <button type="button" class="deleteButton btn btn-outline-danger" href="/#delete" data-bs-toggle="modal" data-bs-target="#delete" data-id="{{user.id}}" data-title="{{ '#' ~ user.id ~ ' - ' ~ user.firstName ~ " " ~ user.lastName }}" value="{{user.id}}" ><i
                 class="far fa-trash-alt" title="Supprimer cet article"></i></button>
           </td>
         </tr>
@@ -129,7 +136,13 @@
   </div>
 
 </div>
-{% include "/backend/admin/delete.html.twig" %}
+
+{{ admin.confirmationModal("delete","Supprimer cet utilisateur","Êtes-vous sûr de vouloir supprimer cet utilisateur ?", "formUserDelete","deleteButtonConfirmation", {reponse:"deleteTitleConfirmation"}) }}
+
+{{ admin.confirmationModal("validate","Valider cet utilisateur","Êtes-vous sûr de vouloir valider cet utilisateur ?", "formUserValidate","validateButtonConfirmation", {reponse:"validateTitleConfirmation", bgColor:"text-light bg-success", btn:"success"}) }}
+
+{{ admin.confirmationModal("disable","Désactiver cet utilisateur","Êtes-vous sûr de vouloir désactiver cet utilisateur ?", "formUserDisable","disableButtonConfirmation", {reponse:"disableTitleConfirmation", bgColor:"text-light bg-dark", btn:"dark"}) }}
+{% include "/backend/admin/user/userShow.html.twig" %}
 
 {% endif %}
 
