@@ -14,10 +14,11 @@
     <div class="col-12 my-2 fw-bold"><span class="text-danger">* </span>Image
         mis en avant
     </div>
-    {% if posts.picture %} <div class="col-12 col-md-6 my-2">image actuelle : <a href="/img/blog/posts/{{posts.picture}}"
-            target="_blank" rel="noopener">{{posts.picture}}</a></div>
-    {{ form.input('picture','Photo', {class:'col
-    col-lg-6',other:'accept="image/png, image/jpeg, image/jpg"
+    {% if posts.picture %} <div class="col-12 col-md-6 my-2 text-center">
+        <a href="/img/blog/posts/{{posts.picture}}"
+            target="_blank" rel="noopener"><img src="/img/blog/posts/{{posts.picture}}" class="imgEditPost"/>
+        </a></div>
+    {{ form.input('picture','Photo', {class:'col col-lg-6 d-flex align-items-center',other:'accept="image/png, image/jpeg, image/jpg"
     size=5242880',
     type:'file'})}}
 

@@ -11824,3 +11824,7 @@ html {
 .pointer{
   cursor: pointer;
 }
+.imgEditPost{
+  max-width:300px; 
+  height:200px;
+}
