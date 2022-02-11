@@ -11737,7 +11737,17 @@ html {
   background-size: cover;
   position: relative;
 }
-
+.hero_userManager {
+  max-height: 300px;
+  min-height: 300px;
+  background:  linear-gradient(
+      rgba(15, 5, 107, 0.6), 
+      rgba(15, 5, 107, 0.6)
+    ), url('../img/blog/userManager.jpg') no-repeat 50% 50%;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
 .hero_postArchived {
   max-height: 300px;
   min-height: 300px;
