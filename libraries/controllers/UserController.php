@@ -45,7 +45,7 @@ class UserController extends Controller
         $id = "";
         $this->errorMessage = "";
         $emailOld = "";
-        
+
         $id = (int) $this->sanitize($this->var->request->get('id'));
         $emailOld = $this->userModel->read($id);
         $this->data['firstName'] = $this->sanitize($this->var->request->get('firstNameProfile'));
@@ -119,9 +119,11 @@ class UserController extends Controller
             $success = false;
         } else {
             $userAccount = $this->userModel->read($id);
-            $filename = __DIR__ . '/../../public/img/blog/profiles/' . $userAccount['picture'];
-            if (file_exists($filename)) {
-                unlink($filename);
+            if ($userAccount['picture'] <> "") {
+                $filename = __DIR__ . '/../../public/img/blog/profiles/' . $userAccount['picture'];
+                if (file_exists($filename)) {
+                    unlink($filename);
+                }
             }
             $this->data['picture'] = $this->uploadImage($_FILES, __DIR__ . '\..\..\public/img/blog/profiles/', $check["extension"]);
 
@@ -212,17 +214,15 @@ class UserController extends Controller
             foreach ($commentsUpdate as $comment) {
                 $this->commentModel->update($comment['id'], ['parentId' => 0], 'parentId');
             }
-            
+
             // Delete comments user
             $this->commentModel->delete($id_user, 'User_id');
-            
+
             // Delete user
             $this->userModel->delete($id_user, 'id');
             $message = $this->div_alert("L'utilisateur a bien été supprimé.", "success");
             $success = true;
-        }
-        else
-        {
+        } else {
             $message = $this->div_alert("Merci de réattribuer les articles créés par cet utilisateur avant suppression. <br/>Nombre d'article concerné : <b>$countPost</b>", "danger");
             $success = false;
         }

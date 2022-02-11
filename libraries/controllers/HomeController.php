@@ -89,11 +89,11 @@ class HomeController extends Controller
         $firstPage = $this->firstPage($currentPage, $AllPosts, $this->itemsByPage);
         if(empty($this->var->query->get('category')))
         {
-            $posts = $this->postModel->readAllPosts("1","","$firstPage,$this->itemsByPage");
+            $posts = $this->postModel->readAllPosts("1","post.dateAddPost DESC","$firstPage,$this->itemsByPage");
         }
         else{
             $currentCategory = (int) $this->sanitize(($this->var->query->get('category')));
-            $posts = $this->postModel->readAllPostsByCategory("1",$currentCategory,"","$firstPage,$this->itemsByPage");
+            $posts = $this->postModel->readAllPostsByCategory("1",$currentCategory,"post.dateAddPost DESC","$firstPage,$this->itemsByPage");
             
         }
         
