@@ -2,6 +2,8 @@
 
 namespace Blog\Controllers;
 
+use Symfony\Component\HttpFoundation\Exception\JsonException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -59,8 +61,9 @@ class CommentController extends Controller
     
         $json['success'] = true;
         $json['message'] = $this->div_alert("Commentaire ajouté avec succès et en attente de modération par l'administrateur.", "success");
-        echo json_encode($json);
-        exit;
+        print_r(json_encode($json));
+        //return new JsonResponse($json);
+
     }
 
     
@@ -89,8 +92,8 @@ class CommentController extends Controller
         $json['success'] = $success;
         $json['message'] = $message;
         $json['status'] = $this->data['status'];
-        echo json_encode($json);
-        exit;
+        print_r(json_encode($json));
+
     }
 
     /**
@@ -115,8 +118,7 @@ class CommentController extends Controller
     
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
-        exit;
+        print_r(json_encode($json));
     }
 
     /**
@@ -141,8 +143,7 @@ class CommentController extends Controller
     
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
-        exit;
+        print_r(json_encode($json));
     }
 
     /**
@@ -167,7 +168,6 @@ class CommentController extends Controller
     
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
-        exit;
+        print_r(json_encode($json));
     }
 }
