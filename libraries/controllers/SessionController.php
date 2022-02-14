@@ -1,18 +1,23 @@
 <?php
 
 namespace Blog\Controllers;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class SessionController
 {
-
-    public $flash = [];
-
-
+    private $var;
+    
     public function __construct()
     {
         $this->sessionStart();
+        $this->var = Request::createFromGlobals();
     }
 
+    /**
+     * Start session PHP
+     * @return void
+     */
     public static function sessionStart()
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -20,18 +25,11 @@ class SessionController
         }
     }
 
-    public function getFlashMessage(string $key, $default = null)
-    {
-        if (!isset($this->flash[$key])) {
-            $message = $this->get($key, $default);
-            unset($_SESSION[$key]);
-            $this->flash[$key] = $message;
-        }
-
-        return $this->flash[$key];
-    }
-
-    public static function set(string $name, $value, ?string $key = null)
+    /**
+     * Set a session variable with 1 or 2 parameters
+     * @return bool
+     */
+    public static function set(string $name, $value, ?string $key = null) : bool
     {
         if ($key == null) {
             $_SESSION[$name] = $value;
@@ -41,6 +39,10 @@ class SessionController
         return true;
     }
 
+    /**
+     * Get a session variable with 1 or 2 parameters
+     * @return mixed
+     */
     public static function get(string $name, ?string $key = null)
     {
         if ($key == null) {
@@ -54,16 +56,24 @@ class SessionController
         }
     }
 
-    public static function check($key)
+    /**
+     * Check if a session variable exist
+     * @return bool
+     */
+    public static function check($key) : bool
     {
         return isset($_SESSION[$key]);
     }
-
-    public static function delete($key)
+    
+    /**
+     * Delete a session variable
+     * @return bool
+     */
+    public static function delete($key) : bool
     {
         if (self::check($key)) {
             unset($_SESSION[$key]);
-            return !self::check($key);
+            return true;
         } else {
             return false;
         }

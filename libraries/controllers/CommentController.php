@@ -62,7 +62,6 @@ class CommentController extends Controller
         $json['success'] = true;
         $json['message'] = $this->div_alert("Commentaire ajouté avec succès et en attente de modération par l'administrateur.", "success");
         print_r(json_encode($json));
-        //return new JsonResponse($json);
 
     }
 

@@ -19,12 +19,14 @@ abstract class Controller
     protected static $twig = null;
     public $request;
     public $response;
+    private $var;
 
     public  function __construct()
     {
         $this->model = new $this->modelName();
         $this->request = Request::createFromGlobals();
         $this->response = new Response();
+        $this->var = Request::createFromGlobals();
     }
 
 
@@ -159,11 +161,9 @@ abstract class Controller
         EOT;
 
         if (!$mail->send()) {
-            SessionController::set('error', $mail->ErrorInfo, 'validation');
             return false;
             $mail->smtpClose();
         } else {
-            SessionController::set('successMail', "Votre message a bien été envoyé !", 'validation');
             return true;
             $mail->smtpClose();
         }

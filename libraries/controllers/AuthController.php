@@ -14,8 +14,8 @@ class AuthController extends Controller
     protected $modelName = \Models\User::class;
     private $data = [];
     private string $password;
-    public $var;
     public $errorMessage = "";
+    private $var;
 
     public function __construct()
     {
