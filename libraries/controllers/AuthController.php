@@ -3,9 +3,10 @@
 namespace Blog\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
+use Twig\Environment;
 
-$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
-$dotenv->load();
+//$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
+//$dotenv->load();
 
 
 class AuthController extends Controller
@@ -29,7 +30,7 @@ class AuthController extends Controller
      */
     public function is_login(): bool
     {
-        if (isset($_SESSION['login']['auth'])) {
+        if (SessionController::get('auth','login')<>"") {
             return true;
         }
         return false;
@@ -41,8 +42,8 @@ class AuthController extends Controller
      */
     public static function is_admin()
     {
-        if (isset($_SESSION['login']['userType'])) {
-            if ($_SESSION['login']['userType'] == 'admin') {
+        if (SessionController::get('userType','login')<>"") {
+            if (SessionController::get('userType','login') == 'admin') {
                 return true;
             } else {
                 Controller::redirect('/');
@@ -57,7 +58,7 @@ class AuthController extends Controller
      */
     public static function force_login()
     {
-        if (empty($_SESSION['login']['auth'])) {
+        if (empty(SessionController::get('auth','login'))) {
             Controller::redirect('/?login=true');
         }
     }
@@ -135,8 +136,7 @@ class AuthController extends Controller
 
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
-        exit;
+        print_r(json_encode($json));
     }
 
     public function logout()
@@ -189,7 +189,7 @@ class AuthController extends Controller
             $success = false;
         } else {
             $this->userModel->insert($this->data);
-            $this->data['subject'] = $_ENV['TITLE_WEBSITE'] . " - Inscription en attente d'approbation";
+            $this->data['subject'] = EnvironmentController::get('TITLE_WEBSITE'). " - Inscription en attente d'approbation";
             $this->data['message'] = "Votre inscription a bien été pris en compte. L'administrateur validera votre inscription très rapidemment. A bientôt !";
             $message = $this->div_alert("Inscription réussie. <br/> Patience... Votre compte est en attente de validation par l'administrateur.", "success");
             $this->sendMessage($this->data);
@@ -197,7 +197,7 @@ class AuthController extends Controller
         }
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
+        print_r(json_encode($json));
     }
     /**
      * Function lostPassword
@@ -235,8 +235,8 @@ class AuthController extends Controller
             $this->data['token'] = uniqid('', false);
             $this->userModel->update($emailLostPassword, $this->data, 'email');
 
-            $this->data['subject'] = $_ENV['TITLE_WEBSITE'] . " - Réinitialisation mot de passe";
-            $this->data['message'] = "Voici un lien pour réinitialiser votre mot de passe : " . $_SERVER['HTTP_REFERER'] . "renew/" . $this->data['token'];
+            $this->data['subject'] = EnvironmentController::get('TITLE_WEBSITE') . " - Réinitialisation mot de passe";
+            $this->data['message'] = "Voici un lien pour réinitialiser votre mot de passe : " . $this->var->server->get('HTTP_REFERER'). "renew/" . $this->data['token'];
             $this->data['email'] = $emailLostPassword;
             $this->data['firstName'] = "";
             $this->data['lastName'] = "";
@@ -244,7 +244,7 @@ class AuthController extends Controller
         }
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
+        print_r(json_encode($json));
     }
 
     /**
@@ -298,7 +298,7 @@ class AuthController extends Controller
             $this->data['token'] = NULL;
             $this->userModel->update($id, $this->data);
 
-            $this->data['subject'] = $_ENV['TITLE_WEBSITE'] . " - Votre mot de passe a bien été changé";
+            $this->data['subject'] = EnvironmentController::get('TITLE_WEBSITE') . " - Votre mot de passe a bien été changé";
             $this->data['message'] = "Votre mot de passe a bien été changé.";
 
             $this->data['email'] = $user['email'];
@@ -308,6 +308,6 @@ class AuthController extends Controller
         }
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
+        print_r(json_encode($json));
     }
 }
