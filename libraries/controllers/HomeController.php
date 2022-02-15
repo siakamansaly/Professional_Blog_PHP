@@ -5,8 +5,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class HomeController extends Controller
 {
-    private $contactModel;
-    protected $modelName = \Models\Contact::class;
+    protected $modelName = \Blog\Models\Contact::class;
     private $path;
     private $data;
     private $userModel;
@@ -15,11 +14,10 @@ class HomeController extends Controller
     private $commentsModel;
     private $postcategoryModel;
     private $itemsByPage = 9;
-    public $var;
 
     public function __construct()
     {
-        $this->contactModel = new \Blog\Models\Contact;
+        parent::__construct();
         $this->userModel = new \Blog\Models\User;
         $this->postModel = new \Blog\Models\Post;
         $this->categoryModel = new \Blog\Models\PostCategory;

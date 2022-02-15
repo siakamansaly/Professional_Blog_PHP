@@ -13,7 +13,7 @@ class CommentController extends Controller
     private $commentModel;
     private $postcategoryModel;
     private $categoryModel;
-    protected $modelName = \Models\Post::class;
+    protected $modelName = \Blog\Models\Comment::class;
     public $path;
     public $data;
     public $errorMessage = "";
@@ -22,11 +22,10 @@ class CommentController extends Controller
 
     public function __construct()
     {
+        parent::__construct();
         $this->postModel = new \Blog\Models\Post;
-        $this->commentModel = new \Blog\Models\Comment;
         $this->postcategoryModel = new \Blog\Models\Post_PostCategory;
         $this->categoryModel = new \Blog\Models\PostCategory;
-        $this->post = Request::createFromGlobals();
     }
 
 
@@ -42,11 +41,11 @@ class CommentController extends Controller
         $this->data = [];
         $json = [];
    
-        $this->data['parentId'] = $this->sanitize($this->post->request->get('parent_id'));
-        $this->data['Post_id'] = $this->sanitize($this->post->request->get('post_id'));
+        $this->data['parentId'] = $this->sanitize($this->var->request->get('parent_id'));
+        $this->data['Post_id'] = $this->sanitize($this->var->request->get('post_id'));
         $this->data['dateAddComment'] = date('Y-m-d H:i:s');
         $this->data['User_id'] = SessionController::get('id', 'login');
-        $this->data['content'] = $this->sanitize($this->post->request->get('comment'));
+        $this->data['content'] = $this->sanitize($this->var->request->get('comment'));
 
         if (SessionController::get('userType', 'login')=="admin")
         {
@@ -57,7 +56,7 @@ class CommentController extends Controller
             $this->data['status'] = 0;
         }
 
-        $this->commentModel->insert($this->data);
+        $this->model->insert($this->data);
     
         $json['success'] = true;
         $json['message'] = $this->div_alert("Commentaire ajouté avec succès et en attente de modération par l'administrateur.", "success");
@@ -79,11 +78,11 @@ class CommentController extends Controller
         $message = "";
         $id_comment ="";
 
-        $id_comment = $this->sanitize($this->post->request->get('idCommentEdit'));
-        $this->data['content'] = $this->sanitize($this->post->request->get('comment'));
-        $this->data['status'] = $this->sanitize($this->post->request->get('status'));
+        $id_comment = $this->sanitize($this->var->request->get('idCommentEdit'));
+        $this->data['content'] = $this->sanitize($this->var->request->get('comment'));
+        $this->data['status'] = $this->sanitize($this->var->request->get('status'));
 
-        $this->commentModel->update($id_comment, $this->data);
+        $this->model->update($id_comment, $this->data);
 
         $message = $this->div_alert("Commentaire mis à jour avec succès.", "success");
         $success = true;
@@ -107,10 +106,10 @@ class CommentController extends Controller
         $success = "";
         $message = "";
 
-        $id_comment = $this->sanitize($this->post->request->get('idCommentValidate'));
+        $id_comment = $this->sanitize($this->var->request->get('idCommentValidate'));
 
         $this->data['status'] = 1;
-        $this->commentModel->update($id_comment, $this->data);
+        $this->model->update($id_comment, $this->data);
 
         $message = $this->div_alert("Commentaire validé avec succès.", "success");
         $success = true;
@@ -132,10 +131,10 @@ class CommentController extends Controller
         $success = "";
         $message = "";
 
-        $id_comment = $this->sanitize($this->post->request->get('idCommentDisable'));
+        $id_comment = $this->sanitize($this->var->request->get('idCommentDisable'));
 
         $this->data['status'] = 2;
-        $this->commentModel->update($id_comment, $this->data);
+        $this->model->update($id_comment, $this->data);
 
         $message = $this->div_alert("Le commentaire a bien été désapprouvé.", "success");
         $success = true;
@@ -157,10 +156,10 @@ class CommentController extends Controller
         $success = "";
         $message = "";
         
-        $id_comment = $this->sanitize($this->post->request->get('idCommentDelete'));
+        $id_comment = $this->sanitize($this->var->request->get('idCommentDelete'));
 
-        $this->commentModel->update($id_comment, ['parentId' => 0], 'parentId');
-        $this->commentModel->delete($id_comment, 'id');
+        $this->model->update($id_comment, ['parentId' => 0], 'parentId');
+        $this->model->delete($id_comment, 'id');
 
         $message = $this->div_alert("Le commentaire a bien été supprimé.", "success");
         $success = true;

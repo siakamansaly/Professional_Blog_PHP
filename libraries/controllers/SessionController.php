@@ -4,14 +4,13 @@ namespace Blog\Controllers;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class SessionController
+class SessionController extends Controller
 {
-    private $var;
+    protected $var;
     
     public function __construct()
     {
-        $this->sessionStart();
-        $this->var = Request::createFromGlobals();
+        parent::__construct();
     }
 
     /**

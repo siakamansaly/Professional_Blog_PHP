@@ -4,28 +4,22 @@ namespace Blog\Controllers;
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
-use Blog\Controllers\PhpAdditionalExtension;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use PHPMailer\PHPMailer\PHPMailer;
-
-$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
-$dotenv->load();
 
 abstract class Controller
 {
     protected $model;
     protected $modelName;
-    protected static $twig = null;
-    public $request;
+    protected $twig = null;
     public $response;
-    private $var;
+    protected $var;
 
     public  function __construct()
     {
         $this->model = new $this->modelName();
-        $this->request = Request::createFromGlobals();
-        $this->response = new Response();
+        //$this->response = new Response();
         $this->var = Request::createFromGlobals();
     }
 
@@ -35,17 +29,16 @@ abstract class Controller
      * 
      * @return \Twig
      */
-    public static function render(string $view, array $params = [])
+    public function render(string $view, array $params = [])
     {
-        if (self::$twig == null) {
-            self::$twig = new Environment(new FilesystemLoader(BASE_PATH . '/templates'), [
+        if ($this->twig == null) {
+            $this->twig = new Environment(new FilesystemLoader(BASE_PATH . '/templates'), [
                 'cache' => false, // __DIR__ . '/tmp'
                 'needs_context' => true,
             ]);
-            self::$twig->addGlobal('session', filter_var_array($_SESSION));
-            self::$twig->addExtension(new PhpAdditionalExtension());
+            $this->twig->addGlobal('session', filter_var_array($_SESSION));
         }
-        return self::$twig->display($view, $params);
+        return $this->twig->display($view, $params);
     }
 
     /**

@@ -7,11 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PostCategoryController extends Controller
 {
-    private $postModel;
-    private $commentsModel;
     private $postcategoryModel;
-    private $categoryModel;
-    protected $modelName = \Models\Post::class;
+    protected $modelName = \Blog\Models\PostCategory::class;
     public $path;
     public $data;
     public $errorMessage = "";
@@ -20,15 +17,9 @@ class PostCategoryController extends Controller
 
     public function __construct()
     {
-        $this->postModel = new \Blog\Models\Post;
-        $this->commentsModel = new \Blog\Models\Comment;
+        parent::__construct();
         $this->postcategoryModel = new \Blog\Models\Post_PostCategory;
-        $this->categoryModel = new \Blog\Models\PostCategory;
-        $this->post = Request::createFromGlobals();
     }
-
-
-    
 
     /**
      * Function add category
@@ -40,15 +31,14 @@ class PostCategoryController extends Controller
         $this->data = [];
         $json = [];
    
-        $this->data['name'] = $this->sanitize($this->post->request->get('name'));
-        $this->data['description'] = $this->sanitize($this->post->request->get('description'));
+        $this->data['name'] = $this->sanitize($this->var->request->get('name'));
+        $this->data['description'] = $this->sanitize($this->var->request->get('description'));
 
-        $this->categoryModel->insert($this->data);
+        $this->model->insert($this->data);
     
         $json['success'] = true;
         $json['message'] = $this->div_alert("Catégorie ajoutée avec succès.", "success");
-        echo json_encode($json);
-        exit;
+        print_r(json_encode($json));
     }
 
     
@@ -65,19 +55,19 @@ class PostCategoryController extends Controller
         $message = "";
         $id_category ="";
 
-        $id_category = $this->sanitize($this->post->request->get('idCategoryEdit'));
-        $this->data['name'] = $this->sanitize($this->post->request->get('name'));
-        $this->data['description'] = $this->sanitize($this->post->request->get('description'));
+        $id_category = $this->sanitize($this->var->request->get('idCategoryEdit'));
+        $this->data['name'] = $this->sanitize($this->var->request->get('name'));
+        $this->data['description'] = $this->sanitize($this->var->request->get('description'));
 
-        $this->categoryModel->update($id_category, $this->data);
+        $this->model->update($id_category, $this->data);
 
         $message = $this->div_alert("Catégorie mis à jour avec succès.", "success");
         $success = true;
     
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
-        exit;
+        print_r(json_encode($json));
+
     }
 
 
@@ -93,18 +83,17 @@ class PostCategoryController extends Controller
         $success = "";
         $message = "";
 
-        $id_category = $this->sanitize($this->post->request->get('idCategoryDelete'));
+        $id_category = $this->sanitize($this->var->request->get('idCategoryDelete'));
 
         $this->postcategoryModel->delete($id_category, 'PostCategory_id');
 
-        $this->categoryModel->delete($id_category, 'id');
+        $this->model->delete($id_category, 'id');
 
         $message = $this->div_alert("La catégorie a bien été supprimé.", "success");
         $success = true;
     
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
-        exit;
+        print_r(json_encode($json));
     }
 }

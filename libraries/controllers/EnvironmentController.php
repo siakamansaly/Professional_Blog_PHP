@@ -10,12 +10,9 @@ class EnvironmentController
      */
     public static function get(string $name)
     {
-            if (getenv($name)<>"") {
-                return getenv($name);
+            if ($_ENV[$name]<>"") {
+                return $_ENV[$name];
             }
             return null;
-    }
-
-   
-    
+    }    
 }

@@ -2,26 +2,16 @@
 
 namespace Blog\Controllers;
 
-use Symfony\Component\HttpFoundation\Request;
-use Twig\Environment;
-
-//$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
-//$dotenv->load();
-
-
 class AuthController extends Controller
 {
-    private $userModel;
-    protected $modelName = \Models\User::class;
+    protected $modelName = \Blog\Models\User::class;
     private $data = [];
     private string $password;
     public $errorMessage = "";
-    private $var;
 
     public function __construct()
     {
-        $this->userModel = new \Blog\Models\User;
-        $this->var = Request::createFromGlobals();
+        parent::__construct();
     }
 
     /**
@@ -92,9 +82,9 @@ class AuthController extends Controller
         }
 
         // Check if email exist
-        if ($this->userModel->getEmail($this->data['email']) == 1) {
+        if ($this->model->getEmail($this->data['email']) == 1) {
 
-            $user = $this->userModel->read($this->data['email'], 'email');
+            $user = $this->model->read($this->data['email'], 'email');
             // Check status user
             if ($user['status'] == 1) {
 
@@ -131,7 +121,7 @@ class AuthController extends Controller
             SessionController::set('id', $user['id'], 'login');
             // Update lastConnectionDate
             $this->data['lastConnectionDate'] = date('Y-m-d H:i:s');
-            $this->userModel->update($this->data['email'], ["lastConnectionDate" => $this->data['lastConnectionDate']], 'email');
+            $this->model->update($this->data['email'], ["lastConnectionDate" => $this->data['lastConnectionDate']], 'email');
         }
 
         $json['success'] = $success;
@@ -171,7 +161,7 @@ class AuthController extends Controller
         $this->data['regitrationDate'] = date('Y-m-d H:i:s');
         $passwordRepeat = $this->sanitize($this->var->request->get('passwordRepeat'));
 
-        if ($this->userModel->getEmail($this->data['email']) == 1) {
+        if ($this->model->getEmail($this->data['email']) == 1) {
             $this->errorMessage .= $this->li_alert("L'adresse email renseignée est déja inscrite !");
             $error++;
         }
@@ -188,7 +178,7 @@ class AuthController extends Controller
             $message = $this->div_alert($this->errorMessage, "danger");
             $success = false;
         } else {
-            $this->userModel->insert($this->data);
+            $this->model->insert($this->data);
             $this->data['subject'] = EnvironmentController::get('TITLE_WEBSITE'). " - Inscription en attente d'approbation";
             $this->data['message'] = "Votre inscription a bien été pris en compte. L'administrateur validera votre inscription très rapidemment. A bientôt !";
             $message = $this->div_alert("Inscription réussie. <br/> Patience... Votre compte est en attente de validation par l'administrateur.", "success");
@@ -219,7 +209,7 @@ class AuthController extends Controller
 
         $emailLostPassword = $this->sanitize($this->var->request->get('emailLostPassword'));
 
-        if ($this->userModel->getEmail($emailLostPassword) == 0) {
+        if ($this->model->getEmail($emailLostPassword) == 0) {
             $this->errorMessage .= $this->li_alert("L'adresse email renseignée n'est pas inscrite !");
             $error++;
         }
@@ -233,7 +223,7 @@ class AuthController extends Controller
             $message = $this->div_alert("Un lien de réinitialisation de mot de passe a été envoyé sur votre boite mail.", "success");
             $success = true;
             $this->data['token'] = uniqid('', false);
-            $this->userModel->update($emailLostPassword, $this->data, 'email');
+            $this->model->update($emailLostPassword, $this->data, 'email');
 
             $this->data['subject'] = EnvironmentController::get('TITLE_WEBSITE') . " - Réinitialisation mot de passe";
             $this->data['message'] = "Voici un lien pour réinitialiser votre mot de passe : " . $this->var->server->get('HTTP_REFERER'). "renew/" . $this->data['token'];
@@ -270,7 +260,7 @@ class AuthController extends Controller
         $this->data['password'] = $this->sanitize($this->var->request->get('passwordRenew'));
         $id = $this->sanitize($this->var->request->get('id'));
         $passwordRepeat = $this->sanitize($this->var->request->get('passwordRepeatRenew'));
-        $user = $this->userModel->read($id);
+        $user = $this->model->read($id);
         if (!empty($this->var->request->get('passwordOldChange'))) {
             $passwordOld = $this->var->request->get('passwordOldChange');
             $this->password = $user['password'];
@@ -296,7 +286,7 @@ class AuthController extends Controller
             $success = true;
             $this->data['password'] = password_hash($this->data['password'], PASSWORD_DEFAULT);
             $this->data['token'] = NULL;
-            $this->userModel->update($id, $this->data);
+            $this->model->update($id, $this->data);
 
             $this->data['subject'] = EnvironmentController::get('TITLE_WEBSITE') . " - Votre mot de passe a bien été changé";
             $this->data['message'] = "Votre mot de passe a bien été changé.";

@@ -2,17 +2,14 @@
 
 namespace Blog\Controllers;
 
-use Symfony\Component\HttpFoundation\Request;
 use Cocur\Slugify\Slugify;
 
 
 class PostController extends Controller
 {
-    private $postModel;
     private $comments;
     private $postcategoryModel;
-    private $categoryModel;
-    protected $modelName = \Models\Post::class;
+    protected $modelName = \Blog\Models\Post::class;
     public $path;
     public $data;
     public $errorMessage = "";
@@ -21,16 +18,12 @@ class PostController extends Controller
 
     public function __construct()
     {
-        $this->postModel = new \Blog\Models\Post;
+        parent::__construct();
         $this->comments = new \Blog\Models\Comment;
         $this->postcategoryModel = new \Blog\Models\Post_PostCategory;
-        $this->categoryModel = new \Blog\Models\PostCategory;
-        $this->post = Request::createFromGlobals();
         $this->slugify = new Slugify();
     }
 
-
-    
 
     /**
      * Function add Post
@@ -47,7 +40,7 @@ class PostController extends Controller
         $categories = "";
         $this->errorMessage = "";
         //
-        if (empty($this->post->files->all())) {
+        if (empty($this->var->files->all())) {
             $error++;
             $this->errorMessage .= "Taille de fichier trop grande !";
         }
@@ -60,12 +53,12 @@ class PostController extends Controller
             }
         }
 
-        $this->data['title'] = $this->sanitize($this->post->request->get('titlePostAdd'));
-        $this->data['chapo'] = $this->sanitize($this->post->request->get('chapoPostAdd'));
-        $this->data['content'] = $this->sanitize($this->post->request->get('contentPostAdd'));
-        $this->data['User_id'] = $this->sanitize($this->post->request->get('authorPostAdd'));
-        $this->data['status'] = $this->sanitize($this->post->request->get('statusPostAdd'));
-        $categories = json_encode($this->post->request->get('PostCategory_id'));
+        $this->data['title'] = $this->sanitize($this->var->request->get('titlePostAdd'));
+        $this->data['chapo'] = $this->sanitize($this->var->request->get('chapoPostAdd'));
+        $this->data['content'] = $this->sanitize($this->var->request->get('contentPostAdd'));
+        $this->data['User_id'] = $this->sanitize($this->var->request->get('authorPostAdd'));
+        $this->data['status'] = $this->sanitize($this->var->request->get('statusPostAdd'));
+        $categories = json_encode($this->var->request->get('PostCategory_id'));
         $categories = json_decode($categories, true);
 
         $this->errorMessage = $this->ul_alert($this->errorMessage);
@@ -76,15 +69,15 @@ class PostController extends Controller
         } else {
             $this->data['dateAddPost'] = date('Y-m-d H:i:s');
             $this->data['picture'] = $this->uploadImage($_FILES, __DIR__ . '\..\..\public/img/blog/posts/', $check["extension"]);
-            $this->postModel->insert($this->data);
+            $this->model->insert($this->data);
 
             $dataPost = [];
             $dataSlug = [];
-            $lastid = $this->postModel->lastInsertIdPDO();
+            $lastid = $this->model->lastInsertIdPDO();
             $dataPost["Post_id"] = $lastid['lastid'];
             $dataSlug['slug'] = $lastid['lastid'] . "-" . $this->slugify->slugify($this->data['title']);
 
-            $this->postModel->update($lastid['lastid'], $dataSlug);
+            $this->model->update($lastid['lastid'], $dataSlug);
 
             foreach ($categories as $categorie) {
                 $dataPost["PostCategory_id"] = $categorie;
@@ -95,8 +88,7 @@ class PostController extends Controller
         }
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
-        exit;
+        print_r(json_encode($json));
     }
 
     /**
@@ -123,15 +115,15 @@ class PostController extends Controller
             }
         }
 
-        $id_post = $this->post->request->get('idPostEdit');
+        $id_post = $this->var->request->get('idPostEdit');
         //print_r($id_post);die;
-        $this->data['title'] = $this->sanitize($this->post->request->get('titlePostAdd'));
-        $this->data['chapo'] = $this->sanitize($this->post->request->get('chapoPostAdd'));
-        $this->data['content'] = $this->sanitize($this->post->request->get('contentPostAdd'));
-        $this->data['User_id'] = $this->sanitize($this->post->request->get('authorPostAdd'));
-        $this->data['status'] = $this->sanitize($this->post->request->get('statusPostAdd'));
+        $this->data['title'] = $this->sanitize($this->var->request->get('titlePostAdd'));
+        $this->data['chapo'] = $this->sanitize($this->var->request->get('chapoPostAdd'));
+        $this->data['content'] = $this->sanitize($this->var->request->get('contentPostAdd'));
+        $this->data['User_id'] = $this->sanitize($this->var->request->get('authorPostAdd'));
+        $this->data['status'] = $this->sanitize($this->var->request->get('statusPostAdd'));
         $this->data['slug'] = $id_post . "-" . $this->slugify->slugify($this->data['title']);
-        $categories = json_encode($this->post->request->get('PostCategory_id'));
+        $categories = json_encode($this->var->request->get('PostCategory_id'));
         $categories = json_decode($categories, true);
 
         $this->errorMessage = $this->ul_alert($this->errorMessage);
@@ -144,7 +136,7 @@ class PostController extends Controller
             if ($_FILES['picture']['error'] <> 4 || empty($_FILES)) {
                 $this->data['picture'] = $this->uploadImage($_FILES, __DIR__ . '\..\..\public/img/blog/posts/', $check["extension"]);
             }
-            $this->postModel->update($id_post, $this->data);
+            $this->model->update($id_post, $this->data);
 
             $dataPost = [];
             $dataPost["Post_id"] = $id_post;
@@ -160,8 +152,7 @@ class PostController extends Controller
         }
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
-        exit;
+        print_r(json_encode($json));
     }
 
     /**
@@ -178,24 +169,23 @@ class PostController extends Controller
         $id_post = "";
         $countComments = 0;
 
-        $id_post = $this->post->request->get('idPostDelete');
+        $id_post = $this->var->request->get('idPostDelete');
 
         $countComments = $this->comments->count('Post_id', $id_post);
 
         if ($countComments > 0) {
             $this->data['status'] = -1;
-            $this->postModel->update($id_post, $this->data);
+            $this->model->update($id_post, $this->data);
             $message = $this->div_alert("L'article a été archivé car il contient des commentaires.", "success");
         } else {
             $this->postcategoryModel->delete($id_post, 'Post_id');
-            $this->postModel->delete($id_post, 'id');
+            $this->model->delete($id_post, 'id');
             $message = $this->div_alert("Article supprimé avec succès.", "success");
         }
 
         $success = true;
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
-        exit;
+        print_r(json_encode($json));
     }
 }

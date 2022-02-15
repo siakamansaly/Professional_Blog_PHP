@@ -4,27 +4,20 @@ namespace Blog\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
 
-$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
-$dotenv->load();
-
 
 class UserController extends Controller
 {
-
-    private $userModel;
     private $commentModel;
     private $postModel;
-    protected $modelName = \Models\User::class;
+    protected $modelName = \Blog\Models\User::class;
     private $data = [];
-    public $var;
     public string $errorMessage;
 
     public function __construct()
     {
-        $this->userModel = new \Blog\Models\User;
+        parent::__construct();
         $this->commentModel = new \Blog\Models\Comment;
         $this->postModel = new \Blog\Models\Post;
-        $this->var = Request::createFromGlobals();
     }
     /**
      * Function save Profile
@@ -47,7 +40,7 @@ class UserController extends Controller
         $emailOld = "";
 
         $id = (int) $this->sanitize($this->var->request->get('id'));
-        $emailOld = $this->userModel->read($id);
+        $emailOld = $this->model->read($id);
         $this->data['firstName'] = $this->sanitize($this->var->request->get('firstNameProfile'));
         $this->data['lastName'] = $this->sanitize($this->var->request->get('lastNameProfile'));
         $this->data['email'] = $this->sanitize($this->var->request->get('email'));
@@ -62,7 +55,7 @@ class UserController extends Controller
         }
 
         if ($this->data['email'] <> $emailOld['email']) {
-            if ($this->userModel->getEmail($this->data['email']) == 1) {
+            if ($this->model->getEmail($this->data['email']) == 1) {
                 $this->errorMessage .= $this->li_alert("L'adresse email renseignée est déja inscrite ! ");
                 $error++;
             }
@@ -74,15 +67,14 @@ class UserController extends Controller
             $message = $this->div_alert($this->errorMessage, "danger");
             $success = false;
         } else {
-            $this->userModel->update($id, $this->data);
+            $this->model->update($id, $this->data);
             $message = $this->div_alert("Sauvegarde effectuée.", "success");
 
             $success = true;
         }
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
-        exit;
+        print_r(json_encode($json));
     }
 
 
@@ -105,7 +97,6 @@ class UserController extends Controller
             $success = false;
             $json['success'] = $success;
             $json['message'] = "Taille de fichier trop grande !";
-            //echo json_encode($json);
             exit;
         }
 
@@ -122,7 +113,7 @@ class UserController extends Controller
             $message = $this->div_alert($this->errorMessage, "danger");
             $success = false;
         } else {
-            $userAccount = $this->userModel->read($id);
+            $userAccount = $this->model->read($id);
             if ($userAccount['picture'] <> "") {
                 $filename = __DIR__ . '/../../public/img/blog/profiles/' . $userAccount['picture'];
                 if (file_exists($filename)) {
@@ -131,14 +122,13 @@ class UserController extends Controller
             }
             $this->data['picture'] = $this->uploadImage($_FILES, __DIR__ . '\..\..\public/img/blog/profiles/', $check["extension"]);
 
-            $this->userModel->update($id, $this->data);
+            $this->model->update($id, $this->data);
             $message = $this->div_alert("Photo modifiée.", "success");
             $success = true;
         }
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
-        exit;
+        print_r(json_encode($json));
     }
 
     /**
@@ -156,15 +146,14 @@ class UserController extends Controller
         $id_user = $this->sanitize($this->var->request->get('idUserValidate'));
 
         $this->data['status'] = 1;
-        $this->userModel->update($id_user, $this->data);
+        $this->model->update($id_user, $this->data);
 
         $message = $this->div_alert("Utilisateur validé avec succès.", "success");
         $success = true;
 
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
-        exit;
+        print_r(json_encode($json));
     }
 
     /**
@@ -182,15 +171,14 @@ class UserController extends Controller
         $id_user = $this->sanitize($this->var->request->get('idUserDisable'));
 
         $this->data['status'] = 0;
-        $this->userModel->update($id_user, $this->data);
+        $this->model->update($id_user, $this->data);
 
         $message = $this->div_alert("L'utilisateur a été désactivé avec succès.", "success");
         $success = true;
 
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
-        exit;
+        print_r(json_encode($json));
     }
 
     /**
@@ -223,7 +211,7 @@ class UserController extends Controller
             $this->commentModel->delete($id_user, 'User_id');
 
             // Delete user
-            $this->userModel->delete($id_user, 'id');
+            $this->model->delete($id_user, 'id');
             $message = $this->div_alert("L'utilisateur a bien été supprimé.", "success");
             $success = true;
         } else {
@@ -233,7 +221,6 @@ class UserController extends Controller
 
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
-        exit;
+        print_r(json_encode($json));
     }
 }
