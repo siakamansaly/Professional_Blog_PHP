@@ -37,7 +37,7 @@ class ContactController extends Controller
         $this->data['email'] = $this->sanitize($this->request->request->get('email'));
         $this->data['message'] = $this->sanitize($this->request->request->get('message'));
 
-        $this->data['subject'] = $_ENV['TITLE_WEBSITE'] . ' - Formulaire de contact';
+        $this->data['subject'] = EnvironmentController::get('TITLE_WEBSITE') . ' - Formulaire de contact';
         $message = $this->div_alert("Message envoyé avec succès !","success");
         $success=$this->sendMessage($this->data);
         $json['success']=$success;

@@ -12,7 +12,7 @@ $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();*/
 
 // Active environment variable
-$dotenv = Dotenv\Dotenv::createImmutable(BASE_PATH);
+$dotenv = Dotenv\Dotenv::createUnsafeImmutable(BASE_PATH);
 $dotenv->load();
 
 // Start Router
