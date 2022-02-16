@@ -63,20 +63,20 @@ class BackEndController extends Controller
         AuthController::force_login();
         AuthController::force_admin();
 
-        $AllCommentsCounterActive = $this->commentsModel->count('comment.status', '1');
-        $AllCommentsCounterPending = $this->commentsModel->count('comment.status', '0');
-        $AllCommentsCounterDisable = $this->commentsModel->count('comment.status', '2');
+        $AllCommentsActive = $this->commentsModel->count('comment.status', '1');
+        $AllCommentsPending = $this->commentsModel->count('comment.status', '0');
+        $AllCommentsDisable = $this->commentsModel->count('comment.status', '2');
 
-        $AllUsersCounterAdmin = $this->userModel->count('user.userType', 'admin');
-        $AllUsersCounterMember = $this->userModel->count('user.userType', 'member');
+        $AllUsersAdmin = $this->userModel->count('user.userType', 'admin');
+        $AllUsersMember = $this->userModel->count('user.userType', 'member');
 
-        $AllPostsCounterActive = $this->postModel->count('post.status', '1');
-        $AllPostsCounterDisable = $this->postModel->count('post.status', '0');
-        $AllPostsCounterArchived = $this->postModel->count('post.status', '-1');
-        $AllCategoriesCounter = $this->categoryModel->count('', '');
+        $AllPostsActive = $this->postModel->count('post.status', '1');
+        $AllPostsDisable = $this->postModel->count('post.status', '0');
+        $AllPostsArchived = $this->postModel->count('post.status', '-1');
+        $AllCategories = $this->categoryModel->count('', '');
 
         $this->path = '\backend\admin\adminblog.html.twig';
-        $this->data = ['head' => ['title' => 'Administration Blog'], 'AllCommentsCounterActive' => $AllCommentsCounterActive, 'AllCommentsCounterPending' => $AllCommentsCounterPending, 'AllCommentsCounterDisable' => $AllCommentsCounterDisable, 'AllUsersCounterAdmin' => $AllUsersCounterAdmin, 'AllUsersCounterMember' => $AllUsersCounterMember, 'AllPostsCounterActive' => $AllPostsCounterActive, 'AllPostsCounterDisable' => $AllPostsCounterDisable, 'AllPostsCounterArchived' => $AllPostsCounterArchived, 'AllCategoriesCounter' => $AllCategoriesCounter];
+        $this->data = ['head' => ['title' => 'Administration Blog'], 'AllCommentsCounterActive' => $AllCommentsActive, 'AllCommentsCounterPending' => $AllCommentsPending, 'AllCommentsCounterDisable' => $AllCommentsDisable, 'AllUsersCounterAdmin' => $AllUsersAdmin, 'AllUsersCounterMember' => $AllUsersMember, 'AllPostsCounterActive' => $AllPostsActive, 'AllPostsCounterDisable' => $AllPostsDisable, 'AllPostsCounterArchived' => $AllPostsArchived, 'AllCategoriesCounter' => $AllCategories];
         $this->setResponseHttp(200);
         $this->render($this->path, $this->data);
     }
