@@ -19,7 +19,7 @@ $(document).ready(function () {
                     $("#formRegister")[0].reset();
                 }
             },
-            error: function (response) {
+            error: function () {
                 $("#alertRegister").text("Une erreur inattendue est survenue...");
             },
         });
@@ -44,7 +44,7 @@ $(document).ready(function () {
                     $("#formContact")[0].reset();
                 }
             },
-            error: function (response) {
+            error: function () {
                 $("#alertContact").text("Une erreur inattendue est survenue...");
             },
         });
@@ -72,7 +72,7 @@ $(document).ready(function () {
 
                 }
             },
-            error: function (response) {
+            error: function () {
                 $("#alertLogin").text("Une erreur inattendue est survenue...");
             },
         });
@@ -98,7 +98,7 @@ $(document).ready(function () {
                     }, 2000)
                 }
             },
-            error: function (response) {
+            error: function () {
                 $("#alertEditProfile").text("Une erreur inattendue est survenue...");
             },
         });
@@ -140,7 +140,7 @@ $(document).ready(function () {
                     $("#alertEditPicture").show("2000");
                 }
             },
-            error: function (response) {
+            error: function () {
                 $("#alertEditPicture").text("Une erreur inattendue est survenue...");
             },
         });
@@ -162,7 +162,7 @@ $(document).ready(function () {
                 $("#alertLostPassword").show("2000");
 
             },
-            error: function (response) {
+            error: function () {
                 $("#alertLostPassword").text("Une erreur inattendue est survenue...");
             },
         });
@@ -188,7 +188,7 @@ $(document).ready(function () {
                     }, 2000)
                 }
             },
-            error: function (response) {
+            error: function () {
                 $("#alertRenewPassword").text("Une erreur inattendue est survenue...");
             },
         });
@@ -221,7 +221,7 @@ $(document).ready(function () {
                     $("#alertPostAdd").show("2000");
                 }
             },
-            error: function (response) {
+            error: function () {
                 $("#alertPostAdd").text("Une erreur inattendue est survenue...");
             },
         });
@@ -256,7 +256,7 @@ $(document).ready(function () {
                     $("#alertPostEdit").show("2000");
                 }
             },
-            error: function (response) {
+            error: function () {
                 $("#alertPostEdit").text("Une erreur inattendue est survenue...");
             },
         });
@@ -349,7 +349,7 @@ $(document).ready(function () {
                     $("#delete").modal("hide");
                     location.reload();
                 },
-                error: function (response) {
+                error: function () {
                     $("#alertPostDelete").text("Une erreur inattendue est survenue...");
                 },
             });
@@ -406,7 +406,7 @@ $(document).ready(function () {
                    window.location.href = "/post/" + slug;
                 }, 2000)
             },
-            error: function (response) {
+            error: function () {
                 $("#alertComment").text("Une erreur inattendue est survenue...");
             },
         });
@@ -431,7 +431,7 @@ $(document).ready(function () {
                     $("#validate").modal("hide");
                     $("#comment-"+ id).hide("slow");
                 },
-                error: function (response) {
+                error: function () {
                     $("#alertComment").text("Une erreur inattendue est survenue...");
                 },
             });
@@ -456,7 +456,7 @@ $(document).ready(function () {
                     $("#disable").modal("hide");
                     $("#comment-"+ id).hide("slow");
                 },
-                error: function (response) {
+                error: function () {
                     $("#alertComment").text("Une erreur inattendue est survenue...");
                 },
             });
@@ -482,7 +482,7 @@ $(document).ready(function () {
                     $("#comment-"+ id).hide("slow");
                     
                 },
-                error: function (response) {
+                error: function () {
                     $("#alertComment").text("Une erreur inattendue est survenue...");
                 },
             });
@@ -510,7 +510,7 @@ $(document).ready(function () {
                     }, 2000)
                 }
             },
-            error: function (response) {
+            error: function () {
                 $("#alertCommentEdit").text("Une erreur inattendue est survenue...");
             },
         });
@@ -536,7 +536,7 @@ $(document).ready(function () {
                     location.reload();
                 }
             },
-            error: function (response) {
+            error: function () {
                 $("#alertCategoryAdd").text("Une erreur inattendue est survenue...");
             },
         });
@@ -560,7 +560,7 @@ $(document).ready(function () {
                     $("#category-"+ id).hide("slow");
                     
                 },
-                error: function (response) {
+                error: function () {
                     $("#alertCategory").text("Une erreur inattendue est survenue...");
                 },
             });
@@ -588,7 +588,7 @@ $(document).ready(function () {
                     }, 2000)
                 }
             },
-            error: function (response) {
+            error: function () {
                 $("#alertCategoryEdit").text("Une erreur inattendue est survenue...");
             },
         });
@@ -612,7 +612,7 @@ $(document).ready(function () {
                     $("#validate").modal("hide");
                     location.reload();
                 },
-                error: function (response) {
+                error: function () {
                     $("#alertUser").text("Une erreur inattendue est survenue...");
                 },
             });
@@ -638,7 +638,7 @@ $(document).ready(function () {
                     location.reload();
                     
                 },
-                error: function (response) {
+                error: function () {
                     $("#alertUser").text("Une erreur inattendue est survenue...");
                 },
             });
@@ -668,7 +668,7 @@ $(document).ready(function () {
                     
                     
                 },
-                error: function (response) {
+                error: function () {
                     $("#alertUser").text("Une erreur inattendue est survenue...");
                 },
             });
