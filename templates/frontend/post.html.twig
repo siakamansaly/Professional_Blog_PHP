@@ -1,6 +1,6 @@
 {% import '/macro/section.html.twig' as section %}
 {% import '/macro/form.html.twig' as form %}
-{% if session.login.userType == 'admin' %}
+{% if sidebar == true %}
 {% import '/macro/admin.html.twig' as admin %}
 {% endif %}
 {% extends "layout.html.twig" %}
@@ -132,7 +132,7 @@
         <div class="col-lg-4 mt-4 px-5">
             
                            
-                {% if session.login.userType == 'admin' %}
+                {% if sidebar == true %}
                 <div class="card mb-4">
                     <div class="card-header bg-primary text-light">Administration des articles</div>
                     <div class="card-body">

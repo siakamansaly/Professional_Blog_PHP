@@ -2,7 +2,7 @@
 {% extends "layout.html.twig" %}
 {% block navbar %}{% set urlblog = "/" %} {% set url = "/" %}{{ parent() }}{% endblock %}
 {% block content %}
-{% if session %}
+
 <header id="dashboard" class="page-section bg-light border-bottom mb-4 hero_dashboard">
     <div class="container">
         <div class="text-center mt-5">
@@ -169,5 +169,4 @@
 {% include "/backend/dashboard/userComments.html.twig" %}
 
 
-{% endif %}
 {% endblock %}

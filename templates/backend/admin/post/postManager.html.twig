@@ -4,7 +4,7 @@
 {% block navbar %}{% set urlblog = "/" %} {% set url = "/" %} {{ parent() }}{% endblock
 %}
 {% block content %}
-{% if session.login.userType == 'admin' %}
+
 <header id="adminBlog" class="page-section hero_postManager border-bottom mb-4">
   <div class="container">
     <div class="text-center mt-5">
@@ -100,6 +100,6 @@
 
 {{ admin.confirmationModal("delete","Supprimer cet article","Êtes-vous sûr de vouloir supprimer cet article ?", "formPostDelete","deleteButtonConfirmation", {reponse:"deleteTitleConfirmation"}) }}
 
-{% endif %}
+
 
 {% endblock %}

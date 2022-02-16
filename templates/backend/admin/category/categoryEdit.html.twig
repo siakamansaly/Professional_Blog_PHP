@@ -6,7 +6,7 @@
 {{ parent() }}
 {% endblock %}
 {% block content %}
-{% if session.login.userType == 'admin' %}
+
 <header id="adminBlog" class="page-section hero_categoryManager border-bottom mb-4">
   <div class="container">
     <div class="text-center mt-5">
@@ -32,5 +32,5 @@
     </div>
   </form>
 </div>
-{% endif %}
+
 {% endblock %}

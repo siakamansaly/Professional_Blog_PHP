@@ -3,7 +3,6 @@
 {% block navbar %}{% set urlblog = "/" %} {% set url = "/" %} {{ parent() }}{% endblock
 %}
 {% block content %}
-{% if session.login.userType == 'admin' %}
 <header id="adminBlog" class="page-section bg-light border-bottom mb-4 hero_postArchived">
   <div class="container">
     <div class="text-center mt-5">
@@ -84,6 +83,5 @@
 
 {% include "/backend/admin/post/postAdd.html.twig" %}
 
-{% endif %}
 
 {% endblock %}

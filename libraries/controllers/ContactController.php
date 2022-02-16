@@ -36,7 +36,7 @@ class ContactController extends Controller
         $success=$this->sendMessage($this->data);
         $json['success']=$success;
         $json['message']=$message;
-        echo json_encode($json);
+        print_r(json_encode($json));
         
     }
 }

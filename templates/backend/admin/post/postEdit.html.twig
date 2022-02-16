@@ -3,7 +3,6 @@
 {% block navbar %}{% set urlblog = "/" %} {% set url = "/" %}{{ parent() }}{% endblock
 %}
 {% block content %}
-{% if session.login.userType == 'admin' %}
 <header id="adminBlog" class="page-section bg-primary border-bottom mb-4">
   <div class="container">
     <div class="text-center mt-5">
@@ -39,6 +38,5 @@
 
 
 
-{% endif %}
 
 {% endblock %}

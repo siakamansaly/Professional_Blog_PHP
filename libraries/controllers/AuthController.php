@@ -1,6 +1,7 @@
 <?php
 
 namespace Blog\Controllers;
+use Blog\Controllers\Controller;
 
 class AuthController extends Controller
 {
@@ -15,12 +16,35 @@ class AuthController extends Controller
     }
 
     /**
+     * Redirects user if not logged in
+     * @return void
+     */
+    public static function force_login()
+    {
+        if (empty(SessionController::get('auth','login'))) {
+            Controller::redirect('/?login=true');
+        }
+    }
+
+    /**
      * Checks if the user is logged in
      * @return bool
      */
-    public function is_login(): bool
+    public static function is_login(): bool
     {
         if (SessionController::get('auth','login')<>"") {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the user is logged in
+     * @return bool
+     */
+    public static function is_admin(): bool
+    {
+        if (SessionController::get('userType','login') == 'admin') {
             return true;
         }
         return false;
@@ -30,8 +54,9 @@ class AuthController extends Controller
      * Checks if the user is an administrator
      * @return true or redirect to homepage
      */
-    public static function is_admin()
+    public static function force_admin()
     {
+        
         if (SessionController::get('userType','login')<>"") {
             if (SessionController::get('userType','login') == 'admin') {
                 return true;
@@ -40,17 +65,6 @@ class AuthController extends Controller
             }
         }
         Controller::redirect('/');
-    }
-
-    /**
-     * Redirects user if not logged in
-     * @return void
-     */
-    public static function force_login()
-    {
-        if (empty(SessionController::get('auth','login'))) {
-            Controller::redirect('/?login=true');
-        }
     }
 
     /**

@@ -34,12 +34,21 @@ abstract class Controller
      */
     public function render(string $view, array $params = [])
     {
+
         if ($this->twig == null) {
             $this->twig = new Environment(new FilesystemLoader(BASE_PATH . '/templates'), [
                 'cache' => false, // __DIR__ . '/tmp'
                 'needs_context' => true,
             ]);
-            $this->twig->addGlobal('session', filter_var_array($_SESSION));
+        }
+
+        if(AuthController::is_login())
+        {
+            $params["logged"] = true;
+        }
+        if(AuthController::is_admin())
+        {
+            $params["admin"] = true;
         }
         return $this->twig->display($view, $params);
     }
@@ -72,8 +81,6 @@ abstract class Controller
         return $data;
     }
 
-
-
     /**
      * Redirect http 
      * 
@@ -84,6 +91,8 @@ abstract class Controller
         header('Location: ' . $url . $param);
         exit;
     }
+
+    
 
     /**
      * Return Message with balise 'div'
@@ -228,8 +237,8 @@ abstract class Controller
 
     public function currentPage(int $AllPage)
     {
-        if (isset($_GET['page']) && !empty($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $AllPage) {
-            $currentPage = (int) strip_tags($_GET['page']);
+        if ($this->var->query->get('page')<>"" && $this->var->query->get('page') > 0 && $this->var->query->get('page') <= $AllPage) {
+            $currentPage = (int) strip_tags($this->var->query->get('page'));
         } else {
             $currentPage = 1;
         }

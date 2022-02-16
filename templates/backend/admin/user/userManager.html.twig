@@ -4,7 +4,7 @@
 {% block navbar %}{% set urlblog = "/" %} {% set url = "/" %} {{ parent() }}{% endblock
 %}
 {% block content %}
-{% if session.login.userType == 'admin' %}
+
 <header id="adminBlog" class="page-section hero_userManager border-bottom mb-4 ">
   <div class="container">
     <div class="text-center mt-5">
@@ -144,6 +144,5 @@
 {{ admin.confirmationModal("disable","Désactiver cet utilisateur","Êtes-vous sûr de vouloir désactiver cet utilisateur ?", "formUserDisable","disableButtonConfirmation", {reponse:"disableTitleConfirmation", bgColor:"text-light bg-dark", btn:"dark"}) }}
 {% include "/backend/admin/user/userShow.html.twig" %}
 
-{% endif %}
 
 {% endblock %}
