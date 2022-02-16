@@ -28,7 +28,7 @@ class UserController extends Controller
     {
         //print_r($_POST);die;
         if (empty($this->var->request->all())) {
-            $this->redirect('/');
+            $this->error(405);
         }
         $this->data = [];
         $json = [];

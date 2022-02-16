@@ -32,14 +32,12 @@ class HomeController extends Controller
      * 
      * @return \Twig
      */
-    public function index(array $dataForm = [])
+    public function index()
     {
         $this->path = '\frontend\homepage.html.twig';
         $posts = new \Blog\Models\Post;
         $posts = $this->postModel->readPostsRecent();
-
-        $this->data = ['head' => ['title' => 'Home'], 'posts' => $posts, 'dataForm' => $dataForm];
-        //var_dump($this->data);die;
+        $this->data = ['head' => ['title' => 'Home'], 'posts' => $posts];
         $this->setResponseHttp(200);
         $this->render($this->path, $this->data);
     }
@@ -128,7 +126,7 @@ class HomeController extends Controller
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
         } else { // if no post 
-            $this->error();
+            $this->error(404);
         }
     }
 
@@ -149,7 +147,7 @@ class HomeController extends Controller
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
         } else { // if no token 
-            $this->error();
+            $this->error(498);
         }
     }
 }

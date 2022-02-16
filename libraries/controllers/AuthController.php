@@ -2,6 +2,7 @@
 
 namespace Blog\Controllers;
 use Blog\Controllers\Controller;
+use Blog\Controllers\HomeController;
 
 class AuthController extends Controller
 {
@@ -9,6 +10,7 @@ class AuthController extends Controller
     private $data = [];
     private string $password;
     public $errorMessage = "";
+    private static $instanceLogin = null;
 
     public function __construct()
     {
@@ -22,7 +24,10 @@ class AuthController extends Controller
     public static function force_login()
     {
         if (empty(SessionController::get('auth','login'))) {
-            Controller::redirect('/?login=true');
+            if (self::$instanceLogin === null) :
+                self::$instanceLogin = new AuthController;
+            endif;
+            self::$instanceLogin->error(401);
         }
     }
 
@@ -57,14 +62,17 @@ class AuthController extends Controller
     public static function force_admin()
     {
         
+        if (self::$instanceLogin === null) :
+            self::$instanceLogin = new AuthController;
+        endif;
         if (SessionController::get('userType','login')<>"") {
             if (SessionController::get('userType','login') == 'admin') {
                 return true;
             } else {
-                Controller::redirect('/');
+                self::$instanceLogin->error(403);
             }
         }
-        Controller::redirect('/');
+            self::$instanceLogin->error(401);
     }
 
     /**
@@ -74,7 +82,7 @@ class AuthController extends Controller
     public function login()
     {
         if (empty($this->var->request->all())) {
-            $this->redirect('/?login=true');
+            $this->error(405);
         }
         $this->data = [];
         $user = "";
@@ -146,7 +154,8 @@ class AuthController extends Controller
     public function logout()
     {
         SessionController::delete('login');
-        $this->redirect('/');
+        $logout = new \Blog\Controllers\HomeController;
+        $logout->index();
     }
 
     /**
@@ -158,7 +167,7 @@ class AuthController extends Controller
     {
         //print_r($_POST);die;
         if (empty($this->var->request->all())) {
-            $this->redirect('/?register=true');
+            $this->error(405);
         }
         $this->data = [];
         $passwordRepeat = "";
@@ -211,7 +220,7 @@ class AuthController extends Controller
     public function lostPassword()
     {
         if (empty($this->var->request->all())) {
-            $this->redirect('/');
+            $this->error(405);
         }
         $emailLostPassword = "";
         $this->data = [];
@@ -259,7 +268,7 @@ class AuthController extends Controller
     public function savePassword()
     {
         if (empty($this->var->request->all())) {
-            $this->redirect('/');
+            $this->error(405);
         }
         $this->data = [];
         $json = [];

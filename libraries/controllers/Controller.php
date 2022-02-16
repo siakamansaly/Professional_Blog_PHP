@@ -42,12 +42,10 @@ abstract class Controller
             ]);
         }
 
-        if(AuthController::is_login())
-        {
+        if (AuthController::is_login()) {
             $params["logged"] = true;
         }
-        if(AuthController::is_admin())
-        {
+        if (AuthController::is_admin()) {
             $params["admin"] = true;
         }
         return $this->twig->display($view, $params);
@@ -58,12 +56,37 @@ abstract class Controller
      * 
      * @return \Twig
      */
-    public function error(array $error = [])
+    public function error(int $code = 404)
     {
-        //var_dump($error);die;
+        $error = [];
+        switch ($code) {
+            case 401:
+                $error["code"] = 401;
+                $error["message"] = "Utilisateur non authentifié.";
+                break;
+            case 403 :
+                $error["code"] = 403;
+                $error["message"] = "Accès refusé.";
+                break;
+            case 405:
+                $error["code"] = 405;
+                $error["message"] = "Méthode de requête non autorisée.";
+                break;
+                case 498:
+                    $error["code"] = 498;
+                    $error["message"] = "Le jeton a expiré ou est invalide.";
+                    break;
+                
+            default:
+                $error["code"] = 404;
+                $error["message"] = "Cette page n'existe pas ou est invalide.";
+                break;
+        }
+
         $path = '\core\404.html.twig';
         $data = ['head' => ['title' => 'Erreur 404'], 'error' => $error];
-        $this->setResponseHttp(404);
+
+        $this->setResponseHttp($code);
         $this->render($path, $data);
     }
 
@@ -81,18 +104,7 @@ abstract class Controller
         return $data;
     }
 
-    /**
-     * Redirect http 
-     * 
-     * @return void
-     */
-    public function redirect(string $url, $param = null)
-    {
-        header('Location: ' . $url . $param);
-        exit;
-    }
 
-    
 
     /**
      * Return Message with balise 'div'
@@ -186,7 +198,7 @@ abstract class Controller
         $error = 0;
         $maxSize = 5242880;
 
-        $name= $file->getClientOriginalName();
+        $name = $file->getClientOriginalName();
         $size = $file->getSize();
         $errorFile = $file->getError();
 
@@ -229,7 +241,7 @@ abstract class Controller
             $uniqid = uniqid('', false);
             $uniqname = $uniqid . '.' . $extension;
             $filePath = "{$fileDir}/";
-            $file->move($filePath,$uniqname);
+            $file->move($filePath, $uniqname);
             unset($file);
             return $uniqname;
         }
@@ -237,7 +249,7 @@ abstract class Controller
 
     public function currentPage(int $AllPage)
     {
-        if ($this->var->query->get('page')<>"" && $this->var->query->get('page') > 0 && $this->var->query->get('page') <= $AllPage) {
+        if ($this->var->query->get('page') <> "" && $this->var->query->get('page') > 0 && $this->var->query->get('page') <= $AllPage) {
             $currentPage = (int) strip_tags($this->var->query->get('page'));
         } else {
             $currentPage = 1;
@@ -256,11 +268,9 @@ abstract class Controller
 
     public function checkAllPage($AllPage)
     {
-        if ($AllPage == 0) { 
-            $AllPage=1; 
+        if ($AllPage == 0) {
+            $AllPage = 1;
         }
         return $AllPage;
     }
-
-    
 }

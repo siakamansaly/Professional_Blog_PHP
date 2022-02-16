@@ -2,8 +2,8 @@
 {% extends "layout.html.twig" %}
 {% block navbar %}{% set urlblog = "/" %}{% set url = "/" %} {{ parent() }}{% endblock %}
 {% block content %}
-{{section.sectionstart("404",{color:"error text-primary", heading:"false"})}}
-        <p class="h3 text-primary text-center">Cette page n'existe pas ou est invalide.</p>
+{{section.sectionstart(error.code,{color:"error text-primary", heading:"false"})}}
+        <p class="h3 text-primary text-center">{{error.message}}</p>
         <!-- 404 Section Button-->
         <div class="text-center mt-4">
             <a class="btn btn-xl btn-primary" href="/" rel="noopener">

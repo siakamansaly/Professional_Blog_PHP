@@ -168,7 +168,7 @@ class BackEndController extends Controller
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
         } else { // if no post 
-            $this->error();
+            $this->error(404);
         }
     }
 
@@ -218,7 +218,7 @@ class BackEndController extends Controller
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
         } else { // if no post 
-            $this->error();
+            $this->error(404);
         }
     }
 
@@ -294,7 +294,7 @@ class BackEndController extends Controller
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
         } else { // if no post 
-            $this->error();
+            $this->error(404);
         }
     }
     /**
@@ -355,7 +355,7 @@ class BackEndController extends Controller
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
         } else { // if no post 
-            $this->error();
+            $this->error(404);
         }
     }
 
