@@ -1,6 +1,7 @@
 <?php
 
 namespace Blog\Controllers;
+
 use Symfony\Component\HttpFoundation\Request;
 
 class HomeController extends Controller
@@ -76,20 +77,19 @@ class HomeController extends Controller
     {
 
         $this->path = '\frontend\blog.html.twig';
-        $currentCategory =0;
+        $currentCategory = 0;
 
         // Pagination 
         $AllPosts = $this->postModel->count('post.status', '1');
-        $AllPage = $this->checkAllPage(ceil($AllPosts/$this->itemsByPage));
+        $AllPage = $this->checkAllPage(ceil($AllPosts / $this->itemsByPage));
         $currentPage = $this->currentPage($AllPage);
         $firstPage = $this->firstPage($currentPage, $AllPosts, $this->itemsByPage);
-        if(!empty($this->var->query->get('category')))
-        {
+        if (!empty($this->var->query->get('category'))) {
             $currentCategory = (int) $this->sanitize(($this->var->query->get('category')));
         }
-        $posts = $this->postModel->readAllPostsByCategory("1",$currentCategory,"post.dateAddPost DESC","$firstPage,$this->itemsByPage");
-            
-        
+        $posts = $this->postModel->readAllPostsByCategory("1", $currentCategory, "post.dateAddPost DESC", "$firstPage,$this->itemsByPage");
+
+
         $postsAllCategory = $this->categoryModel->readAll();
 
         $this->data = ['head' => ['title' => 'Blog'], 'posts' => $posts, 'postsAllCategory' => $postsAllCategory, 'AllPage' => $AllPage, 'currentPage' => $currentPage, 'currentCategory' => $currentCategory];
@@ -109,23 +109,23 @@ class HomeController extends Controller
         // if post exist
         if (!empty($posts)) {
             $sidebar = false;
-            if(AuthController::is_admin())
-            {
+            if (AuthController::is_admin()) {
                 $sidebar = true;
             }
             $postsCategory = $this->postcategoryModel->readAllCategoriesByPost($posts['id']);
             $postsAllCategory = $this->categoryModel->readAll();
             $recentPosts = $this->postModel->readPostsRecent($posts['id']);
-            
+
             $commentsParent = $this->commentsModel->readAllCommentsParent($posts['id']);
             $commentsChild = $this->commentsModel->readAllCommentsChild($posts['id']);
 
             $this->data = ['head' => ['title' => $posts['title']], 'post' => $posts, 'postsCategory' => $postsCategory, 'postsAllCategory' => $postsAllCategory, 'recentPosts' => $recentPosts, 'commentsParent' => $commentsParent, 'commentsChild' => $commentsChild, 'sidebar' => $sidebar];
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
-        } 
-         // if no post 
-        $this->error(404);
+        } else {
+            // if no post 
+            $this->error(404);
+        }
         
     }
 
@@ -145,9 +145,9 @@ class HomeController extends Controller
             $this->data = ['head' => ['title' => "Renouveler mot de Passe"], 'token' => $token];
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
-        } 
-        // if no token 
-        $this->error(498);
-    
+        } else {
+            // if no token 
+            $this->error(498);
+        }
     }
 }

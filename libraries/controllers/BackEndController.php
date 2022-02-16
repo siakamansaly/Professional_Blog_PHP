@@ -1,6 +1,7 @@
 <?php
 
 namespace Blog\Controllers;
+
 use Symfony\Component\HttpFoundation\Request;
 
 class BackEndController extends Controller
@@ -43,7 +44,7 @@ class BackEndController extends Controller
         $commentsCounter = $this->commentsModel->count('User_id', SessionController::get('id', 'login'));
 
         // Select comments
-        $commentsUser = $this->commentsModel->readLastCommentUser(SessionController::get('id', 'login'), 'dateAddComment DESC',10);
+        $commentsUser = $this->commentsModel->readLastCommentUser(SessionController::get('id', 'login'), 'dateAddComment DESC', 10);
 
         $this->path = '\backend\dashboard\dashboard.html.twig';
         $this->data = ['head' => ['title' => 'Mon compte'], 'user' => $userAccount, 'commentsCounter' => $commentsCounter, 'commentsUser' => $commentsUser];
@@ -100,11 +101,11 @@ class BackEndController extends Controller
 
         // Pagination 
         $AllPosts = $AllPostsActive + $AllPostsDisable;
-        $AllPage = $this->checkAllPage(ceil($AllPosts/$this->itemsByPage));
+        $AllPage = $this->checkAllPage(ceil($AllPosts / $this->itemsByPage));
         $currentPage = $this->currentPage($AllPage);
         $firstPage = $this->firstPage($currentPage, $AllPosts, $this->itemsByPage);
-        
-        $posts = $this->postModel->readAllPosts("0,1", "id DESC","$firstPage,$this->itemsByPage");
+
+        $posts = $this->postModel->readAllPosts("0,1", "id DESC", "$firstPage,$this->itemsByPage");
 
         $this->path = '\backend\admin\post\postManager.html.twig';
         $this->data = ['head' => ['title' => 'Administration des articles'], 'posts' => $posts, 'users' => $users, 'categories' => $categories, 'AllPostsCounterActive' => $AllPostsActive, 'AllPostsCounterDisable' => $AllPostsDisable, 'AllPage' => $AllPage, 'currentPage' => $currentPage];
@@ -122,27 +123,25 @@ class BackEndController extends Controller
         // Force user login
         AuthController::force_login();
         AuthController::force_admin();
-        $status=0;
-        
-        if(!empty($this->var->query->get('status')))
-        {
+        $status = 0;
+
+        if (!empty($this->var->query->get('status'))) {
             $status = $this->sanitize($this->var->query->get('status'));
         }
 
         $AllCommentCounter = $this->commentsModel->count("comment.status", "$status");
 
         // Pagination 
-        $AllPage = $this->checkAllPage(ceil($AllCommentCounter/$this->itemsByPage));
+        $AllPage = $this->checkAllPage(ceil($AllCommentCounter / $this->itemsByPage));
         $currentPage = $this->currentPage($AllPage);
-        
+
         $firstPage = $this->firstPage($currentPage, $AllCommentCounter, $this->itemsByPage);
-        
-        $comments = $this->commentsModel->readAllCommentsByStatus("$status", "id DESC","$firstPage,$this->itemsByPage");
+
+        $comments = $this->commentsModel->readAllCommentsByStatus("$status", "id DESC", "$firstPage,$this->itemsByPage");
         $this->path = '\backend\admin\comment\commentManager.html.twig';
         $this->data = ['head' => ['title' => 'Administration des commentaires'], 'comments' => $comments, 'AllCommentCounter' => $AllCommentCounter, 'AllPage' => $AllPage, 'currentPage' => $currentPage, 'status' => $status];
         $this->setResponseHttp(200);
         $this->render($this->path, $this->data);
-        
     }
 
     /**
@@ -159,16 +158,16 @@ class BackEndController extends Controller
         $this->path = '\backend\admin\comment\commentEdit.html.twig';
         $comments = $this->commentsModel->readCommentById($param);
 
-    
+
         // if post exist
         if (!empty($comments)) {
             $this->data = ['head' => ['title' => "Modifier un commentaire"], 'comments' => $comments];
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
-        }  
-        
-        // if no post   
-        $this->error(404);
+        } else {
+            // if no post   
+            $this->error(404);
+        }
     }
 
     /**
@@ -181,16 +180,16 @@ class BackEndController extends Controller
         // Force user login
         AuthController::force_login();
         AuthController::force_admin();
-        
+
         $AllCategoryCounter = $this->categoryModel->count();
 
         // Pagination 
-        $AllPage = $this->checkAllPage(ceil($AllCategoryCounter/$this->itemsByPage));
+        $AllPage = $this->checkAllPage(ceil($AllCategoryCounter / $this->itemsByPage));
         $currentPage = $this->currentPage($AllPage);
-        
+
         $firstPage = $this->firstPage($currentPage, $AllCategoryCounter, $this->itemsByPage);
-        
-        $categories = $this->categoryModel->readAll("","id ASC LIMIT $firstPage,$this->itemsByPage");
+
+        $categories = $this->categoryModel->readAll("", "id ASC LIMIT $firstPage,$this->itemsByPage");
         $this->path = '\backend\admin\category\categoryManager.html.twig';
         $this->data = ['head' => ['title' => 'Administration des catégories'], 'categories' => $categories, 'AllCategoryCounter' => $AllCategoryCounter, 'AllPage' => $AllPage, 'currentPage' => $currentPage];
         $this->setResponseHttp(200);
@@ -210,13 +209,14 @@ class BackEndController extends Controller
 
         $this->path = '\backend\admin\category\categoryEdit.html.twig';
         $category = $this->categoryModel->read($param);
-    
+
         // if post exist
         if (!empty($category)) {
             $this->data = ['head' => ['title' => "Modifier une catégorie"], 'category' => $category];
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
-        } else { // if no post 
+        } else { 
+            // if no post 
             $this->error(404);
         }
     }
@@ -231,41 +231,41 @@ class BackEndController extends Controller
         // Force user login
         AuthController::force_login();
         AuthController::force_admin();
-        $status ="";
-        $type ="";
+        $status = "";
+        $type = "";
         $AllUserCounter = $this->userModel->count();
 
         // Pagination 
-        $AllPage = $this->checkAllPage(ceil($AllUserCounter/$this->itemsByPage));
+        $AllPage = $this->checkAllPage(ceil($AllUserCounter / $this->itemsByPage));
         $currentPage = $this->currentPage($AllPage);
-        
+
         $firstPage = $this->firstPage($currentPage, $AllUserCounter, $this->itemsByPage);
 
         $requete = "";
 
-        if($this->var->query->get('status')<>"")
-        {
+        if ($this->var->query->get('status') <> "") {
             $status = $this->sanitize($this->var->query->get('status'));
-            $requete= "status = '$status'";
+            $requete = "status = '$status'";
         }
 
-        if($this->var->query->get('type')<>"")
-        {
+        if ($this->var->query->get('type') <> "") {
             $type = $this->sanitize($this->var->query->get('type'));
-            if($requete<>""){$requete.=" AND ";}
-            $requete.= "userType = '$type'";
+            if ($requete <> "") {
+                $requete .= " AND ";
+            }
+            $requete .= "userType = '$type'";
         }
 
-        $users = $this->userModel->readAll("$requete","id ASC LIMIT $firstPage,$this->itemsByPage");
+        $users = $this->userModel->readAll("$requete", "id ASC LIMIT $firstPage,$this->itemsByPage");
 
         //print_r($requete);die;
-        
+
         $this->path = '\backend\admin\user\userManager.html.twig';
         $this->data = ['head' => ['title' => 'Administration des utilisateurs'], 'users' => $users, 'AllUserCounter' => $AllUserCounter, 'AllPage' => $AllPage, 'currentPage' => $currentPage, 'status' => $status, 'type' => $type];
         $this->setResponseHttp(200);
         $this->render($this->path, $this->data);
     }
-    
+
 
     /**
      * Show a comment Manager Edit
@@ -279,15 +279,16 @@ class BackEndController extends Controller
         AuthController::force_admin();
 
         $this->path = '\backend\admin\user\userEdit.html.twig';
-        $user = $this->userModel->read($param,'id');
+        $user = $this->userModel->read($param, 'id');
 
-    
+
         // if post exist
         if (!empty($user)) {
             $this->data = ['head' => ['title' => "Modifier un utilisateur"], 'user' => $user];
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
-        } else { // if no post 
+        } else { 
+            // if no post 
             $this->error(404);
         }
     }
@@ -306,13 +307,13 @@ class BackEndController extends Controller
         $categories = $this->categoryModel->readAll();
         $AllPostsArchived = $this->postModel->count('post.status', '-1');
         $AllPosts = $AllPostsArchived;
-        
-        $AllPage = $this->checkAllPage(ceil($AllPosts/$this->itemsByPage));
+
+        $AllPage = $this->checkAllPage(ceil($AllPosts / $this->itemsByPage));
         $currentPage = $this->currentPage($AllPage);
         $firstPage = $this->firstPage($currentPage, $AllPosts, $this->itemsByPage);
 
-        $posts = $this->postModel->readAllPosts("-1", 'id DESC',"$firstPage,$this->itemsByPage");
-        
+        $posts = $this->postModel->readAllPosts("-1", 'id DESC', "$firstPage,$this->itemsByPage");
+
         $this->path = '\backend\admin\post\postArchived.html.twig';
         $this->data = ['head' => ['title' => 'Articles archivés'], 'posts' => $posts, 'users' => $users, 'categories' => $categories, 'AllPostsCounterArchived' => $AllPostsArchived, 'AllPage' => $AllPage, 'currentPage' => $currentPage];
         $this->setResponseHttp(200);
@@ -348,10 +349,9 @@ class BackEndController extends Controller
             $this->data = ['head' => ['title' => $posts['title']], 'posts' => $posts, 'users' => $users, 'categories' => $categories, 'postCategory' => $postCategory];
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
-        } else { // if no post 
+        } else { 
+            // if no post 
             $this->error(404);
         }
     }
-
-    
 }
