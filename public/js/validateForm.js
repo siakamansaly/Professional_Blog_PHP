@@ -15,7 +15,7 @@ $(document).ready(function () {
                 $("#alertRegister").html(response.message);
                 $("#alertRegister").show("2000");
 
-                if (response.success == true) {
+                if (response.success === true) {
                     $("#formRegister")[0].reset();
                 }
             },
@@ -40,7 +40,7 @@ $(document).ready(function () {
                 $("#alertContact").html(response.message);
                 $("#alertContact").show();
 
-                if (response.success == true) {
+                if (response.success === true) {
                     $("#formContact")[0].reset();
                 }
             },
@@ -65,7 +65,7 @@ $(document).ready(function () {
                 $("#alertLogin").html(response.message);
                 $("#alertLogin").show("2000");
 
-                if (response.success == true) {
+                if (response.success === true) {
 
                     $("#formLogin")[0].reset();
                     window.location.href = "/dashboard";
@@ -92,7 +92,7 @@ $(document).ready(function () {
                 response = JSON.parse(response);
                 $("#alertEditProfile").html(response.message);
                 $("#alertEditProfile").show("2000");
-                if (response.success == true) {
+                if (response.success === true) {
                     setTimeout(function () {
                         location.reload();
                     }, 2000)
@@ -131,7 +131,7 @@ $(document).ready(function () {
                     response = JSON.parse(response);
                     $("#alertEditPicture").html(response.message);
                     $("#alertEditPicture").show("2000");
-                    if (response.success == true) {
+                    if (response.success === true) {
                         location.reload();
                     }
                 }
@@ -182,7 +182,7 @@ $(document).ready(function () {
                 response = JSON.parse(response);
                 $("#alertRenewPassword").html(response.message);
                 $("#alertRenewPassword").show("2000");
-                if (response.success == true) {
+                if (response.success === true) {
                     setTimeout(function () {
                         window.location.href = "/";
                     }, 2000)
@@ -212,7 +212,7 @@ $(document).ready(function () {
                     response = JSON.parse(response);
                     $("#alertPostAdd").html(response.message);
                     $("#alertPostAdd").show("2000");
-                    if (response.success == true) {
+                    if (response.success === true) {
                         location.reload();
                     }
                 }
@@ -247,7 +247,7 @@ $(document).ready(function () {
                     response = JSON.parse(response);
                     $("#alertPostEdit").html(response.message);
                     $("#alertPostEdit").show("2000");
-                    if (response.success == true) {
+                    if (response.success === true) {
                         window.location.href = "/postManager";
                     }
                 }
@@ -287,7 +287,7 @@ $(document).ready(function () {
         var github = $this.data("github");
         var linkedin = $this.data("linkedin");
 
-        if(status==1) 
+        if(status===1) 
         {
             status = "<span class='badge badge-primary'>Actif</span>";
         }
@@ -368,7 +368,7 @@ $(document).ready(function () {
         var parent_id = $this.data("id");
         var $comment = $("#comment-" + parent_id);
         $form.show();
-        if (parent_id != 0) {
+        if (parent_id !== 0) {
             $form.find("label").text("Répondre à ce commentaire");
         }
         else {
@@ -504,7 +504,7 @@ $(document).ready(function () {
                 response = JSON.parse(response);
                 $("#alertCommentEdit").html(response.message);
                 $("#alertCommentEdit").show("2000");
-                if (response.success == true) {
+                if (response.success === true) {
                     setTimeout(function () {
                         window.location.href = "/commentManager?status="+response.status;
                     }, 2000)
@@ -531,7 +531,7 @@ $(document).ready(function () {
                 $("#alertCategoryAdd").html(response.message);
                 $("#alertCategoryAdd").show();
 
-                if (response.success == true) {
+                if (response.success === true) {
                     $("#formCategoryAdd")[0].reset();
                     location.reload();
                 }
@@ -582,7 +582,7 @@ $(document).ready(function () {
                 response = JSON.parse(response);
                 $("#alertCategoryEdit").html(response.message);
                 $("#alertCategoryEdit").show("2000");
-                if (response.success == true) {
+                if (response.success === true) {
                     setTimeout(function () {
                         window.location.href = "/categoryManager";
                     }, 2000)
@@ -661,7 +661,7 @@ $(document).ready(function () {
                     $("#alertUser").html(response.message);
                     $("#alertUser").show("2000");
                     $("#delete").modal("hide");
-                    if(response.success==true)
+                    if(response.success===true)
                     {
                         $("#user-"+ id).hide("slow");
                     }
