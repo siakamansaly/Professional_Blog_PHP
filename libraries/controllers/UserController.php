@@ -63,14 +63,16 @@ class UserController extends Controller
 
         $this->errorMessage = $this->ul_alert($this->errorMessage);
 
-        if ($error > 0) {
-            $message = $this->div_alert($this->errorMessage, "danger");
-            $success = false;
-        } else {
-            $this->model->update($idUser, $this->data);
-            $message = $this->div_alert("Sauvegarde effectuée.", "success");
-
-            $success = true;
+        switch ($error) {
+            case 0:
+                $this->model->update($idUser, $this->data);
+                $message = $this->div_alert("Sauvegarde effectuée.", "success");
+                $success = true;
+                break;
+            default:
+                $message = $this->div_alert($this->errorMessage, "danger");
+                $success = false;
+                break;
         }
         $json['success'] = $success;
         $json['message'] = $message;

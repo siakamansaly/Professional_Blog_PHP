@@ -27,17 +27,14 @@ abstract class Model
         return $data->fetch();
     }
 
-    public function count(?string $key="", ?string $value=""): int
+    public function count(?string $key = "", ?string $value = ""): int
     {
-        if(!empty($key))
-        {
-            $query = "SELECT * FROM {$this->table} WHERE $key = '".$value."'";
-        }
-        else
-        {
+        if (!empty($key)) {
+            $query = "SELECT * FROM {$this->table} WHERE $key = '" . $value . "'";
+        } else {
             $query = "SELECT * FROM {$this->table}";
         }
-        
+
         $data = $this->pdo->query($query);
         $data = $data->rowCount();
         return $data;
@@ -50,7 +47,7 @@ abstract class Model
         $data = $this->row($query);
         return $data;
     }
-    
+
 
 
     /**
@@ -58,7 +55,7 @@ abstract class Model
      * 
      * @return array
      */
-    public function rows(string $query, array $params = []) : array
+    public function rows(string $query, array $params = []): array
     {
         $datas = $this->pdo->query($query);
         $datas->execute($params);
@@ -74,14 +71,11 @@ abstract class Model
     public function flush(string $query, array $params = [])
     {
         $datas = $this->pdo->prepare($query);
-        if(isset($params))
-        {
+        if (isset($params)) {
             $datas->execute($params);
-        }
-        else{
+        } else {
             $datas->execute();
         }
-        
     }
 
     /**
@@ -95,28 +89,23 @@ abstract class Model
         $query  = "INSERT INTO {$this->table} (" . $keys . ") VALUES (\"" . $values . "\")";
         $this->flush($query, $data);
         return $this;
-
     }
-    
+
     /**
      * Read one row of table
      * 
      * @return mixed
      */
-    public function read(string $value, string $key = null, $select ="")
+    public function read(string $value, string $key = null, $select = "")
     {
         if (isset($key)) {
-            if ($select == "")
-            {
+            if ($select == "") {
                 $query = "SELECT * FROM {$this->table} WHERE " . $key . " = ?";
                 return $this->row($query, [$value]);
-            }
-            else
-            {
+            } else {
                 $query = "SELECT " . $select . " FROM {$this->table} WHERE " . $key . " = ?";
                 return $this->row($query, [$value]);
             }
-            
         }
 
         $query = "SELECT * FROM {$this->table} WHERE id = ?";
@@ -170,9 +159,9 @@ abstract class Model
      * 
      * @return void
      */
-    public function delete(int $idItem, ?string $key=""): void
+    public function delete(int $idItem, ?string $key = ""): void
     {
-        
+
         if (isset($key)) {
             $query = "DELETE FROM {$this->table} WHERE $key = :val";
         } else {

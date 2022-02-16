@@ -32,9 +32,13 @@ class Post extends Model
      * 
      * @return array[]
      */
-    public function readAllPostsByCategory(string $status = "1", int $category, ?string $order = "post.dateAddPost DESC", ?string $limit = ""): array
+    public function readAllPostsByCategory(string $status = "1", int $category = 0, ?string $order = "post.dateAddPost DESC", ?string $limit = ""): array
     {
-        $query = "SELECT post.id, post.dateAddPost, post.dateModifyPost, post.title, post.chapo, post.slug, post.content, post.picture, post.status, post.User_id, user.firstName, user.lastName FROM {$this->table}, user, post_postcategory WHERE {$this->table}.User_id = user.id  AND post.id = post_postcategory.Post_id  AND post.status IN  ($status) AND post_postcategory.PostCategory_id=$category";
+        $query = "SELECT post.id, post.dateAddPost, post.dateModifyPost, post.title, post.chapo, post.slug, post.content, post.picture, post.status, post.User_id, user.firstName, user.lastName FROM {$this->table}, user, post_postcategory WHERE {$this->table}.User_id = user.id  AND post.id = post_postcategory.Post_id  AND post.status IN  ($status) ";
+        if ($category<>0)
+        {
+            $query .= " AND post_postcategory.PostCategory_id=$category";
+        }
         
         if($order)
         {

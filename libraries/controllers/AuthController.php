@@ -1,6 +1,7 @@
 <?php
 
 namespace Blog\Controllers;
+
 use Blog\Controllers\Controller;
 use Blog\Controllers\HomeController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,7 +25,7 @@ class AuthController extends Controller
      */
     public static function force_login()
     {
-        if (empty(SessionController::get('auth','login'))) {
+        if (empty(SessionController::get('auth', 'login'))) {
             if (self::$instanceLogin === null) :
                 self::$instanceLogin = new AuthController;
             endif;
@@ -38,7 +39,7 @@ class AuthController extends Controller
      */
     public static function is_login(): bool
     {
-        if (SessionController::get('auth','login')<>"") {
+        if (SessionController::get('auth', 'login') <> "") {
             return true;
         }
         return false;
@@ -50,7 +51,7 @@ class AuthController extends Controller
      */
     public static function is_admin(): bool
     {
-        if (SessionController::get('userType','login') == 'admin') {
+        if (SessionController::get('userType', 'login') == 'admin') {
             return true;
         }
         return false;
@@ -62,20 +63,22 @@ class AuthController extends Controller
      */
     public static function force_admin()
     {
-        
+
         if (self::$instanceLogin === null) :
             self::$instanceLogin = new AuthController;
         endif;
-        if (SessionController::get('userType','login')<>"") {
-            if (SessionController::get('userType','login') == 'admin') {
+
+        switch (SessionController::get('userType', 'login')) {
+            case SessionController::get('userType', 'login') == 'admin':
                 return true;
-            } else {
+                break;
+            case SessionController::get('userType', 'login') == "":
+                self::$instanceLogin->error(401);
+                break;
+            default:
                 self::$instanceLogin->error(403);
-                //Controller::redirect('/');
-            }
+                break;
         }
-            self::$instanceLogin->error(401);
-            //Controller::redirect('/');
     }
 
     /**
@@ -155,7 +158,6 @@ class AuthController extends Controller
         //return new JsonResponse(array($json));
         $response = new JsonResponse($json);
         $response->send();
-
     }
 
     public function logout()
@@ -209,7 +211,7 @@ class AuthController extends Controller
             $success = false;
         } else {
             $this->model->insert($this->data);
-            $this->data['subject'] = EnvironmentController::get('TITLE_WEBSITE'). " - Inscription en attente d'approbation";
+            $this->data['subject'] = EnvironmentController::get('TITLE_WEBSITE') . " - Inscription en attente d'approbation";
             $this->data['message'] = "Votre inscription a bien été pris en compte. L'administrateur validera votre inscription très rapidemment. A bientôt !";
             $message = $this->div_alert("Inscription réussie. <br/> Patience... Votre compte est en attente de validation par l'administrateur.", "success");
             $this->sendMessage($this->data);
@@ -258,7 +260,7 @@ class AuthController extends Controller
             $this->model->update($emailLostPassword, $this->data, 'email');
 
             $this->data['subject'] = EnvironmentController::get('TITLE_WEBSITE') . " - Réinitialisation mot de passe";
-            $this->data['message'] = "Voici un lien pour réinitialiser votre mot de passe : " . $this->var->server->get('HTTP_REFERER'). "renew/" . $this->data['token'];
+            $this->data['message'] = "Voici un lien pour réinitialiser votre mot de passe : " . $this->var->server->get('HTTP_REFERER') . "renew/" . $this->data['token'];
             $this->data['email'] = $emailLostPassword;
             $this->data['firstName'] = "";
             $this->data['lastName'] = "";

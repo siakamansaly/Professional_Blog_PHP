@@ -122,15 +122,13 @@ class BackEndController extends Controller
         // Force user login
         AuthController::force_login();
         AuthController::force_admin();
-        $status="";
+        $status=0;
         
         if(!empty($this->var->query->get('status')))
         {
             $status = $this->sanitize($this->var->query->get('status'));
         }
-        else{
-            $status = 0;
-        }
+
         $AllCommentCounter = $this->commentsModel->count("comment.status", "$status");
 
         // Pagination 
@@ -167,9 +165,10 @@ class BackEndController extends Controller
             $this->data = ['head' => ['title' => "Modifier un commentaire"], 'comments' => $comments];
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
-        } else { // if no post 
-            $this->error(404);
-        }
+        }  
+        
+        // if no post   
+        $this->error(404);
     }
 
     /**
@@ -232,7 +231,8 @@ class BackEndController extends Controller
         // Force user login
         AuthController::force_login();
         AuthController::force_admin();
-        
+        $status ="";
+        $type ="";
         $AllUserCounter = $this->userModel->count();
 
         // Pagination 
@@ -248,20 +248,14 @@ class BackEndController extends Controller
             $status = $this->sanitize($this->var->query->get('status'));
             $requete= "status = '$status'";
         }
-        else
-        {
-            $status ="";
-        }
+
         if($this->var->query->get('type')<>"")
         {
             $type = $this->sanitize($this->var->query->get('type'));
             if($requete<>""){$requete.=" AND ";}
             $requete.= "userType = '$type'";
         }
-        else
-        {
-            $type ="";
-        }
+
         $users = $this->userModel->readAll("$requete","id ASC LIMIT $firstPage,$this->itemsByPage");
 
         //print_r($requete);die;

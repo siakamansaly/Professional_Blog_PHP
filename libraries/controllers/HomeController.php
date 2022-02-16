@@ -76,22 +76,20 @@ class HomeController extends Controller
     {
 
         $this->path = '\frontend\blog.html.twig';
-        $currentCategory ="";
+        $currentCategory =0;
 
         // Pagination 
         $AllPosts = $this->postModel->count('post.status', '1');
         $AllPage = $this->checkAllPage(ceil($AllPosts/$this->itemsByPage));
         $currentPage = $this->currentPage($AllPage);
         $firstPage = $this->firstPage($currentPage, $AllPosts, $this->itemsByPage);
-        if(empty($this->var->query->get('category')))
+        if(!empty($this->var->query->get('category')))
         {
-            $posts = $this->postModel->readAllPosts("1","post.dateAddPost DESC","$firstPage,$this->itemsByPage");
-        }
-        else{
             $currentCategory = (int) $this->sanitize(($this->var->query->get('category')));
-            $posts = $this->postModel->readAllPostsByCategory("1",$currentCategory,"post.dateAddPost DESC","$firstPage,$this->itemsByPage");
-            
         }
+        $posts = $this->postModel->readAllPostsByCategory("1",$currentCategory,"post.dateAddPost DESC","$firstPage,$this->itemsByPage");
+            
+        
         $postsAllCategory = $this->categoryModel->readAll();
 
         $this->data = ['head' => ['title' => 'Blog'], 'posts' => $posts, 'postsAllCategory' => $postsAllCategory, 'AllPage' => $AllPage, 'currentPage' => $currentPage, 'currentCategory' => $currentCategory];
@@ -125,9 +123,10 @@ class HomeController extends Controller
             $this->data = ['head' => ['title' => $posts['title']], 'post' => $posts, 'postsCategory' => $postsCategory, 'postsAllCategory' => $postsAllCategory, 'recentPosts' => $recentPosts, 'commentsParent' => $commentsParent, 'commentsChild' => $commentsChild, 'sidebar' => $sidebar];
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
-        } else { // if no post 
-            $this->error(404);
-        }
+        } 
+         // if no post 
+        $this->error(404);
+        
     }
 
     /**
@@ -146,8 +145,9 @@ class HomeController extends Controller
             $this->data = ['head' => ['title' => "Renouveler mot de Passe"], 'token' => $token];
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
-        } else { // if no token 
-            $this->error(498);
-        }
+        } 
+        // if no token 
+        $this->error(498);
+    
     }
 }

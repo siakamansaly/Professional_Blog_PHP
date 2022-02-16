@@ -36,15 +36,13 @@ class CommentController extends Controller
         $this->data['dateAddComment'] = date('Y-m-d H:i:s');
         $this->data['User_id'] = SessionController::get('id', 'login');
         $this->data['content'] = $this->sanitize($this->var->request->get('comment'));
-
+        $this->data['status'] = 0;
+        
         if (SessionController::get('userType', 'login')=="admin")
         {
             $this->data['status'] = 1;
         }
-        else
-        {
-            $this->data['status'] = 0;
-        }
+
 
         $this->model->insert($this->data);
     

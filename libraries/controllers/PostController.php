@@ -67,32 +67,38 @@ class PostController extends Controller
 
         $this->errorMessage = $this->ul_alert($this->errorMessage);
 
-        if ($error > 0) {
-            $message = $this->div_alert($this->errorMessage, "danger");
-            $success = false;
-        } else {
-            $this->data['dateAddPost'] = date('Y-m-d H:i:s');
-            $this->data['picture'] = $this->uploadImage($this->var->files->get('picture'), __DIR__ . '\..\..\public/img/blog/posts/', $check["extension"]);
+        switch ($error) {
+            case 0:
+                $this->data['dateAddPost'] = date('Y-m-d H:i:s');
+                $this->data['picture'] = $this->uploadImage($this->var->files->get('picture'), __DIR__ . '\..\..\public/img/blog/posts/', $check["extension"]);
 
-            $this->model->insert($this->data);
+                $this->model->insert($this->data);
 
-            $dataPost = [];
-            $dataSlug = [];
-            $lastid = $this->model->lastInsertIdPDO();
-            $dataPost["Post_id"] = $lastid['lastid'];
-            $dataSlug['slug'] = $lastid['lastid'] . "-" . $this->slugify->slugify($this->data['title']);
+                $dataPost = [];
+                $dataSlug = [];
+                $lastid = $this->model->lastInsertIdPDO();
+                $dataPost["Post_id"] = $lastid['lastid'];
+                $dataSlug['slug'] = $lastid['lastid'] . "-" . $this->slugify->slugify($this->data['title']);
 
-            $this->model->update($lastid['lastid'], $dataSlug);
+                $this->model->update($lastid['lastid'], $dataSlug);
 
-            foreach ($categories as $categorie) {
-                $dataPost["PostCategory_id"] = $categorie;
-                $this->postcategoryModel->insert($dataPost);
-            }
-            $message = $this->div_alert("Article ajouté avec succès.", "success");
-            $success = true;
+                foreach ($categories as $categorie) {
+                    $dataPost["PostCategory_id"] = $categorie;
+                    $this->postcategoryModel->insert($dataPost);
+                }
+                $message = $this->div_alert("Article ajouté avec succès.", "success");
+                $success = true;
+                break;
+
+            default:
+                $message = $this->div_alert($this->errorMessage, "danger");
+                $success = false;
+                break;
         }
+
         $json['success'] = $success;
         $json['message'] = $message;
+        
         $response = new JsonResponse($json);
         $response->send();
     }

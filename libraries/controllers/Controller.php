@@ -165,6 +165,7 @@ abstract class Controller
      */
     public static function sendMessage(array $data): bool
     {
+        $mailResponse = true;
         $mail = new PHPMailer();
         $mail->CharSet = "UTF-8";
         $mail->setLanguage('fr');
@@ -186,13 +187,11 @@ abstract class Controller
             {$data['message']}
         EOT;
 
-        if (!$mail->send()) {
-            return false;
-            $mail->smtpClose();
-        } else {
-            return true;
-            $mail->smtpClose();
-        }
+        if (!$mail->send()) : $mailResponse=false; endif;
+
+        return $mailResponse;
+        $mail->smtpClose();
+
     }
 
     /**
