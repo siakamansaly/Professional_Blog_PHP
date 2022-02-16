@@ -306,6 +306,7 @@ $(document).ready(function () {
         event.preventDefault();
 
             var id = $(this).val();
+            var values = new Array();
             values = { "idPostDelete": id };
             $.ajax({
                 type: "POST",
@@ -389,6 +390,7 @@ $(document).ready(function () {
         event.preventDefault();
         
             var id = $(this).val();
+            var values = new Array();
             values = { "idCommentValidate": id };
             $.ajax({
                 type: "POST",
@@ -412,8 +414,8 @@ $(document).ready(function () {
 
     $(".formCommentDisable").on("click", function (event) {
         event.preventDefault();
-        
             var id = $(this).val();
+            var values = new Array();
             values = { "idCommentDisable": id };
             $.ajax({
                 type: "POST",
@@ -437,7 +439,7 @@ $(document).ready(function () {
 
     $(".formCommentDelete").on("click", function (event) {
         event.preventDefault();
-        
+        var values = new Array();
             var id = $(this).val();
             values = { "idCommentDelete": id };
             $.ajax({
@@ -515,7 +517,7 @@ $(document).ready(function () {
 
     $(".formCategoryDelete").on("click", function (event) {
         event.preventDefault();
-        
+        var values = new Array();
             var id = $(this).val();
             values = { "idCategoryDelete": id };
             $.ajax({
@@ -568,7 +570,7 @@ $(document).ready(function () {
     $("#alertUser").hide();
     $(".formUserValidate").on("click", function (event) {
         event.preventDefault();
-
+        var values = new Array();
             var id = $(this).val();
             values = { "idUserValidate": id };
             $.ajax({
@@ -593,7 +595,7 @@ $(document).ready(function () {
 
     $(".formUserDisable").on("click", function (event) {
         event.preventDefault();
-
+        var values = new Array();
             var id = $(this).val();
             values = { "idUserDisable": id };
             $.ajax({
@@ -619,7 +621,7 @@ $(document).ready(function () {
 
     $(".formUserDelete").on("click", function (event) {
         event.preventDefault();
-        
+        var values = new Array();
             var id = $(this).val();
             values = { "idUserDelete": id };
             $.ajax({
