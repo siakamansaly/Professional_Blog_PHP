@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 use PHPMailer\PHPMailer\PHPMailer;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 abstract class Controller
 {
@@ -107,7 +106,7 @@ abstract class Controller
      * 
      * @return void
      */
-    public function redirect(string $url, int $code=200, $param = null)
+    public function redirect(string $url, int $code=200)
     {
         $response = new RedirectResponse($url);
         $response->setStatusCode($code);
