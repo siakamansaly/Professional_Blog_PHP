@@ -9,10 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CommentController extends Controller
 {
-    private $postModel;
-    private $commentModel;
-    private $postcategoryModel;
-    private $categoryModel;
     protected $modelName = \Blog\Models\Comment::class;
     public $path;
     public $data;
@@ -23,13 +19,7 @@ class CommentController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->postModel = new \Blog\Models\Post;
-        $this->postcategoryModel = new \Blog\Models\Post_PostCategory;
-        $this->categoryModel = new \Blog\Models\PostCategory;
     }
-
-
-    
 
     /**
      * Function add Post

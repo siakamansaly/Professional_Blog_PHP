@@ -207,7 +207,7 @@ abstract class Controller
         $error = 0;
         $maxSize = 5242880;
 
-        $name = $file->getClientOriginalName();
+        //$name = $file->getClientOriginalName();
         $size = $file->getSize();
         $errorFile = $file->getError();
 
