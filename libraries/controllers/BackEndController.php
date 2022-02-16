@@ -95,11 +95,11 @@ class BackEndController extends Controller
         $users = $this->userModel->readAllAuthors();
         $categories = $this->categoryModel->readAll();
 
-        $AllPostsCounterActive = $this->postModel->count('post.status', '1');
-        $AllPostsCounterDisable = $this->postModel->count('post.status', '0');
+        $AllPostsActive = $this->postModel->count('post.status', '1');
+        $AllPostsDisable = $this->postModel->count('post.status', '0');
 
         // Pagination 
-        $AllPosts = $AllPostsCounterActive + $AllPostsCounterDisable;
+        $AllPosts = $AllPostsActive + $AllPostsDisable;
         $AllPage = $this->checkAllPage(ceil($AllPosts/$this->itemsByPage));
         $currentPage = $this->currentPage($AllPage);
         $firstPage = $this->firstPage($currentPage, $AllPosts, $this->itemsByPage);
@@ -107,7 +107,7 @@ class BackEndController extends Controller
         $posts = $this->postModel->readAllPosts("0,1", "id DESC","$firstPage,$this->itemsByPage");
 
         $this->path = '\backend\admin\post\postManager.html.twig';
-        $this->data = ['head' => ['title' => 'Administration des articles'], 'posts' => $posts, 'users' => $users, 'categories' => $categories, 'AllPostsCounterActive' => $AllPostsCounterActive, 'AllPostsCounterDisable' => $AllPostsCounterDisable, 'AllPage' => $AllPage, 'currentPage' => $currentPage];
+        $this->data = ['head' => ['title' => 'Administration des articles'], 'posts' => $posts, 'users' => $users, 'categories' => $categories, 'AllPostsCounterActive' => $AllPostsActive, 'AllPostsCounterDisable' => $AllPostsDisable, 'AllPage' => $AllPage, 'currentPage' => $currentPage];
         $this->setResponseHttp(200);
         $this->render($this->path, $this->data);
     }
@@ -310,8 +310,8 @@ class BackEndController extends Controller
 
         $users = $this->userModel->readAllAuthors();
         $categories = $this->categoryModel->readAll();
-        $AllPostsCounterArchived = $this->postModel->count('post.status', '-1');
-        $AllPosts = $AllPostsCounterArchived;
+        $AllPostsArchived = $this->postModel->count('post.status', '-1');
+        $AllPosts = $AllPostsArchived;
         
         $AllPage = $this->checkAllPage(ceil($AllPosts/$this->itemsByPage));
         $currentPage = $this->currentPage($AllPage);
@@ -320,7 +320,7 @@ class BackEndController extends Controller
         $posts = $this->postModel->readAllPosts("-1", 'id DESC',"$firstPage,$this->itemsByPage");
         
         $this->path = '\backend\admin\post\postArchived.html.twig';
-        $this->data = ['head' => ['title' => 'Articles archivés'], 'posts' => $posts, 'users' => $users, 'categories' => $categories, 'AllPostsCounterArchived' => $AllPostsCounterArchived, 'AllPage' => $AllPage, 'currentPage' => $currentPage];
+        $this->data = ['head' => ['title' => 'Articles archivés'], 'posts' => $posts, 'users' => $users, 'categories' => $categories, 'AllPostsCounterArchived' => $AllPostsArchived, 'AllPage' => $AllPage, 'currentPage' => $currentPage];
         $this->setResponseHttp(200);
         $this->render($this->path, $this->data);
     }
