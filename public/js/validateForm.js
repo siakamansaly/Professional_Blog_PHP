@@ -236,9 +236,9 @@ $(document).ready(function () {
     $(".deleteButton").on("click", function (event) {
         event.preventDefault();
         var $this = $(this);
-        var parent_id = $this.data("id");
+        var parentId = $this.data("id");
         var title = $this.data("title");
-        $("#deleteButtonConfirmation").val(parent_id);
+        $("#deleteButtonConfirmation").val(parentId);
         $("#deleteTitleConfirmation").html(title);
         
     });
@@ -284,9 +284,9 @@ $(document).ready(function () {
     $(".validateButton").on("click", function (event) {
         event.preventDefault();
         var $this = $(this);
-        var parent_id = $this.data("id");
+        var parentId = $this.data("id");
         var title = $this.data("title");
-        $("#validateButtonConfirmation").val(parent_id);
+        $("#validateButtonConfirmation").val(parentId);
         $("#validateTitleConfirmation").html(title);
         
     });
@@ -294,9 +294,9 @@ $(document).ready(function () {
     $(".disableButton").on("click", function (event) {
         event.preventDefault();
         var $this = $(this);
-        var parent_id = $this.data("id");
+        var parentId = $this.data("id");
         var title = $this.data("title");
-        $("#disableButtonConfirmation").val(parent_id);
+        $("#disableButtonConfirmation").val(parentId);
         $("#disableTitleConfirmation").html(title);
         
     });
@@ -337,17 +337,17 @@ $(document).ready(function () {
         var $form = $("#formComment");
         var $alert = $("#alertComment");
         var $this = $(this);
-        var parent_id = $this.data("id");
-        var $comment = $("#comment-" + parent_id);
+        var parentId = $this.data("id");
+        var $comment = $("#comment-" + parentId);
         $form.show();
-        if (parent_id !== 0) {
+        if (parentId !== 0) {
             $form.find("label").text("Répondre à ce commentaire");
         }
         else {
             $form.find("label").text("Ecrire un nouveau commentaire");
         }
 
-        $("#parent_id").val(parent_id);
+        $("#parent_id").val(parentId);
         $alert.after($alert);
         $comment.after($form);
 
@@ -361,7 +361,7 @@ $(document).ready(function () {
         var form = $("#formComment");
         var values = new FormData(document.getElementById("formComment"));
         var slug = values.get("slug");
-        var parent_id = values.get("parent_id");
+        var parentId = values.get("parent_id");
         $.ajax({
             type: "POST",
             url: "/commentAdd",
@@ -372,8 +372,8 @@ $(document).ready(function () {
             datatype: "json",
             success: function (response) {
                 //response = JSON.parse(response);
-                $("#alertComment-"+parent_id).html(response.message);
-                $("#alertComment-"+parent_id).show("2000");
+                $("#alertComment-"+parentId).html(response.message);
+                $("#alertComment-"+parentId).show("2000");
                 setTimeout(function () {
                    window.location.href = "/post/" + slug;
                 }, 2000)
