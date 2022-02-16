@@ -288,13 +288,13 @@ class AuthController extends Controller
         $error = 0;
         $passwordOld = "";
         $passwordRepeat = "";
-        $id = "";
+        $idUser = "";
         $this->errorMessage = "";
 
         $this->data['password'] = $this->sanitize($this->var->request->get('passwordRenew'));
-        $id = $this->sanitize($this->var->request->get('id'));
+        $idUser = $this->sanitize($this->var->request->get('id'));
         $passwordRepeat = $this->sanitize($this->var->request->get('passwordRepeatRenew'));
-        $user = $this->model->read($id);
+        $user = $this->model->read($idUser);
         if (!empty($this->var->request->get('passwordOldChange'))) {
             $passwordOld = $this->var->request->get('passwordOldChange');
             $this->password = $user['password'];
@@ -320,7 +320,7 @@ class AuthController extends Controller
             $success = true;
             $this->data['password'] = password_hash($this->data['password'], PASSWORD_DEFAULT);
             $this->data['token'] = NULL;
-            $this->model->update($id, $this->data);
+            $this->model->update($idUser, $this->data);
 
             $this->data['subject'] = EnvironmentController::get('TITLE_WEBSITE') . " - Votre mot de passe a bien été changé";
             $this->data['message'] = "Votre mot de passe a bien été changé.";

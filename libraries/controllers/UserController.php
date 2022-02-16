@@ -36,12 +36,12 @@ class UserController extends Controller
         $success = "";
         $message = "";
         $error = 0;
-        $id = "";
+        $idUser = "";
         $this->errorMessage = "";
         $emailOld = "";
 
-        $id = (int) $this->sanitize($this->var->request->get('id'));
-        $emailOld = $this->model->read($id);
+        $idUser = (int) $this->sanitize($this->var->request->get('id'));
+        $emailOld = $this->model->read($idUser);
         $this->data['firstName'] = $this->sanitize($this->var->request->get('firstNameProfile'));
         $this->data['lastName'] = $this->sanitize($this->var->request->get('lastNameProfile'));
         $this->data['email'] = $this->sanitize($this->var->request->get('email'));
@@ -67,7 +67,7 @@ class UserController extends Controller
             $message = $this->div_alert($this->errorMessage, "danger");
             $success = false;
         } else {
-            $this->model->update($id, $this->data);
+            $this->model->update($idUser, $this->data);
             $message = $this->div_alert("Sauvegarde effectuée.", "success");
 
             $success = true;
@@ -92,7 +92,7 @@ class UserController extends Controller
         $success = "";
         $message = "";
         $error = 0;
-        $id = "";
+        $idUser = "";
         $this->errorMessage = "";
         if (empty($this->var->files->get('picture'))) {
             $success = false;
@@ -106,7 +106,7 @@ class UserController extends Controller
             }
         }
 
-        $id = $this->sanitize($this->var->request->get('id'));
+        $idUser = $this->sanitize($this->var->request->get('id'));
 
         $this->errorMessage = $this->ul_alert($this->errorMessage);
 
@@ -114,7 +114,7 @@ class UserController extends Controller
             $message = $this->div_alert($this->errorMessage, "danger");
             $success = false;
         } else {
-            $userAccount = $this->model->read($id);
+            $userAccount = $this->model->read($idUser);
             if ($userAccount['picture'] <> "") {
                 $filename = __DIR__ . '/../../public/img/blog/profiles/' . $userAccount['picture'];
                 if (file_exists($filename)) {
@@ -123,7 +123,7 @@ class UserController extends Controller
             }
             $this->data['picture'] = $this->uploadImage($this->var->files->get('picture'), __DIR__ . '\..\..\public/img/blog/profiles/', $check["extension"]);
 
-            $this->model->update($id, $this->data);
+            $this->model->update($idUser, $this->data);
             $message = $this->div_alert("Photo modifiée.", "success");
             $success = true;
         }
@@ -145,10 +145,10 @@ class UserController extends Controller
         $success = "";
         $message = "";
 
-        $id_user = $this->sanitize($this->var->request->get('idUserValidate'));
+        $idUser = $this->sanitize($this->var->request->get('idUserValidate'));
 
         $this->data['status'] = 1;
-        $this->model->update($id_user, $this->data);
+        $this->model->update($idUser, $this->data);
 
         $message = $this->div_alert("Utilisateur validé avec succès.", "success");
         $success = true;

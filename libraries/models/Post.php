@@ -62,10 +62,10 @@ class Post extends Model
      * 
      * @return mixed
      */
-    public function readPostById(string $id)
+    public function readPostById(string $idPost)
     {
-        $query = "SELECT post.id, post.dateAddPost, post.dateModifyPost, post.title, post.chapo, post.slug, post.content, post.picture, post.status, post.User_id, user.firstName, user.lastName FROM {$this->table} JOIN user on {$this->table}.User_id = user.id WHERE post.id LIKE '$id' ";
-        return $this->row($query, [$id]);
+        $query = "SELECT post.id, post.dateAddPost, post.dateModifyPost, post.title, post.chapo, post.slug, post.content, post.picture, post.status, post.User_id, user.firstName, user.lastName FROM {$this->table} JOIN user on {$this->table}.User_id = user.id WHERE post.id LIKE '$idPost' ";
+        return $this->row($query, [$idPost]);
     }
 
     /**
@@ -73,12 +73,12 @@ class Post extends Model
      * 
      * @return array[]
      */
-    public function readPostsRecent(string $id = "", ?int $status = 1, ?string $order="post.dateAddPost DESC", ?int $limit = 3): array
+    public function readPostsRecent(string $idPost = "", ?int $status = 1, ?string $order="post.dateAddPost DESC", ?int $limit = 3): array
     {
         $query = "SELECT post.id, post.dateAddPost, post.dateModifyPost, post.title, post.chapo, post.slug, post.content, post.picture, post.status, post.User_id, user.firstName, user.lastName FROM {$this->table} JOIN user on {$this->table}.User_id = user.id WHERE post.status = $status ";
 
-        if ($id) {
-            $query .= " AND post.id <>  $id";
+        if ($idPost) {
+            $query .= " AND post.id <>  $idPost";
         }
         $query .= " ORDER BY $order";
         $query .= " LIMIT $limit";

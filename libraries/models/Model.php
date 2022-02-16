@@ -170,7 +170,7 @@ abstract class Model
      * 
      * @return void
      */
-    public function delete(int $id, ?string $key=""): void
+    public function delete(int $idItem, ?string $key=""): void
     {
         
         if (isset($key)) {
@@ -178,6 +178,6 @@ abstract class Model
         } else {
             $query = "DELETE FROM {$this->table} WHERE id = :val";
         }
-        $this->flush($query, ['val' => $id]);
+        $this->flush($query, ['val' => $idItem]);
     }
 }
