@@ -96,16 +96,16 @@ class UserController extends Controller
         $error = 0;
         $idUser = "";
         $this->errorMessage = "";
-        if (empty($this->var->files->get('picture'))) {
-            $success = false;
-            $json['success'] = $success;
-            $json['message'] = "Une erreur est survenue au niveau de l'image ...";
-        } else {
+        if ($this->var->files->get('picture')) {
             $check = $this->checkImage($this->var->files->get('picture'));
             if ($check["success"] == false) {
                 $error++;
                 $this->errorMessage .= $check["message"];
-            }
+            }            
+        } else {
+            $success = false;
+            $json['success'] = $success;
+            $json['message'] = "Une erreur est survenue au niveau de l'image ...";
         }
 
         $idUser = $this->sanitize($this->var->request->get('id'));

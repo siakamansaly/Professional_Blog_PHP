@@ -114,17 +114,19 @@ class AuthController extends Controller
 
             $user = $this->model->read($this->data['email'], 'email');
             // Check status user
-            if ($user['status'] == 1) {
-
-                $this->password = $user['password'];
-                // Check password
-                if ((empty(password_verify($this->data['password'], $this->password)))) {
-                    $this->errorMessage .= $this->li_alert("L'identifiant ou le mot de passe est incorrect !");
+            switch ($user['status']) {
+                case 1:
+                    $this->password = $user['password'];
+                    // Check password
+                    if ((empty(password_verify($this->data['password'], $this->password)))) {
+                        $this->errorMessage .= $this->li_alert("L'identifiant ou le mot de passe est incorrect !");
+                        $error++;
+                    }
+                    break;
+                default:
+                    $this->errorMessage .= $this->li_alert("Ce compte n'est pas actif. Merci de contacter l'administrateur.");
                     $error++;
-                }
-            } else {
-                $this->errorMessage .= $this->li_alert("Ce compte n'est pas actif. Merci de contacter l'administrateur.");
-                $error++;
+                    break;
             }
         } else {
             $error++;

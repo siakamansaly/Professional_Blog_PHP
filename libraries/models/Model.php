@@ -29,7 +29,7 @@ abstract class Model
 
     public function count(?string $key = "", ?string $value = ""): int
     {
-        if (!empty($key)) {
+        if ($key) {
             $query = "SELECT * FROM {$this->table} WHERE $key = '" . $value . "'";
         } else {
             $query = "SELECT * FROM {$this->table}";
