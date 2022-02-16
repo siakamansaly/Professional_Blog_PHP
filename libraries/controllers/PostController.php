@@ -4,7 +4,6 @@ namespace Blog\Controllers;
 
 use Cocur\Slugify\Slugify;
 
-
 class PostController extends Controller
 {
     private $comments;
@@ -39,19 +38,23 @@ class PostController extends Controller
         $error = 0;
         $categories = "";
         $this->errorMessage = "";
+        $check = "";
         //
-        if (empty($this->var->files->all())) {
+        if (empty($this->var->files->get('picture'))) {
             $error++;
             $this->errorMessage .= "Taille de fichier trop grande !";
         }
 
-        if (!empty($_FILES)) {
-            $check = $this->checkImage($_FILES);
+        //print_r($this->var->files->get('picture'));die;
+
+        if (!empty($this->var->files->get('picture'))) {
+            $check = $this->checkImage($this->var->files->get('picture'));
             if ($check["success"] == false) {
                 $error++;
                 $this->errorMessage .= $check["message"];
             }
         }
+        //print_r($check);die;
 
         $this->data['title'] = $this->sanitize($this->var->request->get('titlePostAdd'));
         $this->data['chapo'] = $this->sanitize($this->var->request->get('chapoPostAdd'));
@@ -68,7 +71,8 @@ class PostController extends Controller
             $success = false;
         } else {
             $this->data['dateAddPost'] = date('Y-m-d H:i:s');
-            $this->data['picture'] = $this->uploadImage($_FILES, __DIR__ . '\..\..\public/img/blog/posts/', $check["extension"]);
+            $this->data['picture'] = $this->uploadImage($this->var->files->get('picture'), __DIR__ . '\..\..\public/img/blog/posts/', $check["extension"]);
+
             $this->model->insert($this->data);
 
             $dataPost = [];
@@ -106,9 +110,9 @@ class PostController extends Controller
         $categories = "";
         $this->errorMessage = "";
         $id_post = "";
-
-        if ($_FILES['picture']['error'] <> 4) {
-            $check = $this->checkImage($_FILES);
+        $reset = "";
+        if ($this->var->files->get('picture') <> "") {
+            $check = $this->checkImage($this->var->files->get('picture'));
             if ($check["success"] == false) {
                 $error++;
                 $this->errorMessage .= $check["message"];
@@ -133,8 +137,15 @@ class PostController extends Controller
             $success = false;
         } else {
             $this->data['dateAddPost'] = date('Y-m-d H:i:s');
-            if ($_FILES['picture']['error'] <> 4 || empty($_FILES)) {
-                $this->data['picture'] = $this->uploadImage($_FILES, __DIR__ . '\..\..\public/img/blog/posts/', $check["extension"]);
+            if (!empty($this->var->files->get('picture'))) {
+                $reset = $this->model->read($id_post);
+                if ($reset["picture"] <> "") {
+                    $filename = __DIR__ . '/../../public/img/blog/posts/' . $reset['picture'];
+                    if (file_exists($filename)) {
+                        unlink($filename);
+                    }
+                }
+                $this->data['picture'] = $this->uploadImage($this->var->files->get('picture'), __DIR__ . '\..\..\public/img/blog/posts/', $check["extension"]);
             }
             $this->model->update($id_post, $this->data);
 
@@ -178,7 +189,17 @@ class PostController extends Controller
             $this->model->update($id_post, $this->data);
             $message = $this->div_alert("L'article a été archivé car il contient des commentaires.", "success");
         } else {
+            // Delete picture post
+            $reset = $this->model->read($id_post);
+            if ($reset["picture"] <> "") {
+                $filename = __DIR__ . '/../../public/img/blog/posts/' . $reset['picture'];
+                if (file_exists($filename)) {
+                    unlink($filename);
+                }
+            }
+            // Delete category of post
             $this->postcategoryModel->delete($id_post, 'Post_id');
+            // Delete post
             $this->model->delete($id_post, 'id');
             $message = $this->div_alert("Article supprimé avec succès.", "success");
         }

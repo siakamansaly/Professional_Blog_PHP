@@ -7,6 +7,9 @@ use Twig\Loader\FilesystemLoader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use PHPMailer\PHPMailer\PHPMailer;
+use Symfony\Component\HttpFoundation\FileBag;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 
 abstract class Controller
 {
@@ -143,7 +146,7 @@ abstract class Controller
 
         $mail->setFrom(EnvironmentController::get('MAIL_FROM'), EnvironmentController::get('MAIL_FIRSTNAME') . " " . EnvironmentController::get('MAIL_LASTNAME'));
         //$mail->addBCC(EnvironmentController::get('MAIL_FROM'), EnvironmentController::get('MAIL_FIRSTNAME') . " " . EnvironmentController::get('MAIL_LASTNAME'));
-        $mail->addBCC($data('email'), $data('firstName') . " " . $data('lastName'));
+        $mail->addBCC($data['email'], $data['firstName'] . " " . $data['lastName']);
         $mail->addAddress(EnvironmentController::get('MAIL_FROM'), EnvironmentController::get('MAIL_FIRSTNAME') . " " . EnvironmentController::get('MAIL_LASTNAME'));
         $mail->Subject = $data['subject'];
         $mail->Body = <<<EOT
@@ -164,24 +167,21 @@ abstract class Controller
 
     /**
      * Check uploaded image
-     * @param array $file
+     * 
      * @return array ["success" => true or false, "message"=> string]
      */
-    public function checkImage(array $file): array
+    public function checkImage(UploadedFile $file): array
     {
         $result = [];
         $errorMessage = "";
         $error = 0;
         $maxSize = 5242880;
 
-        $tmpName = $file['picture']['tmp_name'];
-        $name = $file['picture']['name'];
-        $size = $file['picture']['size'];
-        $errorFile = $file['picture']['error'];
+        $name= $file->getClientOriginalName();
+        $size = $file->getSize();
+        $errorFile = $file->getError();
 
-
-        $tabExtension = explode('.', $name);
-        $extension = strtolower(end($tabExtension));
+        $extension = $file->getClientOriginalExtension();
 
         //Tableau des extensions que l'on accepte
         $extensions = ['jpg', 'png', 'jpeg'];
@@ -212,18 +212,16 @@ abstract class Controller
 
     /**
      * Upload image in a directory
-     * @param array $file
-     * @param string $fileDir
-     * @param string $extension
      * @return string
      */
-    public function uploadImage(array $file, string $fileDir, string $extension)
+    public function uploadImage(UploadedFile $file, string $fileDir, string $extension)
     {
-        if (!empty($file['picture']['tmp_name'])) {
+        if ($file) {
             $uniqid = uniqid('', false);
             $uniqname = $uniqid . '.' . $extension;
-            $filePath = "{$fileDir}/{$uniqname}";
-            move_uploaded_file($file['picture']['tmp_name'], $filePath);
+            $filePath = "{$fileDir}/";
+            $file->move($filePath,$uniqname);
+            unset($file);
             return $uniqname;
         }
     }

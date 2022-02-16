@@ -49,8 +49,7 @@ class UserController extends Controller
         $this->data['twitter'] = $this->sanitize($this->var->request->get('twitter'));
         $this->data['gitHub'] = $this->sanitize($this->var->request->get('gitHub'));
         $this->data['linkedIn'] = $this->sanitize($this->var->request->get('linkedIn'));
-        if($this->var->request->get('userType')<>"")
-        {
+        if ($this->var->request->get('userType') <> "") {
             $this->data['userType'] = $this->sanitize($this->var->request->get('userType'));
         }
 
@@ -93,18 +92,18 @@ class UserController extends Controller
         $error = 0;
         $id = "";
         $this->errorMessage = "";
-        if (empty($this->var->files->all())) {
+        if (empty($this->var->files->get('picture'))) {
             $success = false;
             $json['success'] = $success;
-            $json['message'] = "Taille de fichier trop grande !";
-            exit;
+            $json['message'] = "Une erreur est survenue au niveau de l'image ...";
+        } else {
+            $check = $this->checkImage($this->var->files->get('picture'));
+            if ($check["success"] == false) {
+                $error++;
+                $this->errorMessage .= $check["message"];
+            }
         }
 
-        $check = $this->checkImage($_FILES);
-        if ($check["success"] == false) {
-            $error++;
-            $this->errorMessage .= $check["message"];
-        }
         $id = $this->sanitize($this->var->request->get('id'));
 
         $this->errorMessage = $this->ul_alert($this->errorMessage);
@@ -120,7 +119,7 @@ class UserController extends Controller
                     unlink($filename);
                 }
             }
-            $this->data['picture'] = $this->uploadImage($_FILES, __DIR__ . '\..\..\public/img/blog/profiles/', $check["extension"]);
+            $this->data['picture'] = $this->uploadImage($this->var->files->get('picture'), __DIR__ . '\..\..\public/img/blog/profiles/', $check["extension"]);
 
             $this->model->update($id, $this->data);
             $message = $this->div_alert("Photo modifiée.", "success");
