@@ -125,7 +125,7 @@ class BackEndController extends Controller
         AuthController::force_admin();
         $status = 0;
 
-        if (!empty($this->var->query->get('status'))) {
+        if ($this->var->query->get('status')) {
             $status = $this->sanitize($this->var->query->get('status'));
         }
 
@@ -160,7 +160,7 @@ class BackEndController extends Controller
 
 
         // if post exist
-        if (!empty($comments)) {
+        if ($comments) {
             $this->data = ['head' => ['title' => "Modifier un commentaire"], 'comments' => $comments];
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
@@ -211,7 +211,7 @@ class BackEndController extends Controller
         $category = $this->categoryModel->read($param);
 
         // if post exist
-        if (!empty($category)) {
+        if ($category) {
             $this->data = ['head' => ['title' => "Modifier une catégorie"], 'category' => $category];
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
@@ -283,7 +283,7 @@ class BackEndController extends Controller
 
 
         // if post exist
-        if (!empty($user)) {
+        if ($user) {
             $this->data = ['head' => ['title' => "Modifier un utilisateur"], 'user' => $user];
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
@@ -335,7 +335,7 @@ class BackEndController extends Controller
         $posts = $this->postModel->readPostById($param);
 
         // if post exist
-        if (!empty($posts)) {
+        if ($posts) {
             $users = $this->userModel->readAllAuthors();
             $categories = $this->categoryModel->readAll();
             $postsCategory = $this->postcategoryModel->readAllCategoriesByPost($posts['id']);

@@ -107,7 +107,7 @@ class HomeController extends Controller
         $this->path = '\frontend\post.html.twig';
         $posts = $this->postModel->readPostBySlug($param);
         // if post exist
-        if (!empty($posts)) {
+        if ($posts) {
             $sidebar = false;
             if (AuthController::is_admin()) {
                 $sidebar = true;
@@ -141,7 +141,7 @@ class HomeController extends Controller
         $token = $token->read($param, "token");
 
         // if token exist
-        if (!empty($token)) {
+        if ($token) {
             $this->data = ['head' => ['title' => "Renouveler mot de Passe"], 'token' => $token];
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
