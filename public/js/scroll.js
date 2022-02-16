@@ -15,8 +15,3 @@ $(document).ready(function () {
     });
   
   });
-
-  // Material Select Initialization
-$(document).ready(function() {
-  $('.mdb-select').materialSelect();
-  });

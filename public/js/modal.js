@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     function GetURLParameter(sParam) {
         var sPageURL = window.location.search.substring(1);
         var sURLVariables = sPageURL.split('&');
@@ -18,6 +17,4 @@ $(document).ready(function () {
     if (url_login == 'true') {
         $('#login').modal('show')
     }
-
-
 });
