@@ -7,22 +7,20 @@ use Twig\Loader\FilesystemLoader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use PHPMailer\PHPMailer\PHPMailer;
-use Symfony\Component\HttpFoundation\FileBag;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 abstract class Controller
 {
     protected $model;
     protected $modelName;
     protected $twig = null;
-    public $response;
     protected $var;
 
     public  function __construct()
     {
         $this->model = new $this->modelName();
-        //$this->response = new Response();
         $this->var = Request::createFromGlobals();
     }
 
@@ -102,6 +100,18 @@ abstract class Controller
         $data = htmlspecialchars($data);
         $data = strip_tags($data);
         return $data;
+    }
+
+    /**
+     * Redirect http 
+     * 
+     * @return void
+     */
+    public function redirect(string $url, int $code=200, $param = null)
+    {
+        $response = new RedirectResponse($url);
+        $response->setStatusCode($code);
+        $response->send();
     }
 
 

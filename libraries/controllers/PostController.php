@@ -3,6 +3,7 @@
 namespace Blog\Controllers;
 
 use Cocur\Slugify\Slugify;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PostController extends Controller
 {
@@ -92,7 +93,8 @@ class PostController extends Controller
         }
         $json['success'] = $success;
         $json['message'] = $message;
-        print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
     }
 
     /**
@@ -163,7 +165,8 @@ class PostController extends Controller
         }
         $json['success'] = $success;
         $json['message'] = $message;
-        print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
     }
 
     /**
@@ -207,6 +210,7 @@ class PostController extends Controller
         $success = true;
         $json['success'] = $success;
         $json['message'] = $message;
-        print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
     }
 }

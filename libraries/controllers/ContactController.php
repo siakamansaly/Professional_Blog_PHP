@@ -1,6 +1,7 @@
 <?php
 
 namespace Blog\Controllers;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ContactController extends Controller
 {
@@ -36,7 +37,8 @@ class ContactController extends Controller
         $success=$this->sendMessage($this->data);
         $json['success']=$success;
         $json['message']=$message;
-        print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
         
     }
 }

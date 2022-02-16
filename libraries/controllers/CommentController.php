@@ -60,7 +60,8 @@ class CommentController extends Controller
     
         $json['success'] = true;
         $json['message'] = $this->div_alert("Commentaire ajouté avec succès et en attente de modération par l'administrateur.", "success");
-        print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
 
     }
 
@@ -90,7 +91,8 @@ class CommentController extends Controller
         $json['success'] = $success;
         $json['message'] = $message;
         $json['status'] = $this->data['status'];
-        print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
 
     }
 
@@ -116,7 +118,8 @@ class CommentController extends Controller
     
         $json['success'] = $success;
         $json['message'] = $message;
-        print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
     }
 
     /**
@@ -141,7 +144,8 @@ class CommentController extends Controller
     
         $json['success'] = $success;
         $json['message'] = $message;
-        print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
     }
 
     /**
@@ -166,6 +170,7 @@ class CommentController extends Controller
     
         $json['success'] = $success;
         $json['message'] = $message;
-        print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
     }
 }

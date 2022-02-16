@@ -11,7 +11,7 @@ $(document).ready(function () {
             data: values,
             datatype: "json",
             success: function (response) {
-                response = JSON.parse(response);
+                //response = JSON.parse(response);
                 $("#alertRegister").html(response.message);
                 $("#alertRegister").show("2000");
 
@@ -36,7 +36,7 @@ $(document).ready(function () {
             data: values,
             datatype: "json",
             success: function (response) {
-                response = JSON.parse(response);
+                //response = JSON.parse(response);
                 $("#alertContact").html(response.message);
                 $("#alertContact").show();
 
@@ -61,7 +61,7 @@ $(document).ready(function () {
             data: values,
             datatype: "json",
             success: function (response) {
-                response = JSON.parse(response);
+                ////response = JSON.parse(response);
                 $("#alertLogin").html(response.message);
                 $("#alertLogin").show("2000");
 
@@ -89,7 +89,7 @@ $(document).ready(function () {
             data: values,
             datatype: "json",
             success: function (response) {
-                response = JSON.parse(response);
+                //response = JSON.parse(response);
                 $("#alertEditProfile").html(response.message);
                 $("#alertEditProfile").show("2000");
                 if (response.success === true) {
@@ -103,15 +103,6 @@ $(document).ready(function () {
             },
         });
     });
-
-    function isJson(str) {
-        try {
-            JSON.parse(str);
-        } catch (e) {
-            return false;
-        }
-        return true;
-    }
 
     $("#alertEditPicture").hide();
     $("#formEditPicture").on("submit", function (event) {
@@ -127,18 +118,11 @@ $(document).ready(function () {
             processData: false,
             datatype: "json",
             success: function (response) {
-                if (isJson(response)) {
-                    response = JSON.parse(response);
-                    $("#alertEditPicture").html(response.message);
+                $("#alertEditPicture").html(response.message);
                     $("#alertEditPicture").show("2000");
                     if (response.success === true) {
                         location.reload();
                     }
-                }
-                else {
-                    $("#alertEditPicture").html(response);
-                    $("#alertEditPicture").show("2000");
-                }
             },
             error: function () {
                 $("#alertEditPicture").text("Une erreur inattendue est survenue...");
@@ -157,7 +141,7 @@ $(document).ready(function () {
             data: values,
             datatype: "json",
             success: function (response) {
-                response = JSON.parse(response);
+                //response = JSON.parse(response);
                 $("#alertLostPassword").html(response.message);
                 $("#alertLostPassword").show("2000");
 
@@ -179,7 +163,7 @@ $(document).ready(function () {
             data: values,
             datatype: "json",
             success: function (response) {
-                response = JSON.parse(response);
+                //response = JSON.parse(response);
                 $("#alertRenewPassword").html(response.message);
                 $("#alertRenewPassword").show("2000");
                 if (response.success === true) {
@@ -208,18 +192,11 @@ $(document).ready(function () {
             processData: false,
             datatype: "json",
             success: function (response) {
-                if (isJson(response)) {
-                    response = JSON.parse(response);
-                    $("#alertPostAdd").html(response.message);
+                $("#alertPostAdd").html(response.message);
                     $("#alertPostAdd").show("2000");
                     if (response.success === true) {
                         location.reload();
                     }
-                }
-                else {
-                    $("#alertPostAdd").html(response);
-                    $("#alertPostAdd").show("2000");
-                }
             },
             error: function () {
                 $("#alertPostAdd").text("Une erreur inattendue est survenue...");
@@ -243,18 +220,12 @@ $(document).ready(function () {
             processData: false,
             datatype: "json",
             success: function (response) {
-                if (isJson(response)) {
-                    response = JSON.parse(response);
-                    $("#alertPostEdit").html(response.message);
+
+                $("#alertPostEdit").html(response.message);
                     $("#alertPostEdit").show("2000");
                     if (response.success === true) {
                         window.location.href = "/postManager";
                     }
-                }
-                else {
-                    $("#alertPostEdit").html(response);
-                    $("#alertPostEdit").show("2000");
-                }
             },
             error: function () {
                 $("#alertPostEdit").text("Une erreur inattendue est survenue...");
@@ -342,7 +313,7 @@ $(document).ready(function () {
                 data: values,
                 datatype: "json",
                 success: function (response) {
-                    response = JSON.parse(response);
+                    //response = JSON.parse(response);
                     $("#alertPostDelete").html(response.message);
                     $("#alertPostDelete").show("2000");
                     $("#post-"+ id).hide("slow");
@@ -399,7 +370,7 @@ $(document).ready(function () {
             data: values,
             datatype: "json",
             success: function (response) {
-                response = JSON.parse(response);
+                //response = JSON.parse(response);
                 $("#alertComment-"+parent_id).html(response.message);
                 $("#alertComment-"+parent_id).show("2000");
                 setTimeout(function () {
@@ -425,7 +396,7 @@ $(document).ready(function () {
                 data: values,
                 datatype: "json",
                 success: function (response) {
-                    response = JSON.parse(response);
+                    //response = JSON.parse(response);
                     $("#alertComment").html(response.message);
                     $("#alertComment").show("2000");
                     $("#validate").modal("hide");
@@ -450,7 +421,7 @@ $(document).ready(function () {
                 data: values,
                 datatype: "json",
                 success: function (response) {
-                    response = JSON.parse(response);
+                    //response = JSON.parse(response);
                     $("#alertComment").html(response.message);
                     $("#alertComment").show("2000");
                     $("#disable").modal("hide");
@@ -475,7 +446,7 @@ $(document).ready(function () {
                 data: values,
                 datatype: "json",
                 success: function (response) {
-                    response = JSON.parse(response);
+                    //response = JSON.parse(response);
                     $("#alertComment").html(response.message);
                     $("#alertComment").show("2000");
                     $("#delete").modal("hide");
@@ -501,7 +472,7 @@ $(document).ready(function () {
             data: values,
             datatype: "json",
             success: function (response) {
-                response = JSON.parse(response);
+                //response = JSON.parse(response);
                 $("#alertCommentEdit").html(response.message);
                 $("#alertCommentEdit").show("2000");
                 if (response.success === true) {
@@ -527,7 +498,7 @@ $(document).ready(function () {
             data: values,
             datatype: "json",
             success: function (response) {
-                response = JSON.parse(response);
+                //response = JSON.parse(response);
                 $("#alertCategoryAdd").html(response.message);
                 $("#alertCategoryAdd").show();
 
@@ -553,7 +524,7 @@ $(document).ready(function () {
                 data: values,
                 datatype: "json",
                 success: function (response) {
-                    response = JSON.parse(response);
+                    //response = JSON.parse(response);
                     $("#alertCategory").html(response.message);
                     $("#alertCategory").show("2000");
                     $("#delete").modal("hide");
@@ -579,7 +550,7 @@ $(document).ready(function () {
             data: values,
             datatype: "json",
             success: function (response) {
-                response = JSON.parse(response);
+                //response = JSON.parse(response);
                 $("#alertCategoryEdit").html(response.message);
                 $("#alertCategoryEdit").show("2000");
                 if (response.success === true) {
@@ -606,7 +577,7 @@ $(document).ready(function () {
                 data: values,
                 datatype: "json",
                 success: function (response) {
-                    response = JSON.parse(response);
+                    //response = JSON.parse(response);
                     $("#alertUser").html(response.message);
                     $("#alertUser").show("2000");
                     $("#validate").modal("hide");
@@ -631,7 +602,7 @@ $(document).ready(function () {
                 data: values,
                 datatype: "json",
                 success: function (response) {
-                    response = JSON.parse(response);
+                    //response = JSON.parse(response);
                     $("#alertUser").html(response.message);
                     $("#alertUser").show("2000");
                     $("#disable").modal("hide");
@@ -657,7 +628,7 @@ $(document).ready(function () {
                 data: values,
                 datatype: "json",
                 success: function (response) {
-                    response = JSON.parse(response);
+                    //response = JSON.parse(response);
                     $("#alertUser").html(response.message);
                     $("#alertUser").show("2000");
                     $("#delete").modal("hide");

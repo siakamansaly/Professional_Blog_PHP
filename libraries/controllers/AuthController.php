@@ -3,6 +3,7 @@
 namespace Blog\Controllers;
 use Blog\Controllers\Controller;
 use Blog\Controllers\HomeController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AuthController extends Controller
 {
@@ -70,9 +71,11 @@ class AuthController extends Controller
                 return true;
             } else {
                 self::$instanceLogin->error(403);
+                //Controller::redirect('/');
             }
         }
             self::$instanceLogin->error(401);
+            //Controller::redirect('/');
     }
 
     /**
@@ -148,7 +151,11 @@ class AuthController extends Controller
 
         $json['success'] = $success;
         $json['message'] = $message;
-        print_r(json_encode($json));
+        //print_r(json_encode($json));
+        //return new JsonResponse(array($json));
+        $response = new JsonResponse($json);
+        $response->send();
+
     }
 
     public function logout()
@@ -210,7 +217,9 @@ class AuthController extends Controller
         }
         $json['success'] = $success;
         $json['message'] = $message;
-        print_r(json_encode($json));
+        //print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
     }
     /**
      * Function lostPassword
@@ -257,7 +266,9 @@ class AuthController extends Controller
         }
         $json['success'] = $success;
         $json['message'] = $message;
-        print_r(json_encode($json));
+        //print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
     }
 
     /**
@@ -321,6 +332,8 @@ class AuthController extends Controller
         }
         $json['success'] = $success;
         $json['message'] = $message;
-        print_r(json_encode($json));
+        //print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
     }
 }

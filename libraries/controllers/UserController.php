@@ -3,6 +3,7 @@
 namespace Blog\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 class UserController extends Controller
@@ -73,7 +74,8 @@ class UserController extends Controller
         }
         $json['success'] = $success;
         $json['message'] = $message;
-        print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
     }
 
 
@@ -127,7 +129,8 @@ class UserController extends Controller
         }
         $json['success'] = $success;
         $json['message'] = $message;
-        print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
     }
 
     /**
@@ -152,7 +155,8 @@ class UserController extends Controller
 
         $json['success'] = $success;
         $json['message'] = $message;
-        print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
     }
 
     /**
@@ -177,7 +181,8 @@ class UserController extends Controller
 
         $json['success'] = $success;
         $json['message'] = $message;
-        print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
     }
 
     /**
@@ -220,6 +225,7 @@ class UserController extends Controller
 
         $json['success'] = $success;
         $json['message'] = $message;
-        print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
     }
 }

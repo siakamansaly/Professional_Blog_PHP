@@ -3,6 +3,7 @@
 namespace Blog\Controllers;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 class PostCategoryController extends Controller
@@ -38,7 +39,8 @@ class PostCategoryController extends Controller
     
         $json['success'] = true;
         $json['message'] = $this->div_alert("Catégorie ajoutée avec succès.", "success");
-        print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
     }
 
     
@@ -66,7 +68,8 @@ class PostCategoryController extends Controller
     
         $json['success'] = $success;
         $json['message'] = $message;
-        print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
 
     }
 
@@ -94,6 +97,7 @@ class PostCategoryController extends Controller
     
         $json['success'] = $success;
         $json['message'] = $message;
-        print_r(json_encode($json));
+        $response = new JsonResponse($json);
+        $response->send();
     }
 }
