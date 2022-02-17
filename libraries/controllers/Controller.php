@@ -33,7 +33,7 @@ abstract class Controller
     {
 
         if ($this->twig == null) {
-            $this->twig = new Environment(new FilesystemLoader(BASE_PATH . '/templates'), [
+            $this->twig = new Environment(new FilesystemLoader('./../templates'), [
                 'cache' => false, // __DIR__ . '/tmp'
                 'needs_context' => true,
             ]);

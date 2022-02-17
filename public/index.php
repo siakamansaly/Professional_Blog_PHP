@@ -1,7 +1,6 @@
 <?php
-define('BASE_PATH', realpath(__DIR__ . '/../'));
 define('ROOT_CONTROLLER', 'Blog\Controllers\\');
-require_once BASE_PATH . '/vendor/autoload.php';
+require_once './../vendor/autoload.php';
 Blog\Controllers\SessionController::sessionStart();
 $token = md5(rand(1000, 9999));
 date_default_timezone_set('Europe/Paris');
@@ -12,7 +11,7 @@ $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();*/
 
 // Active environment variable
-$dotenv = Dotenv\Dotenv::createUnsafeImmutable(BASE_PATH);
+$dotenv = Dotenv\Dotenv::createUnsafeImmutable('./../');
 $dotenv->load();
 
 // Start Router
