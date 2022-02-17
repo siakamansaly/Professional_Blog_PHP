@@ -25,7 +25,7 @@ class ContactController extends Controller
         $message="";
         $success="";
         if (empty($this->var->request->all())) {
-            $this->error(405);
+            $this->redirect("/error/405", 405);
         }
         $this->data['firstName'] = $this->sanitize($this->var->request->get('prenom'));
         $this->data['lastName'] = $this->sanitize($this->var->request->get('name'));

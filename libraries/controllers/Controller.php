@@ -48,45 +48,7 @@ abstract class Controller
         return $this->twig->display($view, $params);
     }
 
-    /**
-     * Show error page
-     * 
-     * @return \Twig
-     */
-    public function error(int $code = 404)
-    {
-        $error = [];
-        switch ($code) {
-            case 401:
-                $error["code"] = 401;
-                $error["message"] = "Utilisateur non authentifié.";
-                break;
-            case 403 :
-                $error["code"] = 403;
-                $error["message"] = "Accès refusé.";
-                break;
-            case 405:
-                $error["code"] = 405;
-                $error["message"] = "Méthode de requête non autorisée.";
-                break;
-                case 498:
-                    $error["code"] = 498;
-                    $error["message"] = "Le jeton a expiré ou est invalide.";
-                    break;
-                
-            default:
-                $error["code"] = 404;
-                $error["message"] = "Cette page n'existe pas ou est invalide.";
-                break;
-        }
-
-        $path = '\core\404.html.twig';
-        $data = ['head' => ['title' => 'Erreur 404'], 'error' => $error];
-
-        $this->setResponseHttp($code);
-        $this->render($path, $data);
-    }
-
+    
     /**
      * sanitize data
      * 
@@ -108,8 +70,7 @@ abstract class Controller
     public function redirect(string $url, int $code=200)
     {
         $response = new RedirectResponse($url);
-        $response->setStatusCode($code);
-        $response->send();
+        return $response->send();
     }
 
 

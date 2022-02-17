@@ -61,9 +61,9 @@ class BackEndController extends Controller
     public function adminblog()
     {
         // Force user login
-        AuthController::force_login();
         AuthController::force_admin();
 
+        
         $AllCommentsActive = $this->commentsModel->count('comment.status', '1');
         $AllCommentsPending = $this->commentsModel->count('comment.status', '0');
         $AllCommentsDisable = $this->commentsModel->count('comment.status', '2');
@@ -80,6 +80,7 @@ class BackEndController extends Controller
         $this->data = ['head' => ['title' => 'Administration Blog'], 'AllCommentsCounterActive' => $AllCommentsActive, 'AllCommentsCounterPending' => $AllCommentsPending, 'AllCommentsCounterDisable' => $AllCommentsDisable, 'AllUsersCounterAdmin' => $AllUsersAdmin, 'AllUsersCounterMember' => $AllUsersMember, 'AllPostsCounterActive' => $AllPostsActive, 'AllPostsCounterDisable' => $AllPostsDisable, 'AllPostsCounterArchived' => $AllPostsArchived, 'AllCategoriesCounter' => $AllCategories];
         $this->setResponseHttp(200);
         $this->render($this->path, $this->data);
+        
     }
 
 
@@ -91,7 +92,6 @@ class BackEndController extends Controller
     public function postManager()
     {
         // Force user login
-        AuthController::force_login();
         AuthController::force_admin();
         $users = $this->userModel->readAllAuthors();
         $categories = $this->categoryModel->readAll();
@@ -121,7 +121,6 @@ class BackEndController extends Controller
     public function commentManager()
     {
         // Force user login
-        AuthController::force_login();
         AuthController::force_admin();
         $status = 0;
 
@@ -152,7 +151,6 @@ class BackEndController extends Controller
     public function commentManagerEdit($param)
     {
         // Force user login
-        AuthController::force_login();
         AuthController::force_admin();
 
         $this->path = '\backend\admin\comment\commentEdit.html.twig';
@@ -166,7 +164,7 @@ class BackEndController extends Controller
             $this->render($this->path, $this->data);
         } else {
             // if no post   
-            $this->error(404);
+            $this->redirect("/error/404", 404);
         }
     }
 
@@ -178,7 +176,6 @@ class BackEndController extends Controller
     public function categoryManager()
     {
         // Force user login
-        AuthController::force_login();
         AuthController::force_admin();
 
         $AllCategoryCounter = $this->categoryModel->count();
@@ -204,7 +201,6 @@ class BackEndController extends Controller
     public function categoryManagerEdit($param)
     {
         // Force user login
-        AuthController::force_login();
         AuthController::force_admin();
 
         $this->path = '\backend\admin\category\categoryEdit.html.twig';
@@ -217,7 +213,7 @@ class BackEndController extends Controller
             $this->render($this->path, $this->data);
         } else { 
             // if no post 
-            $this->error(404);
+            $this->redirect("/error/404", 404);
         }
     }
 
@@ -229,7 +225,6 @@ class BackEndController extends Controller
     public function userManager()
     {
         // Force user login
-        AuthController::force_login();
         AuthController::force_admin();
         $status = "";
         $type = "";
@@ -275,7 +270,6 @@ class BackEndController extends Controller
     public function userManagerEdit($param)
     {
         // Force user login
-        AuthController::force_login();
         AuthController::force_admin();
 
         $this->path = '\backend\admin\user\userEdit.html.twig';
@@ -289,7 +283,7 @@ class BackEndController extends Controller
             $this->render($this->path, $this->data);
         } else { 
             // if no post 
-            $this->error(404);
+            $this->redirect("/error/404", 404);
         }
     }
     /**
@@ -300,7 +294,6 @@ class BackEndController extends Controller
     public function postArchived()
     {
         // Force user login
-        AuthController::force_login();
         AuthController::force_admin();
 
         $users = $this->userModel->readAllAuthors();
@@ -328,7 +321,6 @@ class BackEndController extends Controller
     public function postManagerEdit($param)
     {
         // Force user login
-        AuthController::force_login();
         AuthController::force_admin();
 
         $this->path = '\backend\admin\post\postEdit.html.twig';
@@ -351,7 +343,7 @@ class BackEndController extends Controller
             $this->render($this->path, $this->data);
         } else { 
             // if no post 
-            $this->error(404);
+            $this->redirect("/error/404", 404);
         }
     }
 }

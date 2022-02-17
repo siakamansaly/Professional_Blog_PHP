@@ -124,7 +124,7 @@ class HomeController extends Controller
             $this->render($this->path, $this->data);
         } else {
             // if no post 
-            $this->error(404);
+            $this->redirect("/error/404", 404);
         }
         
     }
@@ -147,7 +147,46 @@ class HomeController extends Controller
             $this->render($this->path, $this->data);
         } else {
             // if no token 
-            $this->error(498);
+            $this->redirect("/error/498", 498);
         }
+    }
+
+    /**
+     * Show error page
+     * 
+     * @return \Twig
+     */
+    public function errorPage(int $code = 404)
+    {
+        $error = [];
+        switch ($code) {
+            case 401:
+                $error["code"] = 401;
+                $error["message"] = "Utilisateur non authentifié.";
+                break;
+            case 403 :
+                $error["code"] = 403;
+                $error["message"] = "Accès refusé.";
+                break;
+            case 405:
+                $error["code"] = 405;
+                $error["message"] = "Méthode de requête non autorisée.";
+                break;
+                case 498:
+                    $error["code"] = 498;
+                    $error["message"] = "Le jeton a expiré ou est invalide.";
+                    break;
+                
+            default:
+                $error["code"] = 404;
+                $error["message"] = "Cette page n'existe pas ou est invalide.";
+                break;
+        }
+
+        $path = '\core\404.html.twig';
+        $data = ['head' => ['title' => 'Erreur 404'], 'error' => $error];
+
+        $this->setResponseHttp($code);
+        $this->render($path, $data);
     }
 }

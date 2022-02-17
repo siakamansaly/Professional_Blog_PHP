@@ -25,6 +25,14 @@ class SessionController extends Controller
         }
     }
 
+    public static function hasSession() : bool
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Set a session variable with 1 or 2 parameters
      * @return bool

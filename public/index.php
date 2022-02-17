@@ -67,6 +67,8 @@ $router->addRoutes(array(
     array('POST', '/editProfile', ROOT_CONTROLLER . 'UserController#editProfile', 'editProfile'),
     array('POST', '/editPicture', ROOT_CONTROLLER . 'UserController#editPicture', 'editPicture'),
 
+    array('GET', '/error/[*:code]', ROOT_CONTROLLER . 'HomeController#errorPage', 'errorPage'),
+
     array('POST', '/login', ROOT_CONTROLLER . 'AuthController#login', 'login')
     
 ));
@@ -87,12 +89,12 @@ if (is_array($match)) {
         
     } else {
         $controller = new Blog\Controllers\HomeController;
-        $controller->error();
+        $controller->redirect("/error/405",405);
     }
 } else {
     // no route was matched
     $controller = new Blog\Controllers\HomeController;
-    $controller->error();
+    $controller->redirect("/error/404", 404);
 }
 //print_r($_SESSION);
 
