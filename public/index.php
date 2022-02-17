@@ -1,6 +1,11 @@
 <?php
+
+use Blog\Controllers\EnvironmentController;
+
 define('ROOT_CONTROLLER', 'Blog\Controllers\\');
 require_once "./../vendor/autoload.php";
+//$test = new \Blog\Controllers\EnvironmentController;
+//$test->test();
 Blog\Controllers\SessionController::sessionStart();
 $token = md5(rand(1000, 9999));
 date_default_timezone_set('Europe/Paris');

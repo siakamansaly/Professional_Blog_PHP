@@ -14,14 +14,32 @@ class SessionController extends Controller
         parent::__construct();
     }
 
+    /*public function test()
+    {
+        $session = new Session();
+        if($session->isEmpty())
+        {
+            $session->start();
+        }
+        $session->set('userType','yoyo');
+        print_r($session->get('userType'));
+        
+    }*/
+
     /**
      * Start session PHP
      * @return void
      */
     public static function sessionStart()
     {
-        if (session_status() === PHP_SESSION_NONE) {
+        /*if (session_status() === PHP_SESSION_NONE) {
             session_start();
+        }*/
+
+        $session = new Session();
+        if($session->isEmpty())
+        {
+            $session->start();
         }
     }
 

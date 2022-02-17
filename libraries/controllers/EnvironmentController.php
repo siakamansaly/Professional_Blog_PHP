@@ -2,6 +2,7 @@
 
 namespace Blog\Controllers;
 
+
 class EnvironmentController
 {
     /**
@@ -10,9 +11,12 @@ class EnvironmentController
      */
     public static function get(string $name)
     {
+        
             if ($_ENV[$name]<>"") {
                 return $_ENV[$name];
             }
             return null;
-    }    
+    }
+    
+    
 }
