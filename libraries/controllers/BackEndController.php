@@ -164,7 +164,7 @@ class BackEndController extends Controller
             $this->render($this->path, $this->data);
         } else {
             // if no post   
-            $this->redirect("/error/404", 404);
+            $this->redirect("/error/404");
         }
     }
 
@@ -213,7 +213,7 @@ class BackEndController extends Controller
             $this->render($this->path, $this->data);
         } else { 
             // if no post 
-            $this->redirect("/error/404", 404);
+            $this->redirect("/error/404");
         }
     }
 
@@ -283,7 +283,7 @@ class BackEndController extends Controller
             $this->render($this->path, $this->data);
         } else { 
             // if no post 
-            $this->redirect("/error/404", 404);
+            $this->redirect("/error/404");
         }
     }
     /**
@@ -343,7 +343,7 @@ class BackEndController extends Controller
             $this->render($this->path, $this->data);
         } else { 
             // if no post 
-            $this->redirect("/error/404", 404);
+            $this->redirect("/error/404");
         }
     }
 }

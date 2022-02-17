@@ -29,7 +29,7 @@ class AuthController extends Controller
             if (self::$instanceLogin === null) :
                 self::$instanceLogin = new AuthController;
             endif;
-            self::$instanceLogin->redirect("/error/401", 401);
+            self::$instanceLogin->redirect("/error/401");
         }
     }
 
@@ -71,7 +71,7 @@ class AuthController extends Controller
         switch (SessionController::get('userType', 'login')) {
 
             case SessionController::hasSession() :
-                self::$instanceLogin->redirect("/error/401", 401);
+                self::$instanceLogin->redirect("/error/401");
                 break;
 
             case SessionController::get('userType', 'login') == 'admin':
@@ -79,7 +79,7 @@ class AuthController extends Controller
                 break;
 
             default:
-                self::$instanceLogin->redirect("/error/403", 403);
+                self::$instanceLogin->redirect("/error/403");
                 break;
         }
     }
@@ -91,7 +91,7 @@ class AuthController extends Controller
     public function login()
     {
         if (empty($this->var->request->all())) {
-            $this->redirect("/error/405", 405);
+            $this->redirect("/error/405");
         }
         $this->data = [];
         $user = "";
@@ -181,7 +181,7 @@ class AuthController extends Controller
     {
         //print_r($_POST);die;
         if (empty($this->var->request->all())) {
-            $this->redirect("/error/405", 405);
+            $this->redirect("/error/405");
         }
         $this->data = [];
         $passwordRepeat = "";
@@ -236,7 +236,7 @@ class AuthController extends Controller
     public function lostPassword()
     {
         if (empty($this->var->request->all())) {
-            $this->redirect("/error/405", 405);
+            $this->redirect("/error/405");
         }
         $emailLostPassword = "";
         $this->data = [];
@@ -286,7 +286,7 @@ class AuthController extends Controller
     public function savePassword()
     {
         if (empty($this->var->request->all())) {
-            $this->redirect("/error/405", 405);
+            $this->redirect("/error/405");
         }
         $this->data = [];
         $json = [];
