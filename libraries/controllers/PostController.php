@@ -149,7 +149,7 @@ class PostController extends Controller
                 $reset = $this->model->read($id_post);
                 if ($reset["picture"] <> "") {
                     $filename = __DIR__ . '/../../public/img/blog/posts/' . $reset['picture'];
-                    if (file_exists($filename)) {
+                    if (is_file($filename)) {
                         unlink($filename);
                     }
                 }

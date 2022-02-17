@@ -103,8 +103,7 @@ class UserController extends Controller
                 $this->errorMessage .= $check["message"];
             }            
         } else {
-            $success = false;
-            $json['success'] = $success;
+            $json['success'] = false;
             $json['message'] = "Une erreur est survenue au niveau de l'image ...";
         }
 

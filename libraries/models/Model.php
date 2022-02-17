@@ -29,10 +29,9 @@ abstract class Model
 
     public function count(?string $key = "", ?string $value = ""): int
     {
+        $query = "SELECT * FROM {$this->table}";
         if ($key) {
             $query = "SELECT * FROM {$this->table} WHERE $key = '" . $value . "'";
-        } else {
-            $query = "SELECT * FROM {$this->table}";
         }
 
         $data = $this->pdo->query($query);
