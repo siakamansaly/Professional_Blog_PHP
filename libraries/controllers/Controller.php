@@ -67,7 +67,7 @@ abstract class Controller
      * 
      * @return void
      */
-    public function redirect(string $url, int $code=200)
+    public function redirect(string $url)
     {
         $response = new RedirectResponse($url);
         return $response->send();
