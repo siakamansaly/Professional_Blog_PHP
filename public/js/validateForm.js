@@ -11,7 +11,6 @@ $(document).ready(function () {
             data: values,
             datatype: "json",
             success: function (response) {
-                //response = JSON.parse(response);
                 $("#alertRegister").html(response.message);
                 $("#alertRegister").show("2000");
 
