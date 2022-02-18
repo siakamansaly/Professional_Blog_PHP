@@ -23,16 +23,15 @@ class Database
     public function getPdo(): \PDO
     {     
         if ($this->instance === null) :
-            $this->instance = new \PDO($this->env("DB_CONNECTION") . ':dbname=' . $this->env("DB_NAME") . ';charset=' . $this->env("CHARSET") . ';host=' . $this->env("DB_HOST"), $this->env("DB_USER"), $this->env("DB_PASSWORD"));
+            $ENV = new Globals;
+            $db_user = (string) $ENV->env("DB_USER");
+            $db_password = (string) $ENV->env("DB_PASSWORD");
+
+            $this->instance = new \PDO($ENV->env("DB_CONNECTION") . ':dbname=' . $ENV->env("DB_NAME") . ';charset=' . $ENV->env("CHARSET") . ';host=' . $ENV->env("DB_HOST"), $db_user, $db_password);
             $this->instance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             $this->instance->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
         endif;
         return $this->instance;
-    }
-
-    public function env($param)
-    {
-       return getenv($param);
     }
     
     
