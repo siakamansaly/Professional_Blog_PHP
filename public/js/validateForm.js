@@ -577,7 +577,6 @@ $(document).ready(function () {
             data: values,
             datatype: "json",
             success: function (response) {
-                //response = JSON.parse(response);
                 $("#alertUser").html(response.message);
                 $("#alertUser").show("2000");
                 $("#disable").modal("hide");

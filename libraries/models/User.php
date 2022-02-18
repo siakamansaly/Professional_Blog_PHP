@@ -1,13 +1,13 @@
 <?php
+
 namespace Blog\Models;
 
-
-class User extends Model {
+class User extends Model
+{
 
     protected $table = "user";
     /**
      * Read all rows of table
-     * 
      * @return array[]
      */
     public function readAllAuthors(?string $where = "", ?string $order = "id ASC"): array
@@ -20,6 +20,10 @@ class User extends Model {
         return $this->rows($query);
     }
 
+    /**
+     * Search by user email
+     * @return int
+     */
     public function getEmail(string $email)
     {
         $query = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE email = :email");
@@ -27,5 +31,4 @@ class User extends Model {
         $item = $query->rowCount();
         return $item;
     }
-
 }
