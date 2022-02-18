@@ -95,7 +95,7 @@ $(document).ready(function () {
                 if (response.success === true) {
                     setTimeout(function () {
                         location.reload();
-                    }, 2000)
+                    }, 2000);
                 }
             },
             error: function () {

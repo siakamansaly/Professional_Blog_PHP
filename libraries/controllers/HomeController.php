@@ -141,14 +141,13 @@ class HomeController extends Controller
         $token = $token->read($param, "token");
 
         // if token exist
-        if ($token) {
-            $this->data = ['head' => ['title' => "Renouveler mot de Passe"], 'token' => $token];
-            $this->setResponseHttp(200);
-            $this->render($this->path, $this->data);
-        } else {
+        if (!$token) {
             // if no token 
             $this->redirect("/error/498");
         }
+        $this->data = ['head' => ['title' => "Renouveler mot de Passe"], 'token' => $token];
+        $this->setResponseHttp(200);
+        $this->render($this->path, $this->data);
     }
 
     /**

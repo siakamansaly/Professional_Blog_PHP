@@ -235,11 +235,10 @@ abstract class Controller
 
     public function currentPage(int $AllPage)
     {
+        $currentPage = 1;
         if ($this->var->query->get('page') <> "" && $this->var->query->get('page') > 0 && $this->var->query->get('page') <= $AllPage) {
             $currentPage = (int) strip_tags($this->var->query->get('page'));
-        } else {
-            $currentPage = 1;
-        }
+        } 
         return $currentPage;
     }
     public function firstPage(int $currentPage, int $AllPosts, int $AllPostsByPage)

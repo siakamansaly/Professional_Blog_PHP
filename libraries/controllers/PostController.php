@@ -199,24 +199,28 @@ class PostController extends Controller
 
         $countComments = $this->comments->count('Post_id', $id_post);
 
-        if ($countComments > 0) {
-            $this->data['status'] = -1;
-            $this->model->update($id_post, $this->data);
-            $message = $this->div_alert("L'article a été archivé car il contient des commentaires.", "success");
-        } else {
-            // Delete picture post
-            $reset = $this->model->read($id_post);
-            if ($reset["picture"] <> "") {
-                $filename = __DIR__ . '/../../public/img/blog/posts/' . $reset['picture'];
-                if (file_exists($filename)) {
-                    unlink($filename);
+        switch ($countComments) {
+            case 0:
+                // Delete picture post
+                $reset = $this->model->read($id_post);
+                if ($reset["picture"] <> "") {
+                    $filename = __DIR__ . '/../../public/img/blog/posts/' . $reset['picture'];
+                    if (file_exists($filename)) {
+                        unlink($filename);
+                    }
                 }
-            }
-            // Delete category of post
-            $this->postcategoryModel->delete($id_post, 'Post_id');
-            // Delete post
-            $this->model->delete($id_post, 'id');
-            $message = $this->div_alert("Article supprimé avec succès.", "success");
+                // Delete category of post
+                $this->postcategoryModel->delete($id_post, 'Post_id');
+                // Delete post
+                $this->model->delete($id_post, 'id');
+                $message = $this->div_alert("Article supprimé avec succès.", "success");
+                break;
+
+            default:
+                $this->data['status'] = -1;
+                $this->model->update($id_post, $this->data);
+                $message = $this->div_alert("L'article a été archivé car il contient des commentaires.", "success");
+                break;
         }
 
         $success = true;

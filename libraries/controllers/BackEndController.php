@@ -36,7 +36,7 @@ class BackEndController extends Controller
     public function dashboard()
     {
         // Force user login
-        
+
         $this->auth->force_login();
 
         // Select user info
@@ -65,7 +65,7 @@ class BackEndController extends Controller
         // Force user login
         $this->auth->force_admin();
 
-        
+
         $AllCommentsActive = $this->commentsModel->count('comment.status', '1');
         $AllCommentsPending = $this->commentsModel->count('comment.status', '0');
         $AllCommentsDisable = $this->commentsModel->count('comment.status', '2');
@@ -82,7 +82,6 @@ class BackEndController extends Controller
         $this->data = ['head' => ['title' => 'Administration Blog'], 'AllCommentsCounterActive' => $AllCommentsActive, 'AllCommentsCounterPending' => $AllCommentsPending, 'AllCommentsCounterDisable' => $AllCommentsDisable, 'AllUsersCounterAdmin' => $AllUsersAdmin, 'AllUsersCounterMember' => $AllUsersMember, 'AllPostsCounterActive' => $AllPostsActive, 'AllPostsCounterDisable' => $AllPostsDisable, 'AllPostsCounterArchived' => $AllPostsArchived, 'AllCategoriesCounter' => $AllCategories];
         $this->setResponseHttp(200);
         $this->render($this->path, $this->data);
-        
     }
 
 
@@ -162,13 +161,11 @@ class BackEndController extends Controller
         // if no post exist
         if (!$comments) {
             $this->redirect("/error/404");
-        } 
-        
+        }
+
         $this->data = ['head' => ['title' => "Modifier un commentaire"], 'comments' => $comments];
         $this->setResponseHttp(200);
         $this->render($this->path, $this->data);
-        
-        
     }
 
     /**
@@ -209,15 +206,15 @@ class BackEndController extends Controller
         $this->path = '\backend\admin\category\categoryEdit.html.twig';
         $category = $this->categoryModel->read($param);
 
-        // if post exist
-        if ($category) {
-            $this->data = ['head' => ['title' => "Modifier une catégorie"], 'category' => $category];
-            $this->setResponseHttp(200);
-            $this->render($this->path, $this->data);
-        } else { 
+
+        if (!$category) {
             // if no post 
             $this->redirect("/error/404");
         }
+        // if post exist
+        $this->data = ['head' => ['title' => "Modifier une catégorie"], 'category' => $category];
+        $this->setResponseHttp(200);
+        $this->render($this->path, $this->data);
     }
 
     /**
@@ -284,7 +281,7 @@ class BackEndController extends Controller
             $this->data = ['head' => ['title' => "Modifier un utilisateur"], 'user' => $user];
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
-        } else { 
+        } else {
             // if no post 
             $this->redirect("/error/404");
         }
@@ -344,7 +341,7 @@ class BackEndController extends Controller
             $this->data = ['head' => ['title' => $posts['title']], 'posts' => $posts, 'users' => $users, 'categories' => $categories, 'postCategory' => $postCategory];
             $this->setResponseHttp(200);
             $this->render($this->path, $this->data);
-        } else { 
+        } else {
             // if no post 
             $this->redirect("/error/404");
         }

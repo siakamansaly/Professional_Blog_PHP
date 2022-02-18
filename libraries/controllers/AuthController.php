@@ -133,11 +133,9 @@ class AuthController extends Controller
 
         $this->errorMessage = $this->ul_alert($this->errorMessage);
         // Construct and send result JSON
-        if ($error > 0) {
-            $message = $this->div_alert($this->errorMessage, "danger");
-            $success = false;
-        } else {
-            $message = $this->div_alert("Connexion réussie.", "success");
+        switch ($error) {
+            case 0 :
+                $message = $this->div_alert("Connexion réussie.", "success");
             $success = true;
             // Assign session variables
             $this->session->set('firstName', $user['firstName']);
@@ -151,6 +149,12 @@ class AuthController extends Controller
             // Update lastConnectionDate
             $this->data['lastConnectionDate'] = date('Y-m-d H:i:s');
             $this->model->update($this->data['email'], ["lastConnectionDate" => $this->data['lastConnectionDate']], 'email');
+                break;
+            
+            default:
+            $message = $this->div_alert($this->errorMessage, "danger");
+            $success = false;
+                break;
         }
 
         $json['success'] = $success;
