@@ -40,15 +40,6 @@ abstract class Model
         return $data;
     }
 
-    public function lastInsertIdPDO()
-    {
-        $query = "SELECT MAX(id) as lastid FROM {$this->table}";
-        $data = $this->pdo->query($query);
-        $data = $this->row($query);
-        return $data;
-    }
-
-
 
     /**
      * Return all rows datas
