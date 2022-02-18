@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     $("#alertRegister").hide();
     $("#formRegister").on("submit", function (event) {
         event.preventDefault();
@@ -13,7 +12,6 @@ $(document).ready(function () {
             success: function (response) {
                 $("#alertRegister").html(response.message);
                 $("#alertRegister").show("2000");
-
                 if (response.success === true) {
                     $("#formRegister")[0].reset();
                 }
@@ -35,10 +33,8 @@ $(document).ready(function () {
             data: values,
             datatype: "json",
             success: function (response) {
-                //response = JSON.parse(response);
                 $("#alertContact").html(response.message);
                 $("#alertContact").show();
-
                 if (response.success === true) {
                     $("#formContact")[0].reset();
                 }
@@ -60,7 +56,6 @@ $(document).ready(function () {
             data: values,
             datatype: "json",
             success: function (response) {
-                ////response = JSON.parse(response);
                 $("#alertLogin").html(response.message);
                 $("#alertLogin").show("2000");
 
@@ -118,10 +113,10 @@ $(document).ready(function () {
             datatype: "json",
             success: function (response) {
                 $("#alertEditPicture").html(response.message);
-                    $("#alertEditPicture").show("2000");
-                    if (response.success === true) {
-                        location.reload();
-                    }
+                $("#alertEditPicture").show("2000");
+                if (response.success === true) {
+                    location.reload();
+                }
             },
             error: function () {
                 $("#alertEditPicture").text("Une erreur inattendue est survenue...");
@@ -192,18 +187,16 @@ $(document).ready(function () {
             datatype: "json",
             success: function (response) {
                 $("#alertPostAdd").html(response.message);
-                    $("#alertPostAdd").show("2000");
-                    if (response.success === true) {
-                        location.reload();
-                    }
+                $("#alertPostAdd").show("2000");
+                if (response.success === true) {
+                    location.reload();
+                }
             },
             error: function () {
                 $("#alertPostAdd").text("Une erreur inattendue est survenue...");
             },
         });
     });
-
-
 
     $("#alertPostEdit").hide();
     $("#formPostEdit").on("submit", function (event) {
@@ -221,10 +214,10 @@ $(document).ready(function () {
             success: function (response) {
 
                 $("#alertPostEdit").html(response.message);
-                    $("#alertPostEdit").show("2000");
-                    if (response.success === true) {
-                        window.location.href = "/postManager";
-                    }
+                $("#alertPostEdit").show("2000");
+                if (response.success === true) {
+                    window.location.href = "/postManager";
+                }
             },
             error: function () {
                 $("#alertPostEdit").text("Une erreur inattendue est survenue...");
@@ -239,7 +232,6 @@ $(document).ready(function () {
         var title = $this.data("title");
         $("#deleteButtonConfirmation").val(parentId);
         $("#deleteTitleConfirmation").html(title);
-        
     });
 
     $(".userShow").on("click", function (event) {
@@ -257,15 +249,13 @@ $(document).ready(function () {
         var github = $this.data("github");
         var linkedin = $this.data("linkedin");
 
-        if(status===1) 
-        {
+        if (status === 1) {
             status = "<span class='badge badge-primary'>Actif</span>";
         }
-        else
-        {
+        else {
             status = "<span class='badge badge-danger'>Inactif</span>";
         }
-        
+
         $("#detailName").html(name);
         $("#detailType").html(type);
         $("#detailRegistration").html(registration);
@@ -277,7 +267,7 @@ $(document).ready(function () {
         $("#detailTwitter").html(twitter);
         $("#detailGitHub").html(github);
         $("#detailLinkedIn").html(linkedin);
-        
+
     });
 
     $(".validateButton").on("click", function (event) {
@@ -287,7 +277,7 @@ $(document).ready(function () {
         var title = $this.data("title");
         $("#validateButtonConfirmation").val(parentId);
         $("#validateTitleConfirmation").html(title);
-        
+
     });
 
     $(".disableButton").on("click", function (event) {
@@ -297,34 +287,32 @@ $(document).ready(function () {
         var title = $this.data("title");
         $("#disableButtonConfirmation").val(parentId);
         $("#disableTitleConfirmation").html(title);
-        
     });
 
     $("#alertPostDelete").hide();
     $(".formPostDelete").on("click", function (event) {
         event.preventDefault();
 
-            var id = $(this).val();
-            var values = new Array();
-            values = { "idPostDelete": id };
-            $.ajax({
-                type: "POST",
-                url: "/postDelete",
-                data: values,
-                datatype: "json",
-                success: function (response) {
-                    //response = JSON.parse(response);
-                    $("#alertPostDelete").html(response.message);
-                    $("#alertPostDelete").show("2000");
-                    $("#post-"+ id).hide("slow");
-                    $("#delete").modal("hide");
-                    location.reload();
-                },
-                error: function () {
-                    $("#alertPostDelete").text("Une erreur inattendue est survenue...");
-                },
-            });
-
+        var id = $(this).val();
+        var values = new Array();
+        values = { "idPostDelete": id };
+        $.ajax({
+            type: "POST",
+            url: "/postDelete",
+            data: values,
+            datatype: "json",
+            success: function (response) {
+                //response = JSON.parse(response);
+                $("#alertPostDelete").html(response.message);
+                $("#alertPostDelete").show("2000");
+                $("#post-" + id).hide("slow");
+                $("#delete").modal("hide");
+                location.reload();
+            },
+            error: function () {
+                $("#alertPostDelete").text("Une erreur inattendue est survenue...");
+            },
+        });
     });
 
     $("#alertComment").hide();
@@ -332,7 +320,6 @@ $(document).ready(function () {
 
     $(".reply").on("click", function (event) {
         event.preventDefault();
-
         var $form = $("#formComment");
         var $alert = $("#alertComment");
         var $this = $(this);
@@ -345,11 +332,9 @@ $(document).ready(function () {
         else {
             $form.find("label").text("Ecrire un nouveau commentaire");
         }
-
         $("#parent_id").val(parentId);
         $alert.after($alert);
         $comment.after($form);
-
     });
 
 
@@ -371,95 +356,88 @@ $(document).ready(function () {
             datatype: "json",
             success: function (response) {
                 //response = JSON.parse(response);
-                $("#alertComment-"+parentId).html(response.message);
-                $("#alertComment-"+parentId).show("2000");
+                $("#alertComment-" + parentId).html(response.message);
+                $("#alertComment-" + parentId).show("2000");
                 setTimeout(function () {
-                   window.location.href = "/post/" + slug;
+                    window.location.href = "/post/" + slug;
                 }, 2000);
             },
             error: function () {
                 $("#alertComment").text("Une erreur inattendue est survenue...");
             },
         });
-
     });
 
     $("#alertComment").hide();
     $(".formCommentValidate").on("click", function (event) {
         event.preventDefault();
-        
-            var id = $(this).val();
-            var values = new Array();
-            values = { "idCommentValidate": id };
-            $.ajax({
-                type: "POST",
-                url: "/commentValidate",
-                data: values,
-                datatype: "json",
-                success: function (response) {
-                    //response = JSON.parse(response);
-                    $("#alertComment").html(response.message);
-                    $("#alertComment").show("2000");
-                    $("#validate").modal("hide");
-                    $("#comment-"+ id).hide("slow");
-                },
-                error: function () {
-                    $("#alertComment").text("Une erreur inattendue est survenue...");
-                },
-            });
-        
 
+        var id = $(this).val();
+        var values = new Array();
+        values = { "idCommentValidate": id };
+        $.ajax({
+            type: "POST",
+            url: "/commentValidate",
+            data: values,
+            datatype: "json",
+            success: function (response) {
+                //response = JSON.parse(response);
+                $("#alertComment").html(response.message);
+                $("#alertComment").show("2000");
+                $("#validate").modal("hide");
+                $("#comment-" + id).hide("slow");
+            },
+            error: function () {
+                $("#alertComment").text("Une erreur inattendue est survenue...");
+            },
+        });
     });
 
     $(".formCommentDisable").on("click", function (event) {
         event.preventDefault();
-            var id = $(this).val();
-            var values = new Array();
-            values = { "idCommentDisable": id };
-            $.ajax({
-                type: "POST",
-                url: "/commentDisable",
-                data: values,
-                datatype: "json",
-                success: function (response) {
-                    //response = JSON.parse(response);
-                    $("#alertComment").html(response.message);
-                    $("#alertComment").show("2000");
-                    $("#disable").modal("hide");
-                    $("#comment-"+ id).hide("slow");
-                },
-                error: function () {
-                    $("#alertComment").text("Une erreur inattendue est survenue...");
-                },
-            });
-        
-
+        var id = $(this).val();
+        var values = new Array();
+        values = { "idCommentDisable": id };
+        $.ajax({
+            type: "POST",
+            url: "/commentDisable",
+            data: values,
+            datatype: "json",
+            success: function (response) {
+                //response = JSON.parse(response);
+                $("#alertComment").html(response.message);
+                $("#alertComment").show("2000");
+                $("#disable").modal("hide");
+                $("#comment-" + id).hide("slow");
+            },
+            error: function () {
+                $("#alertComment").text("Une erreur inattendue est survenue...");
+            },
+        });
     });
 
     $(".formCommentDelete").on("click", function (event) {
         event.preventDefault();
         var values = new Array();
-            var id = $(this).val();
-            values = { "idCommentDelete": id };
-            $.ajax({
-                type: "POST",
-                url: "/commentDelete",
-                data: values,
-                datatype: "json",
-                success: function (response) {
-                    //response = JSON.parse(response);
-                    $("#alertComment").html(response.message);
-                    $("#alertComment").show("2000");
-                    $("#delete").modal("hide");
-                    $("#comment-"+ id).hide("slow");
-                    
-                },
-                error: function () {
-                    $("#alertComment").text("Une erreur inattendue est survenue...");
-                },
-            });
-        
+        var id = $(this).val();
+        values = { "idCommentDelete": id };
+        $.ajax({
+            type: "POST",
+            url: "/commentDelete",
+            data: values,
+            datatype: "json",
+            success: function (response) {
+                //response = JSON.parse(response);
+                $("#alertComment").html(response.message);
+                $("#alertComment").show("2000");
+                $("#delete").modal("hide");
+                $("#comment-" + id).hide("slow");
 
+            },
+            error: function () {
+                $("#alertComment").text("Une erreur inattendue est survenue...");
+            },
+        });
     });
 
     $("#alertCommentEdit").hide();
@@ -478,7 +456,7 @@ $(document).ready(function () {
                 $("#alertCommentEdit").show("2000");
                 if (response.success === true) {
                     setTimeout(function () {
-                        window.location.href = "/commentManager?status="+response.status;
+                        window.location.href = "/commentManager?status=" + response.status;
                     }, 2000);
                 }
             },
@@ -517,27 +495,25 @@ $(document).ready(function () {
     $(".formCategoryDelete").on("click", function (event) {
         event.preventDefault();
         var values = new Array();
-            var id = $(this).val();
-            values = { "idCategoryDelete": id };
-            $.ajax({
-                type: "POST",
-                url: "/categoryDelete",
-                data: values,
-                datatype: "json",
-                success: function (response) {
-                    //response = JSON.parse(response);
-                    $("#alertCategory").html(response.message);
-                    $("#alertCategory").show("2000");
-                    $("#delete").modal("hide");
-                    $("#category-"+ id).hide("slow");
-                    
-                },
-                error: function () {
-                    $("#alertCategory").text("Une erreur inattendue est survenue...");
-                },
-            });
-        
+        var id = $(this).val();
+        values = { "idCategoryDelete": id };
+        $.ajax({
+            type: "POST",
+            url: "/categoryDelete",
+            data: values,
+            datatype: "json",
+            success: function (response) {
+                //response = JSON.parse(response);
+                $("#alertCategory").html(response.message);
+                $("#alertCategory").show("2000");
+                $("#delete").modal("hide");
+                $("#category-" + id).hide("slow");
 
+            },
+            error: function () {
+                $("#alertCategory").text("Une erreur inattendue est survenue...");
+            },
+        });
     });
 
     $("#alertCategoryEdit").hide();
@@ -570,88 +546,74 @@ $(document).ready(function () {
     $(".formUserValidate").on("click", function (event) {
         event.preventDefault();
         var values = new Array();
-            var id = $(this).val();
-            values = { "idUserValidate": id };
-            $.ajax({
-                type: "POST",
-                url: "/userValidate",
-                data: values,
-                datatype: "json",
-                success: function (response) {
-                    //response = JSON.parse(response);
-                    $("#alertUser").html(response.message);
-                    $("#alertUser").show("2000");
-                    $("#validate").modal("hide");
-                    location.reload();
-                },
-                error: function () {
-                    $("#alertUser").text("Une erreur inattendue est survenue...");
-                },
-            });
-        
-
+        var id = $(this).val();
+        values = { "idUserValidate": id };
+        $.ajax({
+            type: "POST",
+            url: "/userValidate",
+            data: values,
+            datatype: "json",
+            success: function (response) {
+                //response = JSON.parse(response);
+                $("#alertUser").html(response.message);
+                $("#alertUser").show("2000");
+                $("#validate").modal("hide");
+                location.reload();
+            },
+            error: function () {
+                $("#alertUser").text("Une erreur inattendue est survenue...");
+            },
+        });
     });
 
     $(".formUserDisable").on("click", function (event) {
         event.preventDefault();
         var values = new Array();
-            var id = $(this).val();
-            values = { "idUserDisable": id };
-            $.ajax({
-                type: "POST",
-                url: "/userDisable",
-                data: values,
-                datatype: "json",
-                success: function (response) {
-                    //response = JSON.parse(response);
-                    $("#alertUser").html(response.message);
-                    $("#alertUser").show("2000");
-                    $("#disable").modal("hide");
-                    location.reload();
-                    
-                },
-                error: function () {
-                    $("#alertUser").text("Une erreur inattendue est survenue...");
-                },
-            });
-        
+        var id = $(this).val();
+        values = { "idUserDisable": id };
+        $.ajax({
+            type: "POST",
+            url: "/userDisable",
+            data: values,
+            datatype: "json",
+            success: function (response) {
+                //response = JSON.parse(response);
+                $("#alertUser").html(response.message);
+                $("#alertUser").show("2000");
+                $("#disable").modal("hide");
+                location.reload();
 
+            },
+            error: function () {
+                $("#alertUser").text("Une erreur inattendue est survenue...");
+            },
+        });
     });
 
     $(".formUserDelete").on("click", function (event) {
         event.preventDefault();
         var values = new Array();
-            var id = $(this).val();
-            values = { "idUserDelete": id };
-            $.ajax({
-                type: "POST",
-                url: "/userDelete",
-                data: values,
-                datatype: "json",
-                success: function (response) {
-                    //response = JSON.parse(response);
-                    $("#alertUser").html(response.message);
-                    $("#alertUser").show("2000");
-                    $("#delete").modal("hide");
-                    if(response.success===true)
-                    {
-                        $("#user-"+ id).hide("slow");
-                    }
-                    
-                    
-                },
-                error: function () {
-                    $("#alertUser").text("Une erreur inattendue est survenue...");
-                },
-            });
-        
-
+        var id = $(this).val();
+        values = { "idUserDelete": id };
+        $.ajax({
+            type: "POST",
+            url: "/userDelete",
+            data: values,
+            datatype: "json",
+            success: function (response) {
+                //response = JSON.parse(response);
+                $("#alertUser").html(response.message);
+                $("#alertUser").show("2000");
+                $("#delete").modal("hide");
+                if (response.success === true) {
+                    $("#user-" + id).hide("slow");
+                }
+            },
+            error: function () {
+                $("#alertUser").text("Une erreur inattendue est survenue...");
+            },
+        });
     });
-
-    
-
-    
-
 });
 
 
