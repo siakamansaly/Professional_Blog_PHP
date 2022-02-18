@@ -129,7 +129,7 @@ abstract class Controller
      */
     public static function sendMessage(array $data): bool
     {
-
+        $ENV = new Globals;
         $mailResponse = true;
         $mail = new PHPMailer();
         $mail->CharSet = "UTF-8";
@@ -137,13 +137,13 @@ abstract class Controller
         $mail->isSMTP();
         //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
         $mail->SMTPDebug = 0;
-        $mail->Host = $_ENV['HOST_SMTP'];
-        $mail->Port = $_ENV['PORT_SMTP'];
+        $mail->Host = $ENV->env("HOST_SMTP");
+        $mail->Port = $ENV->env("PORT_SMTP");
 
-        $mail->setFrom($_ENV['MAIL_FROM'], $_ENV['MAIL_FIRSTNAME'] . " " . $_ENV['MAIL_LASTNAME']);
+        $mail->setFrom($ENV->env("MAIL_FROM"), $ENV->env("MAIL_FIRSTNAME") . " " . $ENV->env("MAIL_LASTNAME"));
         //$mail->addBCC($_ENV['MAIL_FROM'], $_ENV['MAIL_FIRSTNAME'] . " " . $_ENV['MAIL_LASTNAME']);
         $mail->addBCC($data['email'], $data['firstName'] . " " . $data['lastName']);
-        $mail->addAddress($_ENV['MAIL_FROM'], $_ENV['MAIL_FIRSTNAME'] . " " . $_ENV['MAIL_LASTNAME']);
+        $mail->addAddress($ENV->env("MAIL_FROM"), $ENV->env("MAIL_FIRSTNAME") . " " . $ENV->env("MAIL_LASTNAME"));
         $mail->Subject = $data['subject'];
         $mail->Body = <<<EOT
             Email: {$data['email']}
