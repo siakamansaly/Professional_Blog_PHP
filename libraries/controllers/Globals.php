@@ -2,13 +2,8 @@
 
 namespace Blog\Controllers;
 
-use Dotenv\Dotenv;
-
 class Globals 
 {
-    private $ENV;
-    private $dotenv = null;
-    
     /**
      * Get all Environment variables
      * @return array
