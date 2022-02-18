@@ -6,17 +6,17 @@ use Dotenv\Dotenv;
 
 class Globals 
 {
-    private static $ENV;
-    private static $dotenv;
+    private $ENV;
+    private $dotenv;
     
     /**
      * Get all Environment variables
      */
-    public static function allEnv()
+    public function allEnv()
     {   
-        self::$dotenv = Dotenv::createImmutable(__DIR__."./../../");
-        self::$ENV = self::$dotenv->load();
-        return self::$ENV;
+        $this->dotenv = Dotenv::createImmutable(__DIR__."./../../");
+        $this->ENV = $this->dotenv->load();
+        return $this->ENV;
     }
     
     
