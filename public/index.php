@@ -1,11 +1,13 @@
 <?php
-
-use Blog\Controllers\EnvironmentController;
-
 define('ROOT_CONTROLLER', 'Blog\Controllers\\');
 require_once "./../vendor/autoload.php";
-//$test = new \Blog\Controllers\EnvironmentController;
-//$test->test();
+// Active environment variable
+//$dotenv = Dotenv\Dotenv::createUnsafeImmutable('./../');
+//$ENV = $dotenv->load();
+//$ENV = filter_input_array(INPUT_ENV,$ENV);
+
+
+
 Blog\Controllers\SessionController::sessionStart();
 $token = md5(rand(1000, 9999));
 date_default_timezone_set('Europe/Paris');
@@ -15,9 +17,7 @@ date_default_timezone_set('Europe/Paris');
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();*/
 
-// Active environment variable
-$dotenv = Dotenv\Dotenv::createUnsafeImmutable('./../');
-$dotenv->load();
+
 
 // Start Router
 $router = new AltoRouter();

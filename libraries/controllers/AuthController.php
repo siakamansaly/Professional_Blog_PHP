@@ -5,6 +5,7 @@ namespace Blog\Controllers;
 use Blog\Controllers\Controller;
 use Blog\Controllers\HomeController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Blog\Controllers\Globals;
 
 class AuthController extends Controller
 {
@@ -12,7 +13,6 @@ class AuthController extends Controller
     private $data = [];
     private string $password;
     public $errorMessage = "";
-    private static $instanceLogin = null;
 
     public function __construct()
     {
@@ -26,10 +26,7 @@ class AuthController extends Controller
     public static function force_login()
     {
         if (empty(SessionController::get('auth', 'login'))) {
-            if (self::$instanceLogin === null) :
-                self::$instanceLogin = new AuthController;
-            endif;
-            self::$instanceLogin->redirect("/error/401");
+            self::redirect("/error/401");
         }
     }
 
@@ -63,15 +60,10 @@ class AuthController extends Controller
      */
     public static function force_admin()
     {
-
-        if (self::$instanceLogin === null) :
-            self::$instanceLogin = new AuthController;
-        endif;
-
         switch (SessionController::get('userType', 'login')) {
 
             case SessionController::hasSession() :
-                self::$instanceLogin->redirect("/error/401");
+                self::redirect("/error/401");
                 break;
 
             case SessionController::get('userType', 'login') == 'admin':
@@ -79,7 +71,7 @@ class AuthController extends Controller
                 break;
 
             default:
-                self::$instanceLogin->redirect("/error/403");
+                self::redirect("/error/403");
                 break;
         }
     }
@@ -216,7 +208,9 @@ class AuthController extends Controller
             $success = false;
         } else {
             $this->model->insert($this->data);
-            $this->data['subject'] = EnvironmentController::get('TITLE_WEBSITE') . " - Inscription en attente d'approbation";
+            $ENV  = new Globals;
+            $ENV = $ENV->allEnv();
+            $this->data['subject'] = $ENV['TITLE_WEBSITE'] . " - Inscription en attente d'approbation";
             $this->data['message'] = "Votre inscription a bien été pris en compte. L'administrateur validera votre inscription très rapidemment. A bientôt !";
             $message = $this->div_alert("Inscription réussie. <br/> Patience... Votre compte est en attente de validation par l'administrateur.", "success");
             $this->sendMessage($this->data);
@@ -264,7 +258,9 @@ class AuthController extends Controller
             $this->data['token'] = uniqid('', false);
             $this->model->update($emailLostPassword, $this->data, 'email');
 
-            $this->data['subject'] = EnvironmentController::get('TITLE_WEBSITE') . " - Réinitialisation mot de passe";
+            $ENV  = new Globals;
+            $ENV = $ENV->allEnv();
+            $this->data['subject'] = $ENV['TITLE_WEBSITE'] . " - Réinitialisation mot de passe";
             $this->data['message'] = "Voici un lien pour réinitialiser votre mot de passe : " . $this->var->server->get('HTTP_REFERER') . "renew/" . $this->data['token'];
             $this->data['email'] = $emailLostPassword;
             $this->data['firstName'] = "";
@@ -329,7 +325,10 @@ class AuthController extends Controller
             $this->data['token'] = NULL;
             $this->model->update($idUser, $this->data);
 
-            $this->data['subject'] = EnvironmentController::get('TITLE_WEBSITE') . " - Votre mot de passe a bien été changé";
+            $ENV  = new Globals;
+            $ENV = $ENV->allEnv();
+
+            $this->data['subject'] = $ENV['TITLE_WEBSITE'] . " - Votre mot de passe a bien été changé";
             $this->data['message'] = "Votre mot de passe a bien été changé.";
 
             $this->data['email'] = $user['email'];

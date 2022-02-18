@@ -2,6 +2,8 @@
 
 namespace Blog\Controllers;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Blog\Controllers\Globals;
+use Dotenv\Dotenv;
 
 class ContactController extends Controller
 {
@@ -19,7 +21,7 @@ class ContactController extends Controller
      * @return void
      */
     public function contact()
-    {
+    {        
         $this->data = [];
         $json=[];
         $message="";
@@ -32,7 +34,7 @@ class ContactController extends Controller
         $this->data['email'] = $this->sanitize($this->var->request->get('email'));
         $this->data['message'] = $this->sanitize($this->var->request->get('message'));
 
-        $this->data['subject'] = EnvironmentController::get('TITLE_WEBSITE') . ' - Formulaire de contact';
+        $this->data['subject'] = $_ENV["TITLE_WEBSITE"] . ' - Formulaire de contact';
         $message = $this->div_alert("Message envoyé avec succès !","success");
         $success=$this->sendMessage($this->data);
         $json['success']=$success;

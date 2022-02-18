@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 use PHPMailer\PHPMailer\PHPMailer;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Blog\Controllers\Globals;
+
 
 abstract class Controller
 {
@@ -38,7 +40,7 @@ abstract class Controller
                 'needs_context' => true,
             ]);
         }
-
+        
         if (AuthController::is_login()) {
             $params["logged"] = true;
         }
@@ -105,6 +107,8 @@ abstract class Controller
         return "<ul>" . $message . "</ul>";
     }
 
+    
+
 
     /**
      * Set HTTP Response 
@@ -125,6 +129,7 @@ abstract class Controller
      */
     public static function sendMessage(array $data): bool
     {
+
         $mailResponse = true;
         $mail = new PHPMailer();
         $mail->CharSet = "UTF-8";
@@ -132,13 +137,13 @@ abstract class Controller
         $mail->isSMTP();
         //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
         $mail->SMTPDebug = 0;
-        $mail->Host = EnvironmentController::get('HOST_SMTP');
-        $mail->Port = EnvironmentController::get('PORT_SMTP');
+        $mail->Host = $_ENV['HOST_SMTP'];
+        $mail->Port = $_ENV['PORT_SMTP'];
 
-        $mail->setFrom(EnvironmentController::get('MAIL_FROM'), EnvironmentController::get('MAIL_FIRSTNAME') . " " . EnvironmentController::get('MAIL_LASTNAME'));
-        //$mail->addBCC(EnvironmentController::get('MAIL_FROM'), EnvironmentController::get('MAIL_FIRSTNAME') . " " . EnvironmentController::get('MAIL_LASTNAME'));
+        $mail->setFrom($_ENV['MAIL_FROM'], $_ENV['MAIL_FIRSTNAME'] . " " . $_ENV['MAIL_LASTNAME']);
+        //$mail->addBCC($_ENV['MAIL_FROM'], $_ENV['MAIL_FIRSTNAME'] . " " . $_ENV['MAIL_LASTNAME']);
         $mail->addBCC($data['email'], $data['firstName'] . " " . $data['lastName']);
-        $mail->addAddress(EnvironmentController::get('MAIL_FROM'), EnvironmentController::get('MAIL_FIRSTNAME') . " " . EnvironmentController::get('MAIL_LASTNAME'));
+        $mail->addAddress($_ENV['MAIL_FROM'], $_ENV['MAIL_FIRSTNAME'] . " " . $_ENV['MAIL_LASTNAME']);
         $mail->Subject = $data['subject'];
         $mail->Body = <<<EOT
             Email: {$data['email']}
