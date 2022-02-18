@@ -138,7 +138,7 @@ class PostController extends Controller
         $this->dataEdit['content'] = $this->sanitize($this->var->request->get('contentPostAdd'));
         $this->dataEdit['User_id'] = $this->sanitize($this->var->request->get('authorPostAdd'));
         $this->dataEdit['status'] = $this->sanitize($this->var->request->get('statusPostAdd'));
-        $this->dataEdit['slug'] = $id_post . "-" . $this->slugify->slugify($this->data['title']);
+        $this->dataEdit['slug'] = $id_post . "-" . $this->slugify->slugify($this->dataEdit['title']);
         $categories = json_encode($this->var->request->get('PostCategory_id'));
         $categories = json_decode($categories, true);
 
