@@ -24,7 +24,6 @@ class BackEndController extends Controller
         $this->categoryModel = new \Blog\Models\PostCategory;
         $this->commentsModel = new \Blog\Models\Comment;
         $this->postcategoryModel = new \Blog\Models\Post_PostCategory;
-        $this->var = Request::createFromGlobals();
     }
 
     /**
