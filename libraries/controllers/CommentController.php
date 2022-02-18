@@ -15,10 +15,12 @@ class CommentController extends Controller
     public $errorMessage = "";
     public $post;
     public $slugify;
+    protected $auth;
 
     public function __construct()
     {
         parent::__construct();
+        $this->auth = new AuthController;
     }
 
     /**
@@ -160,5 +162,59 @@ class CommentController extends Controller
         $json['message'] = $message;
         $response = new JsonResponse($json);
         $response->send();
+    }
+
+    /**
+     * Show post Manager
+     * 
+     * @return \Twig
+     */
+    public function commentManager()
+    {
+        // Force user login
+        $this->auth->force_admin();
+        $status = 0;
+
+        if ($this->var->query->get('status')) {
+            $status = $this->sanitize($this->var->query->get('status'));
+        }
+
+        $AllCommentCounter = $this->model->count("comment.status", "$status");
+
+        // Pagination 
+        $AllPage = $this->checkAllPage(ceil($AllCommentCounter / $this->itemsByPage));
+        $currentPage = $this->currentPage($AllPage);
+
+        $firstPage = $this->firstPage($currentPage, $AllCommentCounter, $this->itemsByPage);
+
+        $comments = $this->model->readAllCommentsByStatus("$status", "id DESC", "$firstPage,$this->itemsByPage");
+        $this->path = '\backend\admin\comment\commentManager.html.twig';
+        $this->data = ['head' => ['title' => 'Administration des commentaires'], 'comments' => $comments, 'AllCommentCounter' => $AllCommentCounter, 'AllPage' => $AllPage, 'currentPage' => $currentPage, 'status' => $status];
+        $this->setResponseHttp(200);
+        $this->render($this->path, $this->data);
+    }
+
+    /**
+     * Show a comment Manager Edit
+     * 
+     * @return \Twig
+     */
+    public function commentManagerEdit($param)
+    {
+        // Force user login
+        $this->auth->force_admin();
+
+        $this->path = '\backend\admin\comment\commentEdit.html.twig';
+        $comments = $this->model->readCommentById($param);
+
+
+        // if no post exist
+        if (!$comments) {
+            $this->redirect("/error/404");
+        }
+
+        $this->data = ['head' => ['title' => "Modifier un commentaire"], 'comments' => $comments];
+        $this->setResponseHttp(200);
+        $this->render($this->path, $this->data);
     }
 }

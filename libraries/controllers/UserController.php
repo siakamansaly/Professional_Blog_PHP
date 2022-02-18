@@ -13,12 +13,14 @@ class UserController extends Controller
     protected $modelName = \Blog\Models\User::class;
     private $data = [];
     public string $errorMessage;
+    protected $auth;
 
     public function __construct()
     {
         parent::__construct();
         $this->commentModel = new \Blog\Models\Comment;
         $this->postModel = new \Blog\Models\Post;
+        $this->auth = new AuthController;
     }
     /**
      * Function save Profile
@@ -240,5 +242,74 @@ class UserController extends Controller
         $json['message'] = $message;
         $response = new JsonResponse($json);
         $response->send();
+    }
+
+    /**
+     * Show user Manager
+     * 
+     * @return \Twig
+     */
+    public function userManager()
+    {
+        // Force user login
+        $this->auth->force_admin();
+        $status = "";
+        $type = "";
+        $AllUserCounter = $this->model->count();
+
+        // Pagination 
+        $AllPage = $this->checkAllPage(ceil($AllUserCounter / $this->itemsByPage));
+        $currentPage = $this->currentPage($AllPage);
+
+        $firstPage = $this->firstPage($currentPage, $AllUserCounter, $this->itemsByPage);
+
+        $requete = "";
+
+        if ($this->var->query->get('status') <> "") {
+            $status = $this->sanitize($this->var->query->get('status'));
+            $requete = "status = '$status'";
+        }
+
+        if ($this->var->query->get('type') <> "") {
+            $type = $this->sanitize($this->var->query->get('type'));
+            if ($requete <> "") {
+                $requete .= " AND ";
+            }
+            $requete .= "userType = '$type'";
+        }
+
+        $users = $this->model->readAll("$requete", "id ASC LIMIT $firstPage,$this->itemsByPage");
+
+        //print_r($requete);die;
+
+        $this->path = '\backend\admin\user\userManager.html.twig';
+        $this->data = ['head' => ['title' => 'Administration des utilisateurs'], 'users' => $users, 'AllUserCounter' => $AllUserCounter, 'AllPage' => $AllPage, 'currentPage' => $currentPage, 'status' => $status, 'type' => $type];
+        $this->setResponseHttp(200);
+        $this->render($this->path, $this->data);
+    }
+
+
+    /**
+     * Show a comment Manager Edit
+     * 
+     * @return \Twig
+     */
+    public function userManagerEdit($param)
+    {
+        // Force user login
+        $this->auth->force_admin();
+
+        $this->path = '\backend\admin\user\userEdit.html.twig';
+        $user = $this->model->read($param, 'id');
+
+
+        if (!$user) {
+            // if no post 
+            $this->redirect("/error/404");
+        }
+        // if post exist
+        $this->data = ['head' => ['title' => "Modifier un utilisateur"], 'user' => $user];
+        $this->setResponseHttp(200);
+        $this->render($this->path, $this->data);
     }
 }

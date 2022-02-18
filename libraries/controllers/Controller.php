@@ -16,6 +16,7 @@ abstract class Controller extends Renderer
     protected $var;
     protected $auth;
     protected $session;
+    protected $itemsByPage = 9;
 
 
     public  function __construct()
@@ -23,6 +24,7 @@ abstract class Controller extends Renderer
         $this->model = new $this->modelName();
         $this->var = Request::createFromGlobals();
         $this->session = new Session();
+
     }
 
     /**

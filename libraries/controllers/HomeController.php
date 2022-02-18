@@ -13,7 +13,6 @@ class HomeController extends Controller
     private $categoryModel;
     private $commentsModel;
     private $postcategoryModel;
-    private $itemsByPage = 9;
     protected $auth;
 
     public function __construct()

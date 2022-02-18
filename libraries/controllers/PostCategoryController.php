@@ -15,11 +15,13 @@ class PostCategoryController extends Controller
     public $errorMessage = "";
     public $post;
     public $slugify;
+    protected $auth;
 
     public function __construct()
     {
         parent::__construct();
         $this->postcategoryModel = new \Blog\Models\Post_PostCategory;
+        $this->auth = new AuthController;
     }
 
     /**
@@ -99,5 +101,54 @@ class PostCategoryController extends Controller
         $json['message'] = $message;
         $response = new JsonResponse($json);
         $response->send();
+    }
+
+    /**
+     * Show post Manager
+     * 
+     * @return \Twig
+     */
+    public function categoryManager()
+    {
+        // Force user login
+        $this->auth->force_admin();
+
+        $AllCategoryCounter = $this->model->count();
+
+        // Pagination 
+        $AllPage = $this->checkAllPage(ceil($AllCategoryCounter / $this->itemsByPage));
+        $currentPage = $this->currentPage($AllPage);
+
+        $firstPage = $this->firstPage($currentPage, $AllCategoryCounter, $this->itemsByPage);
+
+        $categories = $this->model->readAll("", "id ASC LIMIT $firstPage,$this->itemsByPage");
+        $this->path = '\backend\admin\category\categoryManager.html.twig';
+        $this->data = ['head' => ['title' => 'Administration des catégories'], 'categories' => $categories, 'AllCategoryCounter' => $AllCategoryCounter, 'AllPage' => $AllPage, 'currentPage' => $currentPage];
+        $this->setResponseHttp(200);
+        $this->render($this->path, $this->data);
+    }
+
+    /**
+     * Show a comment Manager Edit
+     * 
+     * @return \Twig
+     */
+    public function categoryManagerEdit($param)
+    {
+        // Force user login
+        $this->auth->force_admin();
+
+        $this->path = '\backend\admin\category\categoryEdit.html.twig';
+        $category = $this->model->read($param);
+
+
+        if (!$category) {
+            // if no post 
+            $this->redirect("/error/404");
+        }
+        // if post exist
+        $this->data = ['head' => ['title' => "Modifier une catégorie"], 'category' => $category];
+        $this->setResponseHttp(200);
+        $this->render($this->path, $this->data);
     }
 }

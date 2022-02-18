@@ -15,13 +15,20 @@ class PostController extends Controller
     public $errorMessage = "";
     public $post;
     public $slugify;
+    protected $auth;
+    private $userModel;
+    private $categoryModel;
+
 
     public function __construct()
     {
         parent::__construct();
+        $this->userModel = new \Blog\Models\User;
         $this->comments = new \Blog\Models\Comment;
         $this->postcategoryModel = new \Blog\Models\Post_PostCategory;
+        $this->categoryModel = new \Blog\Models\PostCategory;
         $this->slugify = new Slugify();
+        $this->auth = new AuthController;
     }
 
 
@@ -228,5 +235,95 @@ class PostController extends Controller
         $json['message'] = $message;
         $response = new JsonResponse($json);
         $response->send();
+    }
+
+    /**
+     * Show post Manager
+     * 
+     * @return \Twig
+     */
+    public function postManager()
+    {
+        // Force user login
+        $this->auth->force_admin();
+        $users = $this->userModel->readAllAuthors();
+        $categories = $this->categoryModel->readAll();
+
+        $AllPostsActive = $this->model->count('post.status', '1');
+        $AllPostsDisable = $this->model->count('post.status', '0');
+
+        // Pagination 
+        $AllPosts = $AllPostsActive + $AllPostsDisable;
+        $AllPage = $this->checkAllPage(ceil($AllPosts / $this->itemsByPage));
+        $currentPage = $this->currentPage($AllPage);
+        $firstPage = $this->firstPage($currentPage, $AllPosts, $this->itemsByPage);
+
+        $posts = $this->model->readAllPosts("0,1", "id DESC", "$firstPage,$this->itemsByPage");
+
+        $this->path = '\backend\admin\post\postManager.html.twig';
+        $this->data = ['head' => ['title' => 'Administration des articles'], 'posts' => $posts, 'users' => $users, 'categories' => $categories, 'AllPostsCounterActive' => $AllPostsActive, 'AllPostsCounterDisable' => $AllPostsDisable, 'AllPage' => $AllPage, 'currentPage' => $currentPage];
+        $this->setResponseHttp(200);
+        $this->render($this->path, $this->data);
+    }
+
+    /**
+     * Show archived post
+     * 
+     * @return \Twig
+     */
+    public function postArchived()
+    {
+        // Force user login
+        $this->auth->force_admin();
+
+        $users = $this->userModel->readAllAuthors();
+        $categories = $this->categoryModel->readAll();
+        $AllPostsArchived = $this->model->count('post.status', '-1');
+        $AllPosts = $AllPostsArchived;
+
+        $AllPage = $this->checkAllPage(ceil($AllPosts / $this->itemsByPage));
+        $currentPage = $this->currentPage($AllPage);
+        $firstPage = $this->firstPage($currentPage, $AllPosts, $this->itemsByPage);
+
+        $posts = $this->model->readAllPosts("-1", 'id DESC', "$firstPage,$this->itemsByPage");
+
+        $this->path = '\backend\admin\post\postArchived.html.twig';
+        $this->data = ['head' => ['title' => 'Articles archivés'], 'posts' => $posts, 'users' => $users, 'categories' => $categories, 'AllPostsCounterArchived' => $AllPostsArchived, 'AllPage' => $AllPage, 'currentPage' => $currentPage];
+        $this->setResponseHttp(200);
+        $this->render($this->path, $this->data);
+    }
+
+    /**
+     * Show a post Manager
+     * 
+     * @return \Twig
+     */
+    public function postManagerEdit($param)
+    {
+        // Force user login
+        $this->auth->force_admin();
+
+        $this->path = '\backend\admin\post\postEdit.html.twig';
+        $posts = $this->model->readPostById($param);
+
+
+        if (!$posts) {
+            // if no post 
+            $this->redirect("/error/404");
+        }
+        // if post exist
+        $users = $this->userModel->readAllAuthors();
+        $categories = $this->categoryModel->readAll();
+        $postsCategory = $this->postcategoryModel->readAllCategoriesByPost($posts['id']);
+        $postCategory = "";
+
+        foreach ($postsCategory as $value) {
+            $postCategory .= $value['id'] . ", ";
+        }
+        $postCategory = substr($postCategory, 0, -2);
+
+        $this->data = ['head' => ['title' => $posts['title']], 'posts' => $posts, 'users' => $users, 'categories' => $categories, 'postCategory' => $postCategory];
+        $this->setResponseHttp(200);
+        $this->render($this->path, $this->data);
     }
 }
