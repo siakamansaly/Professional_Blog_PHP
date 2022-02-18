@@ -169,7 +169,7 @@ $(document).ready(function () {
                 if (response.success === true) {
                     setTimeout(function () {
                         window.location.href = "/";
-                    }, 2000)
+                    }, 2000);
                 }
             },
             error: function () {
@@ -376,7 +376,7 @@ $(document).ready(function () {
                 $("#alertComment-"+parentId).show("2000");
                 setTimeout(function () {
                    window.location.href = "/post/" + slug;
-                }, 2000)
+                }, 2000);
             },
             error: function () {
                 $("#alertComment").text("Une erreur inattendue est survenue...");
@@ -480,7 +480,7 @@ $(document).ready(function () {
                 if (response.success === true) {
                     setTimeout(function () {
                         window.location.href = "/commentManager?status="+response.status;
-                    }, 2000)
+                    }, 2000);
                 }
             },
             error: function () {
@@ -558,7 +558,7 @@ $(document).ready(function () {
                 if (response.success === true) {
                     setTimeout(function () {
                         window.location.href = "/categoryManager";
-                    }, 2000)
+                    }, 2000);
                 }
             },
             error: function () {

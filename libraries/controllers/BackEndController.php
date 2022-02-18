@@ -2,8 +2,6 @@
 
 namespace Blog\Controllers;
 
-use Symfony\Component\HttpFoundation\Request;
-
 class BackEndController extends Controller
 {
     protected $modelName = \Blog\Models\Contact::class;
@@ -276,15 +274,14 @@ class BackEndController extends Controller
         $user = $this->userModel->read($param, 'id');
 
 
-        // if post exist
-        if ($user) {
-            $this->data = ['head' => ['title' => "Modifier un utilisateur"], 'user' => $user];
-            $this->setResponseHttp(200);
-            $this->render($this->path, $this->data);
-        } else {
+        if (!$user) {
             // if no post 
             $this->redirect("/error/404");
         }
+        // if post exist
+        $this->data = ['head' => ['title' => "Modifier un utilisateur"], 'user' => $user];
+        $this->setResponseHttp(200);
+        $this->render($this->path, $this->data);
     }
     /**
      * Show archived post
@@ -326,24 +323,24 @@ class BackEndController extends Controller
         $this->path = '\backend\admin\post\postEdit.html.twig';
         $posts = $this->postModel->readPostById($param);
 
-        // if post exist
-        if ($posts) {
-            $users = $this->userModel->readAllAuthors();
-            $categories = $this->categoryModel->readAll();
-            $postsCategory = $this->postcategoryModel->readAllCategoriesByPost($posts['id']);
-            $postCategory = "";
 
-            foreach ($postsCategory as $value) {
-                $postCategory .= $value['id'] . ", ";
-            }
-            $postCategory = substr($postCategory, 0, -2);
-
-            $this->data = ['head' => ['title' => $posts['title']], 'posts' => $posts, 'users' => $users, 'categories' => $categories, 'postCategory' => $postCategory];
-            $this->setResponseHttp(200);
-            $this->render($this->path, $this->data);
-        } else {
+        if (!$posts) {
             // if no post 
             $this->redirect("/error/404");
         }
+        // if post exist
+        $users = $this->userModel->readAllAuthors();
+        $categories = $this->categoryModel->readAll();
+        $postsCategory = $this->postcategoryModel->readAllCategoriesByPost($posts['id']);
+        $postCategory = "";
+
+        foreach ($postsCategory as $value) {
+            $postCategory .= $value['id'] . ", ";
+        }
+        $postCategory = substr($postCategory, 0, -2);
+
+        $this->data = ['head' => ['title' => $posts['title']], 'posts' => $posts, 'users' => $users, 'categories' => $categories, 'postCategory' => $postCategory];
+        $this->setResponseHttp(200);
+        $this->render($this->path, $this->data);
     }
 }

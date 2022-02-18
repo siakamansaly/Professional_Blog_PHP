@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Blog\Controllers\Globals;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Blog\Controllers\AuthController;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 
 abstract class Controller
@@ -30,8 +29,6 @@ abstract class Controller
         $this->model = new $this->modelName();
         $this->var = Request::createFromGlobals();
         $this->session = new Session();
-        
-
     }
 
 
@@ -238,15 +235,19 @@ abstract class Controller
         $currentPage = 1;
         if ($this->var->query->get('page') <> "" && $this->var->query->get('page') > 0 && $this->var->query->get('page') <= $AllPage) {
             $currentPage = (int) strip_tags($this->var->query->get('page'));
-        } 
+        }
         return $currentPage;
     }
     public function firstPage(int $currentPage, int $AllPosts, int $AllPostsByPage)
     {
-        if ($AllPosts > $AllPostsByPage) {
-            $first = ($currentPage * $AllPostsByPage) - $AllPostsByPage;
-        } else {
-            $first = 0;
+        switch ($AllPosts > $AllPostsByPage) {
+            case true:
+                $first = ($currentPage * $AllPostsByPage) - $AllPostsByPage;
+                break;
+
+            default:
+                $first = 0;
+                break;
         }
         return $first;
     }
