@@ -9,17 +9,17 @@ class HomeController extends Controller
     protected $modelName = \Blog\Models\Contact::class;
     private $path;
     private $data;
-    private $userModel;
     private $postModel;
     private $categoryModel;
     private $commentsModel;
     private $postcategoryModel;
     private $itemsByPage = 9;
+    protected $auth;
 
     public function __construct()
     {
         parent::__construct();
-        $this->userModel = new \Blog\Models\User;
+
         $this->postModel = new \Blog\Models\Post;
         $this->categoryModel = new \Blog\Models\PostCategory;
         $this->commentsModel = new \Blog\Models\Comment;
@@ -113,7 +113,8 @@ class HomeController extends Controller
 
         // if post exist
         $sidebar = false;
-        if (AuthController::is_admin()) {
+        $this->auth = new AuthController;
+        if ($this->auth->is_admin()) {
             $sidebar = true;
         }
         $postsCategory = $this->postcategoryModel->readAllCategoriesByPost($posts['id']);

@@ -23,10 +23,10 @@ class AuthController extends Controller
      * Redirects user if not logged in
      * @return void
      */
-    public static function force_login()
+    public function force_login()
     {
-        if (empty(SessionController::get('auth', 'login'))) {
-            self::redirect("/error/401");
+        if (empty($this->session->get('auth'))) {
+            $this->redirect("/error/401");
         }
     }
 
@@ -34,9 +34,9 @@ class AuthController extends Controller
      * Checks if the user is logged in
      * @return bool
      */
-    public static function is_login(): bool
+    public function is_login(): bool
     {
-        if (SessionController::get('auth', 'login') <> "") {
+        if ($this->session->get('auth') <> "") {
             return true;
         }
         return false;
@@ -46,9 +46,9 @@ class AuthController extends Controller
      * Checks if the user is logged in
      * @return bool
      */
-    public static function is_admin(): bool
+    public function is_admin(): bool
     {
-        if (SessionController::get('userType', 'login') == 'admin') {
+        if ($this->session->get('userType') == 'admin') {
             return true;
         }
         return false;
@@ -58,20 +58,20 @@ class AuthController extends Controller
      * Checks if the user is an administrator
      * @return true or redirect to homepage
      */
-    public static function force_admin()
+    public function force_admin()
     {
-        switch (SessionController::get('userType', 'login')) {
+        switch ($this->session->get('userType')) {
 
-            case SessionController::hasSession():
-                self::redirect("/error/401");
+            case $this->session->isStarted() === false :
+                $this->redirect("/error/401");
                 break;
 
-            case SessionController::get('userType', 'login') == 'admin':
+            case $this->session->get('userType') == 'admin':
                 return true;
                 break;
 
             default:
-                self::redirect("/error/403");
+                $this->redirect("/error/403");
                 break;
         }
     }
@@ -140,14 +140,14 @@ class AuthController extends Controller
             $message = $this->div_alert("Connexion réussie.", "success");
             $success = true;
             // Assign session variables
-            SessionController::set('firstName', $user['firstName'], 'login');
-            SessionController::set('lastName', $user['lastName'], 'login');
-            SessionController::set('email', $this->data['email'], 'login');
-            SessionController::set('userType', $user['userType'], 'login');
-            SessionController::set('auth', "true", 'login');
-            SessionController::set('regitrationDate', $user['regitrationDate'], 'login');
-            SessionController::set('lastConnectionDate', $user['lastConnectionDate'], 'login');
-            SessionController::set('id', $user['id'], 'login');
+            $this->session->set('firstName', $user['firstName']);
+            $this->session->set('lastName', $user['lastName']);
+            $this->session->set('email', $this->data['email']);
+            $this->session->set('userType', $user['userType']);
+            $this->session->set('auth', "true");
+            $this->session->set('regitrationDate', $user['regitrationDate']);
+            $this->session->set('lastConnectionDate', $user['lastConnectionDate']);
+            $this->session->set('id', $user['id']);
             // Update lastConnectionDate
             $this->data['lastConnectionDate'] = date('Y-m-d H:i:s');
             $this->model->update($this->data['email'], ["lastConnectionDate" => $this->data['lastConnectionDate']], 'email');
@@ -163,9 +163,16 @@ class AuthController extends Controller
 
     public function logout()
     {
-        SessionController::delete('login');
-        $logout = new \Blog\Controllers\HomeController;
-        $logout->index();
+        $this->session->remove('firstName');
+        $this->session->remove('lastName');
+        $this->session->remove('email');
+        $this->session->remove('userType');
+        $this->session->remove('auth', "true");
+        $this->session->remove('regitrationDate');
+        $this->session->remove('lastConnectionDate');
+        $this->session->remove('id');
+ 
+        $this->redirect("/");
     }
 
     /**

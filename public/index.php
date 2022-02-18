@@ -1,4 +1,7 @@
 <?php
+
+use Blog\Controllers\SessionController;
+
 define('ROOT_CONTROLLER', 'Blog\Controllers\\');
 require_once "./../vendor/autoload.php";
 // Active environment variable
@@ -7,8 +10,9 @@ $dotenv->load();
 //$ENV = filter_input_array(INPUT_ENV,$ENV);
 
 
+$session = new SessionController();
+$session->sessionStart();
 
-Blog\Controllers\SessionController::sessionStart();
 $token = md5(rand(1000, 9999));
 date_default_timezone_set('Europe/Paris');
 
@@ -100,5 +104,5 @@ if (is_array($match)) {
     $controller = new Blog\Controllers\HomeController;
     $controller->redirect("/error/404", 404);
 }
-//print_r($_SESSION);
+
 

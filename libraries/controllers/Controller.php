@@ -10,6 +10,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Blog\Controllers\Globals;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Blog\Controllers\AuthController;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 
 abstract class Controller
@@ -18,11 +21,17 @@ abstract class Controller
     protected $modelName;
     protected $twig = null;
     protected $var;
+    protected $auth;
+    protected $session;
+
 
     public  function __construct()
     {
         $this->model = new $this->modelName();
         $this->var = Request::createFromGlobals();
+        $this->session = new Session();
+        
+
     }
 
 
@@ -40,11 +49,11 @@ abstract class Controller
                 'needs_context' => true,
             ]);
         }
-
-        if (AuthController::is_login()) {
+        $this->auth = new AuthController;
+        if ($this->auth->is_login()) {
             $params["logged"] = true;
         }
-        if (AuthController::is_admin()) {
+        if ($this->auth->is_admin()) {
             $params["admin"] = true;
         }
         return $this->twig->display($view, $params);

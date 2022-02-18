@@ -34,11 +34,11 @@ class CommentController extends Controller
         $this->data['parentId'] = $this->sanitize($this->var->request->get('parent_id'));
         $this->data['Post_id'] = $this->sanitize($this->var->request->get('post_id'));
         $this->data['dateAddComment'] = date('Y-m-d H:i:s');
-        $this->data['User_id'] = SessionController::get('id', 'login');
+        $this->data['User_id'] = $this->session->get('id');
         $this->data['content'] = $this->sanitize($this->var->request->get('comment'));
         $this->data['status'] = 0;
         
-        if (SessionController::get('userType', 'login')=="admin")
+        if ($this->session->get('userType')=="admin")
         {
             $this->data['status'] = 1;
         }

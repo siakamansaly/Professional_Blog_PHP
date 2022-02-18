@@ -15,6 +15,7 @@ class BackEndController extends Controller
     private $commentsModel;
     private $postcategoryModel;
     private $itemsByPage = 9;
+    protected $auth;
 
     public function __construct()
     {
@@ -24,6 +25,7 @@ class BackEndController extends Controller
         $this->categoryModel = new \Blog\Models\PostCategory;
         $this->commentsModel = new \Blog\Models\Comment;
         $this->postcategoryModel = new \Blog\Models\Post_PostCategory;
+        $this->auth = new AuthController;
     }
 
     /**
@@ -34,16 +36,17 @@ class BackEndController extends Controller
     public function dashboard()
     {
         // Force user login
-        AuthController::force_login();
+        
+        $this->auth->force_login();
 
         // Select user info
-        $userAccount = $this->userModel->read(SessionController::get('email', 'login'), 'email');
+        $userAccount = $this->userModel->read($this->session->get('email'), 'email');
         unset($userAccount['password']);
         // Prepare Stats dashboard 
-        $commentsCounter = $this->commentsModel->count('User_id', SessionController::get('id', 'login'));
+        $commentsCounter = $this->commentsModel->count('User_id', $this->session->get('id'));
 
         // Select comments
-        $commentsUser = $this->commentsModel->readLastCommentUser(SessionController::get('id', 'login'), 'dateAddComment DESC', 10);
+        $commentsUser = $this->commentsModel->readLastCommentUser($this->session->get('id'), 'dateAddComment DESC', 10);
 
         $this->path = '\backend\dashboard\dashboard.html.twig';
         $this->data = ['head' => ['title' => 'Mon compte'], 'user' => $userAccount, 'commentsCounter' => $commentsCounter, 'commentsUser' => $commentsUser];
@@ -60,7 +63,7 @@ class BackEndController extends Controller
     public function adminblog()
     {
         // Force user login
-        AuthController::force_admin();
+        $this->auth->force_admin();
 
         
         $AllCommentsActive = $this->commentsModel->count('comment.status', '1');
@@ -91,7 +94,7 @@ class BackEndController extends Controller
     public function postManager()
     {
         // Force user login
-        AuthController::force_admin();
+        $this->auth->force_admin();
         $users = $this->userModel->readAllAuthors();
         $categories = $this->categoryModel->readAll();
 
@@ -120,7 +123,7 @@ class BackEndController extends Controller
     public function commentManager()
     {
         // Force user login
-        AuthController::force_admin();
+        $this->auth->force_admin();
         $status = 0;
 
         if ($this->var->query->get('status')) {
@@ -150,7 +153,7 @@ class BackEndController extends Controller
     public function commentManagerEdit($param)
     {
         // Force user login
-        AuthController::force_admin();
+        $this->auth->force_admin();
 
         $this->path = '\backend\admin\comment\commentEdit.html.twig';
         $comments = $this->commentsModel->readCommentById($param);
@@ -176,7 +179,7 @@ class BackEndController extends Controller
     public function categoryManager()
     {
         // Force user login
-        AuthController::force_admin();
+        $this->auth->force_admin();
 
         $AllCategoryCounter = $this->categoryModel->count();
 
@@ -201,7 +204,7 @@ class BackEndController extends Controller
     public function categoryManagerEdit($param)
     {
         // Force user login
-        AuthController::force_admin();
+        $this->auth->force_admin();
 
         $this->path = '\backend\admin\category\categoryEdit.html.twig';
         $category = $this->categoryModel->read($param);
@@ -225,7 +228,7 @@ class BackEndController extends Controller
     public function userManager()
     {
         // Force user login
-        AuthController::force_admin();
+        $this->auth->force_admin();
         $status = "";
         $type = "";
         $AllUserCounter = $this->userModel->count();
@@ -270,7 +273,7 @@ class BackEndController extends Controller
     public function userManagerEdit($param)
     {
         // Force user login
-        AuthController::force_admin();
+        $this->auth->force_admin();
 
         $this->path = '\backend\admin\user\userEdit.html.twig';
         $user = $this->userModel->read($param, 'id');
@@ -294,7 +297,7 @@ class BackEndController extends Controller
     public function postArchived()
     {
         // Force user login
-        AuthController::force_admin();
+        $this->auth->force_admin();
 
         $users = $this->userModel->readAllAuthors();
         $categories = $this->categoryModel->readAll();
@@ -321,7 +324,7 @@ class BackEndController extends Controller
     public function postManagerEdit($param)
     {
         // Force user login
-        AuthController::force_admin();
+        $this->auth->force_admin();
 
         $this->path = '\backend\admin\post\postEdit.html.twig';
         $posts = $this->postModel->readPostById($param);
