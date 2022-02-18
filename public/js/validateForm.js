@@ -62,7 +62,7 @@ $(document).ready(function () {
                 if (response.success === true) {
 
                     $("#formLogin")[0].reset();
-                    window.location.href = "/dashboard";
+                    location.reload();
 
                 }
             },

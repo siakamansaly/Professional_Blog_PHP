@@ -45,7 +45,7 @@ class BackController extends Controller
         $commentsCounter = $this->commentsModel->count('User_id', $this->session->get('id'));
 
         // Select comments
-        $commentsUser = $this->commentsModel->readLastCommentUser($this->session->get('id'), 'dateAddComment DESC', 10);
+        $commentsUser = $this->commentsModel->readLastCommentUser($this->session->get('id'), 10);
 
         $this->path = '\backend\dashboard\dashboard.html.twig';
         $this->data = ['head' => ['title' => 'Mon compte'], 'user' => $userAccount, 'commentsCounter' => $commentsCounter, 'commentsUser' => $commentsUser];

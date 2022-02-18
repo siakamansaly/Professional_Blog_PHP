@@ -112,9 +112,13 @@ class HomeController extends Controller
 
         // if post exist
         $sidebar = false;
+        $writeComment = false;
         $this->auth = new AuthController;
         if ($this->auth->isAdmin()) {
             $sidebar = true;
+        }
+        if ($this->auth->isLogin()) {
+            $writeComment = true;
         }
         $postsCategory = $this->postcategoryModel->readAllCategoriesByPost($posts['id']);
         $postsAllCategory = $this->categoryModel->readAll();
@@ -123,7 +127,7 @@ class HomeController extends Controller
         $commentsParent = $this->commentsModel->readAllCommentsParent($posts['id']);
         $commentsChild = $this->commentsModel->readAllCommentsChild($posts['id']);
 
-        $this->data = ['head' => ['title' => $posts['title']], 'post' => $posts, 'postsCategory' => $postsCategory, 'postsAllCategory' => $postsAllCategory, 'recentPosts' => $recentPosts, 'commentsParent' => $commentsParent, 'commentsChild' => $commentsChild, 'sidebar' => $sidebar];
+        $this->data = ['head' => ['title' => $posts['title']], 'post' => $posts, 'postsCategory' => $postsCategory, 'postsAllCategory' => $postsAllCategory, 'recentPosts' => $recentPosts, 'commentsParent' => $commentsParent, 'commentsChild' => $commentsChild, 'sidebar' => $sidebar, 'writeComment' => $writeComment];
         $this->setResponseHttp(200);
         $this->render($this->path, $this->data);
     }

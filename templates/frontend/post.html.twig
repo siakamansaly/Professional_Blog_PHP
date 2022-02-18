@@ -44,7 +44,9 @@
             <section class="mb-5">
                 <div class="card bg-light">
                     <div class="card-body">
+                        {% if writeComment == true %}
                         <div id="buttonNewComment" class="col mb-4 text-center">
+                            
                             <button class="btn btn-primary-other w-25 reply" type="submit" data-id="0">Nouveau commentaire</button>
                             
                         </div>
@@ -65,7 +67,12 @@
                                     </div>
                                 </div>
                             </form>
+                            {% else %}
 
+                            <p class="text-center">Connectez-vous si vous souhaitez commenter.</p>
+                            <p class="text-center"><a class="btn btn-outline-primary mb-4 " href="/#login" data-bs-toggle="modal" data-bs-target="#login">Se connecter</a></p>
+
+                            {% endif %}
                             
                         <!-- Comment with nested comments-->
                         {% for commentParent in commentsParent %}
@@ -80,6 +87,7 @@
                             <div class="ms-3 w-100">
                                 <div class="fw-bold">{{commentParent.firstName ~ " " ~ commentParent.lastName}} <span class="badge badge-light text-primary mx-2">{{commentParent.dateAddComment|date("d/m/Y H:i")}}</span></div>
                                 {{commentParent.content|raw}}
+                                {% if writeComment == true %}
                                 <div class="row justify-content-center mb-4">
                                     <div class="col">
                                         <a href="#" class="reply mb-4" type="submit" data-id="{{commentParent.id}}">Répondre</a>
@@ -88,7 +96,7 @@
                                         
                                     </div>
                                 </div>
-
+                                {% endif %}
 
                                 <!-- Child comment 1-->
                                 {% for commentChild in commentsChild %}
