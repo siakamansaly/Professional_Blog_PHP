@@ -2,8 +2,8 @@
 define('ROOT_CONTROLLER', 'Blog\Controllers\\');
 require_once "./../vendor/autoload.php";
 // Active environment variable
-//$dotenv = Dotenv\Dotenv::createUnsafeImmutable('./../');
-//$ENV = $dotenv->load();
+$dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__.'./../');
+$dotenv->load();
 //$ENV = filter_input_array(INPUT_ENV,$ENV);
 
 

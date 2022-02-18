@@ -13,23 +13,26 @@ use Blog\Controllers\Globals;
 
 class Database
 {
-    private static $instance = null;
+    private $instance = null;
 
     /**
      * Return connexion database
      * 
      * @return PDO
      */
-    public static function getPdo(): \PDO
+    public function getPdo(): \PDO
     {     
-        if (self::$instance === null) :
-            $ENV = new Globals;
-            $ENV = $ENV->allEnv();
-            self::$instance = new \PDO($ENV["DB_CONNECTION"] . ':dbname=' . $ENV["DB_NAME"] . ';charset=' . $ENV["CHARSET"] . ';host=' . $ENV["DB_HOST"], $ENV["DB_USER"], $ENV["DB_PASSWORD"]);
-            self::$instance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-            self::$instance->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
+        if ($this->instance === null) :
+            $this->instance = new \PDO($this->env("DB_CONNECTION") . ':dbname=' . $this->env("DB_NAME") . ';charset=' . $this->env("CHARSET") . ';host=' . $this->env("DB_HOST"), $this->env("DB_USER"), $this->env("DB_PASSWORD"));
+            $this->instance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            $this->instance->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
         endif;
-        return self::$instance;
+        return $this->instance;
+    }
+
+    public function env($param)
+    {
+       return getenv($param);
     }
     
     

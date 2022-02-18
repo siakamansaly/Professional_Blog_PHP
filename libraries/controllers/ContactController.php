@@ -21,7 +21,10 @@ class ContactController extends Controller
      * @return void
      */
     public function contact()
-    {        
+    {   
+        $ENV = new Globals;
+        $titleWebSite = $ENV->env("TITLE_WEBSITE");
+    
         $this->data = [];
         $json=[];
         $message="";
@@ -34,7 +37,7 @@ class ContactController extends Controller
         $this->data['email'] = $this->sanitize($this->var->request->get('email'));
         $this->data['message'] = $this->sanitize($this->var->request->get('message'));
 
-        $this->data['subject'] = $_ENV["TITLE_WEBSITE"] . ' - Formulaire de contact';
+        $this->data['subject'] = $titleWebSite . ' - Formulaire de contact';
         $message = $this->div_alert("Message envoyé avec succès !","success");
         $success=$this->sendMessage($this->data);
         $json['success']=$success;
@@ -43,4 +46,5 @@ class ContactController extends Controller
         $response->send();
         
     }
+    
 }

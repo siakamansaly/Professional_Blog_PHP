@@ -11,7 +11,8 @@ abstract class Model
 
     public function __construct()
     {
-        $this->pdo = \Blog\Database::getPdo();
+        $this->pdo = new Database;
+        $this->pdo = $this->pdo->getPdo();
     }
 
 

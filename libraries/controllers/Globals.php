@@ -7,16 +7,16 @@ use Dotenv\Dotenv;
 class Globals 
 {
     private $ENV;
-    private $dotenv;
+    private $dotenv = null;
     
     /**
      * Get all Environment variables
+     * @return array
      */
-    public function allEnv()
-    {   
-        $this->dotenv = Dotenv::createImmutable(__DIR__."./../../");
-        $this->ENV = $this->dotenv->load();
-        return $this->ENV;
+    
+    public function env($param = null)
+    {
+       return getenv($param);
     }
     
     
