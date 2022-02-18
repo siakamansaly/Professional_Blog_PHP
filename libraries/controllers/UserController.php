@@ -29,7 +29,6 @@ class UserController extends Controller
      */
     public function editProfile()
     {
-        //print_r($_POST);die;
         if (empty($this->var->request->all())) {
             $this->redirect("/error/405");
         }
@@ -58,21 +57,21 @@ class UserController extends Controller
 
         if ($this->data['email'] <> $emailOld['email']) {
             if ($this->model->getEmail($this->data['email']) == 1) {
-                $this->errorMessage .= $this->li_alert("L'adresse email renseignée est déja inscrite ! ");
+                $this->errorMessage .= $this->liAlert("L'adresse email renseignée est déja inscrite ! ");
                 $error++;
             }
         }
 
-        $this->errorMessage = $this->ul_alert($this->errorMessage);
+        $this->errorMessage = $this->ulAlert($this->errorMessage);
 
         switch ($error) {
             case 0:
                 $this->model->update($idUser, $this->data);
-                $message = $this->div_alert("Sauvegarde effectuée.", "success");
+                $message = $this->divAlert("Sauvegarde effectuée.", "success");
                 $success = true;
                 break;
             default:
-                $message = $this->div_alert($this->errorMessage, "danger");
+                $message = $this->divAlert($this->errorMessage, "danger");
                 $success = false;
                 break;
         }
@@ -90,7 +89,6 @@ class UserController extends Controller
      */
     public function editPicture()
     {
-        //print_r($_POST);die;
         $this->data = [];
         $json = [];
         $success = "";
@@ -101,7 +99,7 @@ class UserController extends Controller
         switch ($this->var->files->get('picture')) {
             case true:
                 $check = $this->checkImage($this->var->files->get('picture'));
-                if ($check["success"] == false) {
+                if ($check["success"] === false) {
                     $error++;
                     $this->errorMessage .= $check["message"];
                 }
@@ -115,7 +113,7 @@ class UserController extends Controller
 
         $idUser = $this->sanitize($this->var->request->get('id'));
 
-        $this->errorMessage = $this->ul_alert($this->errorMessage);
+        $this->errorMessage = $this->ulAlert($this->errorMessage);
 
         switch ($error) {
             case 0:
@@ -129,12 +127,12 @@ class UserController extends Controller
                 $this->data['picture'] = $this->uploadImage($this->var->files->get('picture'), __DIR__ . '\..\..\public/img/blog/profiles/', $check["extension"]);
 
                 $this->model->update($idUser, $this->data);
-                $message = $this->div_alert("Photo modifiée.", "success");
+                $message = $this->divAlert("Photo modifiée.", "success");
                 $success = true;
                 break;
 
             default:
-                $message = $this->div_alert($this->errorMessage, "danger");
+                $message = $this->divAlert($this->errorMessage, "danger");
                 $success = false;
                 break;
         }
@@ -161,7 +159,7 @@ class UserController extends Controller
         $this->data['status'] = 1;
         $this->model->update($idUser, $this->data);
 
-        $message = $this->div_alert("Utilisateur validé avec succès.", "success");
+        $message = $this->divAlert("Utilisateur validé avec succès.", "success");
         $success = true;
 
         $json['success'] = $success;
@@ -187,7 +185,7 @@ class UserController extends Controller
         $this->data['status'] = 0;
         $this->model->update($id_user, $this->data);
 
-        $message = $this->div_alert("L'utilisateur a été désactivé avec succès.", "success");
+        $message = $this->divAlert("L'utilisateur a été désactivé avec succès.", "success");
         $success = true;
 
         $json['success'] = $success;
@@ -227,12 +225,12 @@ class UserController extends Controller
 
                 // Delete user
                 $this->model->delete($id_user, 'id');
-                $message = $this->div_alert("L'utilisateur a bien été supprimé.", "success");
+                $message = $this->divAlert("L'utilisateur a bien été supprimé.", "success");
                 $success = true;
                 break;
 
             default:
-                $message = $this->div_alert("Merci de réattribuer les articles créés par cet utilisateur avant suppression. <br/>Nombre d'article concerné : <b>$countPost</b>", "danger");
+                $message = $this->divAlert("Merci de réattribuer les articles créés par cet utilisateur avant suppression. <br/>Nombre d'article concerné : <b>$countPost</b>", "danger");
                 $success = false;
                 break;
         }
@@ -252,7 +250,7 @@ class UserController extends Controller
     public function userManager()
     {
         // Force user login
-        $this->auth->force_admin();
+        $this->auth->forceAdmin();
         $status = "";
         $type = "";
         $AllUserCounter = $this->model->count();
@@ -280,8 +278,6 @@ class UserController extends Controller
 
         $users = $this->model->readAll("$requete", "id ASC LIMIT $firstPage,$this->itemsByPage");
 
-        //print_r($requete);die;
-
         $this->path = '\backend\admin\user\userManager.html.twig';
         $this->data = ['head' => ['title' => 'Administration des utilisateurs'], 'users' => $users, 'AllUserCounter' => $AllUserCounter, 'AllPage' => $AllPage, 'currentPage' => $currentPage, 'status' => $status, 'type' => $type];
         $this->setResponseHttp(200);
@@ -297,7 +293,7 @@ class UserController extends Controller
     public function userManagerEdit($param)
     {
         // Force user login
-        $this->auth->force_admin();
+        $this->auth->forceAdmin();
 
         $this->path = '\backend\admin\user\userEdit.html.twig';
         $user = $this->model->read($param, 'id');

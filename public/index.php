@@ -1,27 +1,16 @@
 <?php
-
 use Blog\Controllers\SessionController;
 
 define('ROOT_CONTROLLER', 'Blog\Controllers\\');
 require_once "./../vendor/autoload.php";
+date_default_timezone_set('Europe/Paris');
+
 // Active environment variable
 $dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__.'./../');
 $dotenv->load();
-//$ENV = filter_input_array(INPUT_ENV,$ENV);
-
 
 $session = new SessionController();
 $session->sessionStart();
-
-$token = md5(rand(1000, 9999));
-date_default_timezone_set('Europe/Paris');
-
-// Debug mode
-/*$whoops = new \Whoops\Run;
-$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-$whoops->register();*/
-
-
 
 // Start Router
 $router = new AltoRouter();

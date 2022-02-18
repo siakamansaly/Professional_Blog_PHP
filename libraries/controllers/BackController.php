@@ -21,9 +21,9 @@ class BackController extends Controller
         parent::__construct();
         $this->userModel = new \Blog\Models\User;
         $this->postModel = new \Blog\Models\Post;
-        $this->categoryModel = new \Blog\Models\PostCategory;
+        $this->categoryModel = new \Blog\Models\Category;
         $this->commentsModel = new \Blog\Models\Comment;
-        $this->postcategoryModel = new \Blog\Models\Post_PostCategory;
+        $this->postcategoryModel = new \Blog\Models\PostCategory;
         $this->auth = new AuthController;
     }
 
@@ -36,7 +36,7 @@ class BackController extends Controller
     {
         // Force user login
 
-        $this->auth->force_login();
+        $this->auth->forceLogin();
 
         // Select user info
         $userAccount = $this->userModel->read($this->session->get('email'), 'email');
@@ -62,7 +62,7 @@ class BackController extends Controller
     public function adminblog()
     {
         // Force user login
-        $this->auth->force_admin();
+        $this->auth->forceAdmin();
 
 
         $AllCommentsActive = $this->commentsModel->count('comment.status', '1');
@@ -107,7 +107,7 @@ class BackController extends Controller
         $this->data['message'] = $this->sanitize($this->var->request->get('message'));
 
         $this->data['subject'] = $titleWebSite . ' - Formulaire de contact';
-        $message = $this->div_alert("Message envoyé avec succès !","success");
+        $message = $this->divAlert("Message envoyé avec succès !","success");
         $success=$this->sendMessage($this->data);
         $json['success']=$success;
         $json['message']=$message;

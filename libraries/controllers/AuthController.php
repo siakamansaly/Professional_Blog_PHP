@@ -22,7 +22,7 @@ class AuthController extends Controller
      * Redirects user if not logged in
      * @return void
      */
-    public function force_login()
+    public function forceLogin()
     {
         if (empty($this->session->get('auth'))) {
             $this->redirect("/error/401");
@@ -33,7 +33,7 @@ class AuthController extends Controller
      * Checks if the user is logged in
      * @return bool
      */
-    public function is_login(): bool
+    public function isLogin(): bool
     {
         if ($this->session->get('auth') <> "") {
             return true;
@@ -45,7 +45,7 @@ class AuthController extends Controller
      * Checks if the user is logged in
      * @return bool
      */
-    public function is_admin(): bool
+    public function isAdmin(): bool
     {
         if ($this->session->get('userType') == 'admin') {
             return true;
@@ -57,7 +57,7 @@ class AuthController extends Controller
      * Checks if the user is an administrator
      * @return true or redirect to homepage
      */
-    public function force_admin()
+    public function forceAdmin()
     {
         switch ($this->session->get('userType')) {
 
@@ -98,7 +98,7 @@ class AuthController extends Controller
 
         // Check if values not empty
         if (empty($this->data['email']) || empty($this->data['password'])) {
-            $this->errorMessage .= $this->li_alert("Merci de renseigner tous les champs obligatoire !");
+            $this->errorMessage .= $this->liAlert("Merci de renseigner tous les champs obligatoire !");
             $error++;
         }
         // Check if email exist
@@ -111,28 +111,28 @@ class AuthController extends Controller
                         $this->password = $user['password'];
                         // Check password
                         if ((empty(password_verify($this->data['password'], $this->password)))) {
-                            $this->errorMessage .= $this->li_alert("L'identifiant ou le mot de passe est incorrect !");
+                            $this->errorMessage .= $this->liAlert("L'identifiant ou le mot de passe est incorrect !");
                             $error++;
                         }
                         break;
                     default:
-                        $this->errorMessage .= $this->li_alert("Ce compte n'est pas actif. Merci de contacter l'administrateur.");
+                        $this->errorMessage .= $this->liAlert("Ce compte n'est pas actif. Merci de contacter l'administrateur.");
                         $error++;
                         break;
                 }
                 break;
             default:
                 $error++;
-                $this->errorMessage = $this->li_alert("Ce compte n'existe pas.");
+                $this->errorMessage = $this->liAlert("Ce compte n'existe pas.");
                 break;
         }
 
 
-        $this->errorMessage = $this->ul_alert($this->errorMessage);
+        $this->errorMessage = $this->ulAlert($this->errorMessage);
         // Construct and send result JSON
         switch ($error) {
             case 0:
-                $message = $this->div_alert("Connexion réussie.", "success");
+                $message = $this->divAlert("Connexion réussie.", "success");
                 $success = true;
                 // Assign session variables
                 $this->session->set('firstName', $user['firstName']);
@@ -149,7 +149,7 @@ class AuthController extends Controller
                 break;
 
             default:
-                $message = $this->div_alert($this->errorMessage, "danger");
+                $message = $this->divAlert($this->errorMessage, "danger");
                 $success = false;
                 break;
         }
@@ -182,7 +182,6 @@ class AuthController extends Controller
      */
     public function register()
     {
-        //print_r($_POST);die;
         if (empty($this->var->request->all())) {
             $this->redirect("/error/405");
         }
@@ -202,12 +201,12 @@ class AuthController extends Controller
         $passwordRepeat = $this->sanitize($this->var->request->get('passwordRepeat'));
 
         if ($this->model->getEmail($this->data['email']) == 1) {
-            $this->errorMessage .= $this->li_alert("L'adresse email renseignée est déja inscrite !");
+            $this->errorMessage .= $this->liAlert("L'adresse email renseignée est déja inscrite !");
             $error++;
         }
         switch ($this->data['password'] <> $passwordRepeat) {
             case true:
-                $this->errorMessage .= $this->li_alert("Les mots de passe saisies ne sont pas identique !");
+                $this->errorMessage .= $this->liAlert("Les mots de passe saisies ne sont pas identique !");
                 $error++;
                 break;
             default:
@@ -216,7 +215,7 @@ class AuthController extends Controller
         }
 
 
-        $this->errorMessage = $this->ul_alert($this->errorMessage);
+        $this->errorMessage = $this->ulAlert($this->errorMessage);
 
         switch ($error) {
             case 0:
@@ -227,12 +226,12 @@ class AuthController extends Controller
 
                 $this->data['subject'] = $titleWebSite . " - Inscription en attente d'approbation";
                 $this->data['message'] = "Votre inscription a bien été pris en compte. L'administrateur validera votre inscription très rapidemment. A bientôt !";
-                $message = $this->div_alert("Inscription réussie. <br/> Patience... Votre compte est en attente de validation par l'administrateur.", "success");
+                $message = $this->divAlert("Inscription réussie. <br/> Patience... Votre compte est en attente de validation par l'administrateur.", "success");
                 $this->sendMessage($this->data);
                 $success = true;
                 break;
             default:
-                $message = $this->div_alert($this->errorMessage, "danger");
+                $message = $this->divAlert($this->errorMessage, "danger");
                 $success = false;
                 break;
         }
@@ -264,14 +263,14 @@ class AuthController extends Controller
         $emailLostPassword = $this->sanitize($this->var->request->get('emailLostPassword'));
 
         if ($this->model->getEmail($emailLostPassword) == 0) {
-            $this->errorMessage .= $this->li_alert("L'adresse email renseignée n'est pas inscrite !");
+            $this->errorMessage .= $this->liAlert("L'adresse email renseignée n'est pas inscrite !");
             $error++;
         }
-        $this->errorMessage = $this->ul_alert($this->errorMessage);
+        $this->errorMessage = $this->ulAlert($this->errorMessage);
 
         switch ($error) {
             case 0:
-                $message = $this->div_alert("Un lien de réinitialisation de mot de passe a été envoyé sur votre boite mail.", "success");
+                $message = $this->divAlert("Un lien de réinitialisation de mot de passe a été envoyé sur votre boite mail.", "success");
                 $success = true;
                 $this->data['token'] = uniqid('', false);
                 $this->model->update($emailLostPassword, $this->data, 'email');
@@ -287,7 +286,7 @@ class AuthController extends Controller
                 break;
 
             default:
-                $message = $this->div_alert($this->errorMessage, "danger");
+                $message = $this->divAlert($this->errorMessage, "danger");
                 $success = false;
                 break;
         }
@@ -329,19 +328,19 @@ class AuthController extends Controller
 
             // Check password
             if ((empty(password_verify($passwordOld, $this->password)))) {
-                $this->errorMessage .= $this->li_alert("L'ancien mot de passe est incorrect !");
+                $this->errorMessage .= $this->liAlert("L'ancien mot de passe est incorrect !");
                 $error++;
             }
         }
         if ($this->data['password'] <> $passwordRepeat) {
-            $this->errorMessage .= $this->li_alert("Les mots de passe saisies ne sont pas identique !");
+            $this->errorMessage .= $this->liAlert("Les mots de passe saisies ne sont pas identique !");
             $error++;
         }
-        $this->errorMessage = $this->ul_alert($this->errorMessage);
+        $this->errorMessage = $this->ulAlert($this->errorMessage);
 
         switch ($error) {
             case 0:
-                $message = $this->div_alert("Votre mot de passe a bien été modifié.", "success");
+                $message = $this->divAlert("Votre mot de passe a bien été modifié.", "success");
                 $success = true;
                 $this->data['password'] = password_hash($this->data['password'], PASSWORD_DEFAULT);
                 $this->data['token'] = NULL;
@@ -360,7 +359,7 @@ class AuthController extends Controller
                 break;
 
             default:
-                $message = $this->div_alert($this->errorMessage, "danger");
+                $message = $this->divAlert($this->errorMessage, "danger");
                 $success = false;
                 break;
         }

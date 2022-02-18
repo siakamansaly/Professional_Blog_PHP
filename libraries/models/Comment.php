@@ -2,7 +2,6 @@
 
 namespace Blog\Models;
 
-
 class Comment extends Model
 {
 
@@ -33,11 +32,11 @@ class Comment extends Model
     public function readAllCommentsByUser(string $idUser, ?string $select = "", ?string $order = "comment.dateAddComment DESC", ?string $limit = ""): array
     {
         $query = "SELECT comment.id,comment.datePublishComment,comment.dateAddComment,comment.content,comment.status,comment.parentId,comment.User_id,comment.Post_id,post.title, user.firstName, user.lastName, user.picture FROM {$this->table} JOIN post on {$this->table}.Post_id = post.id JOIN user on comment.User_id = user.id WHERE comment.User_id = $idUser ";
-        
+
         if ($select) {
             $query = "SELECT $select FROM {$this->table} JOIN post on {$this->table}.Post_id = post.id JOIN user on comment.User_id = user.id WHERE comment.User_id = $idUser ";
-        } 
-        
+        }
+
         if ($order) {
             $query .= " ORDER BY $order";
         }
@@ -101,9 +100,14 @@ class Comment extends Model
      * 
      * @return mixed
      */
-    public function readCommentById(string $idComment)
+    public function readCommentById(int $idComment)
     {
-        $query = "SELECT comment.id,comment.datePublishComment,comment.dateAddComment,comment.content,comment.status,comment.parentId,comment.User_id,comment.Post_id,post.title, user.firstName, user.lastName, user.picture FROM {$this->table} JOIN post on {$this->table}.Post_id = post.id JOIN user on comment.User_id = user.id WHERE comment.id LIKE '$idComment' ";
+        $query = "SELECT comment.id,comment.datePublishComment,comment.dateAddComment,comment.content,comment.status,comment.parentId,comment.User_id,comment.Post_id,post.title, user.firstName, user.lastName, user.picture 
+        FROM {$this->table} 
+        JOIN post on {$this->table}.Post_id = post.id 
+        JOIN user on comment.User_id = user.id 
+        WHERE comment.id LIKE $idComment";
+
         return $this->row($query, [$idComment]);
     }
 }

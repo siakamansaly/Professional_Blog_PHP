@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class PostCategoryController extends Controller
 {
     private $postcategoryModel;
-    protected $modelName = \Blog\Models\PostCategory::class;
+    protected $modelName = \Blog\Models\Category::class;
     public $path;
     public $data;
     public $errorMessage = "";
@@ -20,7 +20,7 @@ class PostCategoryController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->postcategoryModel = new \Blog\Models\Post_PostCategory;
+        $this->postcategoryModel = new \Blog\Models\PostCategory;
         $this->auth = new AuthController;
     }
 
@@ -40,7 +40,7 @@ class PostCategoryController extends Controller
         $this->model->insert($this->data);
     
         $json['success'] = true;
-        $json['message'] = $this->div_alert("Catégorie ajoutée avec succès.", "success");
+        $json['message'] = $this->divAlert("Catégorie ajoutée avec succès.", "success");
         $response = new JsonResponse($json);
         $response->send();
     }
@@ -65,7 +65,7 @@ class PostCategoryController extends Controller
 
         $this->model->update($id_category, $this->data);
 
-        $message = $this->div_alert("Catégorie mis à jour avec succès.", "success");
+        $message = $this->divAlert("Catégorie mis à jour avec succès.", "success");
         $success = true;
     
         $json['success'] = $success;
@@ -94,7 +94,7 @@ class PostCategoryController extends Controller
 
         $this->model->delete($id_category, 'id');
 
-        $message = $this->div_alert("La catégorie a bien été supprimé.", "success");
+        $message = $this->divAlert("La catégorie a bien été supprimé.", "success");
         $success = true;
     
         $json['success'] = $success;
@@ -111,7 +111,7 @@ class PostCategoryController extends Controller
     public function categoryManager()
     {
         // Force user login
-        $this->auth->force_admin();
+        $this->auth->forceAdmin();
 
         $AllCategoryCounter = $this->model->count();
 
@@ -136,7 +136,7 @@ class PostCategoryController extends Controller
     public function categoryManagerEdit($param)
     {
         // Force user login
-        $this->auth->force_admin();
+        $this->auth->forceAdmin();
 
         $this->path = '\backend\admin\category\categoryEdit.html.twig';
         $category = $this->model->read($param);

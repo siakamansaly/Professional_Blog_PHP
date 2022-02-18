@@ -46,7 +46,7 @@ abstract class Controller extends Renderer
      * @param string [success|danger]
      * @return mixed
      */
-    public function div_alert(string $message, string $alert = "success")
+    public function divAlert(string $message, string $alert = "success")
     {
         return '<div class="col mb-4 justify-content-center alert alert-' . $alert . '">' . $message . '</div>';
     }
@@ -55,7 +55,7 @@ abstract class Controller extends Renderer
      * Return Message with balise 'li'
      * @return mixed
      */
-    public function li_alert(string $message)
+    public function liAlert(string $message)
     {
         return "<li class='list-unstyled'><i class='fas fa-exclamation-triangle mx-2'></i>  " . $message . "</li>";
     }
@@ -65,7 +65,7 @@ abstract class Controller extends Renderer
      * @param string
      * @return mixed
      */
-    public function ul_alert(string $message)
+    public function ulAlert(string $message)
     {
         return "<ul>" . $message . "</ul>";
     }
@@ -82,7 +82,6 @@ abstract class Controller extends Renderer
         $error = 0;
         $maxSize = 5242880;
 
-        //$name = $file->getClientOriginalName();
         $size = $file->getSize();
         $errorFile = $file->getError();
 
@@ -91,15 +90,15 @@ abstract class Controller extends Renderer
         //Tableau des extensions que l'on accepte
         $extensions = ['jpg', 'png', 'jpeg'];
         if (!in_array($extension, $extensions)) {
-            $errorMessage .= $this->li_alert("Extension de fichier non acceptée ! Extensions autorisées : png, jpg, jpeg");
+            $errorMessage .= $this->liAlert("Extension de fichier non acceptée ! Extensions autorisées : png, jpg, jpeg");
             $error++;
         }
         if ($errorFile <> 0) {
-            $errorMessage .= $this->li_alert("Impossible de charger ce fichier ! Erreur No. $errorFile");
+            $errorMessage .= $this->liAlert("Impossible de charger ce fichier ! Erreur No. $errorFile");
             $error++;
         }
         if ($size > $maxSize) {
-            $errorMessage .= $this->li_alert("Taille de fichier trop grande !");
+            $errorMessage .= $this->liAlert("Taille de fichier trop grande !");
             $error++;
         }
 

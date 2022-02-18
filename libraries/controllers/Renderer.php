@@ -34,17 +34,17 @@ abstract class Renderer
     public function render(string $view, array $params = [])
     {
 
-        if ($this->twig == null) {
+        if ($this->twig === null) {
             $this->twig = new Environment(new FilesystemLoader('./../templates'), [
                 'cache' => false, // __DIR__ . '/tmp'
                 'needs_context' => true,
             ]);
         }
         $this->auth = new AuthController;
-        if ($this->auth->is_login()) {
+        if ($this->auth->isLogin()) {
             $params["logged"] = true;
         }
-        if ($this->auth->is_admin()) {
+        if ($this->auth->isAdmin()) {
             $params["admin"] = true;
         }
         return $this->twig->display($view, $params);
@@ -87,13 +87,11 @@ abstract class Renderer
         $mail->CharSet = "UTF-8";
         $mail->setLanguage('fr');
         $mail->isSMTP();
-        //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
         $mail->SMTPDebug = 0;
         $mail->Host = $ENV->env("HOST_SMTP");
         $mail->Port = $ENV->env("PORT_SMTP");
 
         $mail->setFrom($ENV->env("MAIL_FROM"), $ENV->env("MAIL_FIRSTNAME") . " " . $ENV->env("MAIL_LASTNAME"));
-        //$mail->addBCC($_ENV['MAIL_FROM'], $_ENV['MAIL_FIRSTNAME'] . " " . $_ENV['MAIL_LASTNAME']);
         $mail->addBCC($data['email'], $data['firstName'] . " " . $data['lastName']);
         $mail->addAddress($ENV->env("MAIL_FROM"), $ENV->env("MAIL_FIRSTNAME") . " " . $ENV->env("MAIL_LASTNAME"));
         $mail->Subject = $data['subject'];

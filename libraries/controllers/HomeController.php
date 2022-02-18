@@ -20,9 +20,9 @@ class HomeController extends Controller
         parent::__construct();
 
         $this->postModel = new \Blog\Models\Post;
-        $this->categoryModel = new \Blog\Models\PostCategory;
+        $this->categoryModel = new \Blog\Models\Category;
         $this->commentsModel = new \Blog\Models\Comment;
-        $this->postcategoryModel = new \Blog\Models\Post_PostCategory;
+        $this->postcategoryModel = new \Blog\Models\PostCategory;
     }
 
 
@@ -113,7 +113,7 @@ class HomeController extends Controller
         // if post exist
         $sidebar = false;
         $this->auth = new AuthController;
-        if ($this->auth->is_admin()) {
+        if ($this->auth->isAdmin()) {
             $sidebar = true;
         }
         $postsCategory = $this->postcategoryModel->readAllCategoriesByPost($posts['id']);

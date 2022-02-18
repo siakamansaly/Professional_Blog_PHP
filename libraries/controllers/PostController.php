@@ -25,8 +25,8 @@ class PostController extends Controller
         parent::__construct();
         $this->userModel = new \Blog\Models\User;
         $this->comments = new \Blog\Models\Comment;
-        $this->postcategoryModel = new \Blog\Models\Post_PostCategory;
-        $this->categoryModel = new \Blog\Models\PostCategory;
+        $this->postcategoryModel = new \Blog\Models\PostCategory;
+        $this->categoryModel = new \Blog\Models\Category;
         $this->slugify = new Slugify();
         $this->auth = new AuthController;
     }
@@ -53,16 +53,13 @@ class PostController extends Controller
             $this->errorMessage .= "Taille de fichier trop grande !";
         }
 
-        //print_r($this->var->files->get('picture'));die;
-
         if (!empty($this->var->files->get('picture'))) {
             $check = $this->checkImage($this->var->files->get('picture'));
-            if ($check["success"] == false) {
+            if ($check["success"] === false) {
                 $error++;
                 $this->errorMessage .= $check["message"];
             }
         }
-        //print_r($check);die;
 
         $this->data['title'] = $this->sanitize($this->var->request->get('titlePostAdd'));
         $this->data['chapo'] = $this->sanitize($this->var->request->get('chapoPostAdd'));
@@ -72,7 +69,7 @@ class PostController extends Controller
         $categories = json_encode($this->var->request->get('PostCategory_id'));
         $categories = json_decode($categories, true);
 
-        $this->errorMessage = $this->ul_alert($this->errorMessage);
+        $this->errorMessage = $this->ulAlert($this->errorMessage);
 
         switch ($error) {
             case 0:
@@ -93,12 +90,12 @@ class PostController extends Controller
                     $dataPost["PostCategory_id"] = $categorie;
                     $this->postcategoryModel->insert($dataPost);
                 }
-                $message = $this->div_alert("Article ajouté avec succès.", "success");
+                $message = $this->divAlert("Article ajouté avec succès.", "success");
                 $success = true;
                 break;
 
             default:
-                $message = $this->div_alert($this->errorMessage, "danger");
+                $message = $this->divAlert($this->errorMessage, "danger");
                 $success = false;
                 break;
         }
@@ -128,14 +125,13 @@ class PostController extends Controller
         $reset = "";
         if ($this->var->files->get('picture') <> "") {
             $check = $this->checkImage($this->var->files->get('picture'));
-            if ($check["success"] == false) {
+            if ($check["success"] === false) {
                 $error++;
                 $this->errorMessage .= $check["message"];
             }
         }
 
         $id_post = $this->var->request->get('idPostEdit');
-        //print_r($id_post);die;
         $this->data['title'] = $this->sanitize($this->var->request->get('titlePostAdd'));
         $this->data['chapo'] = $this->sanitize($this->var->request->get('chapoPostAdd'));
         $this->data['content'] = $this->sanitize($this->var->request->get('contentPostAdd'));
@@ -145,7 +141,7 @@ class PostController extends Controller
         $categories = json_encode($this->var->request->get('PostCategory_id'));
         $categories = json_decode($categories, true);
 
-        $this->errorMessage = $this->ul_alert($this->errorMessage);
+        $this->errorMessage = $this->ulAlert($this->errorMessage);
 
         switch ($error) {
             case 0:
@@ -171,12 +167,12 @@ class PostController extends Controller
                         $this->postcategoryModel->insert($dataPost);
                     }
                 }
-                $message = $this->div_alert("Article modifié avec succès.", "success");
+                $message = $this->divAlert("Article modifié avec succès.", "success");
                 $success = true;
                 break;
 
             default:
-                $message = $this->div_alert($this->errorMessage, "danger");
+                $message = $this->divAlert($this->errorMessage, "danger");
                 $success = false;
                 break;
         }
@@ -220,13 +216,13 @@ class PostController extends Controller
                 $this->postcategoryModel->delete($id_post, 'Post_id');
                 // Delete post
                 $this->model->delete($id_post, 'id');
-                $message = $this->div_alert("Article supprimé avec succès.", "success");
+                $message = $this->divAlert("Article supprimé avec succès.", "success");
                 break;
 
             default:
                 $this->data['status'] = -1;
                 $this->model->update($id_post, $this->data);
-                $message = $this->div_alert("L'article a été archivé car il contient des commentaires.", "success");
+                $message = $this->divAlert("L'article a été archivé car il contient des commentaires.", "success");
                 break;
         }
 
@@ -245,7 +241,7 @@ class PostController extends Controller
     public function postManager()
     {
         // Force user login
-        $this->auth->force_admin();
+        $this->auth->forceAdmin();
         $users = $this->userModel->readAllAuthors();
         $categories = $this->categoryModel->readAll();
 
@@ -274,7 +270,7 @@ class PostController extends Controller
     public function postArchived()
     {
         // Force user login
-        $this->auth->force_admin();
+        $this->auth->forceAdmin();
 
         $users = $this->userModel->readAllAuthors();
         $categories = $this->categoryModel->readAll();
@@ -301,7 +297,7 @@ class PostController extends Controller
     public function postManagerEdit($param)
     {
         // Force user login
-        $this->auth->force_admin();
+        $this->auth->forceAdmin();
 
         $this->path = '\backend\admin\post\postEdit.html.twig';
         $posts = $this->model->readPostById($param);

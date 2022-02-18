@@ -49,7 +49,7 @@ class CommentController extends Controller
         $this->model->insert($this->data);
     
         $json['success'] = true;
-        $json['message'] = $this->div_alert("Commentaire ajouté avec succès et en attente de modération par l'administrateur.", "success");
+        $json['message'] = $this->divAlert("Commentaire ajouté avec succès et en attente de modération par l'administrateur.", "success");
         $response = new JsonResponse($json);
         $response->send();
 
@@ -75,7 +75,7 @@ class CommentController extends Controller
 
         $this->model->update($id_comment, $this->data);
 
-        $message = $this->div_alert("Commentaire mis à jour avec succès.", "success");
+        $message = $this->divAlert("Commentaire mis à jour avec succès.", "success");
         $success = true;
     
         $json['success'] = $success;
@@ -103,7 +103,7 @@ class CommentController extends Controller
         $this->data['status'] = 1;
         $this->model->update($id_comment, $this->data);
 
-        $message = $this->div_alert("Commentaire validé avec succès.", "success");
+        $message = $this->divAlert("Commentaire validé avec succès.", "success");
         $success = true;
     
         $json['success'] = $success;
@@ -129,7 +129,7 @@ class CommentController extends Controller
         $this->data['status'] = 2;
         $this->model->update($id_comment, $this->data);
 
-        $message = $this->div_alert("Le commentaire a bien été désapprouvé.", "success");
+        $message = $this->divAlert("Le commentaire a bien été désapprouvé.", "success");
         $success = true;
     
         $json['success'] = $success;
@@ -155,7 +155,7 @@ class CommentController extends Controller
         $this->model->update($id_comment, ['parentId' => 0], 'parentId');
         $this->model->delete($id_comment, 'id');
 
-        $message = $this->div_alert("Le commentaire a bien été supprimé.", "success");
+        $message = $this->divAlert("Le commentaire a bien été supprimé.", "success");
         $success = true;
     
         $json['success'] = $success;
@@ -172,7 +172,7 @@ class CommentController extends Controller
     public function commentManager()
     {
         // Force user login
-        $this->auth->force_admin();
+        $this->auth->forceAdmin();
         $status = 0;
 
         if ($this->var->query->get('status')) {
@@ -202,7 +202,7 @@ class CommentController extends Controller
     public function commentManagerEdit($param)
     {
         // Force user login
-        $this->auth->force_admin();
+        $this->auth->forceAdmin();
 
         $this->path = '\backend\admin\comment\commentEdit.html.twig';
         $comments = $this->model->readCommentById($param);
