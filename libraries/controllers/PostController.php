@@ -98,7 +98,7 @@ class PostController extends Controller
 
         $json['success'] = $success;
         $json['message'] = $message;
-        
+
         $response = new JsonResponse($json);
         $response->send();
     }
@@ -140,35 +140,41 @@ class PostController extends Controller
 
         $this->errorMessage = $this->ul_alert($this->errorMessage);
 
-        if ($error > 0) {
-            $message = $this->div_alert($this->errorMessage, "danger");
-            $success = false;
-        } else {
-            $this->data['dateAddPost'] = date('Y-m-d H:i:s');
-            if (!empty($this->var->files->get('picture'))) {
-                $reset = $this->model->read($id_post);
-                if ($reset["picture"] <> "") {
-                    $filename = __DIR__ . '/../../public/img/blog/posts/' . $reset['picture'];
-                    if (is_file($filename)) {
-                        unlink($filename);
+        switch ($error) {
+            case 0:
+                $this->data['dateAddPost'] = date('Y-m-d H:i:s');
+                if (!empty($this->var->files->get('picture'))) {
+                    $reset = $this->model->read($id_post);
+                    if ($reset["picture"] <> "") {
+                        $filename = __DIR__ . '/../../public/img/blog/posts/' . $reset['picture'];
+                        if (is_file($filename)) {
+                            unlink($filename);
+                        }
+                    }
+                    $this->data['picture'] = $this->uploadImage($this->var->files->get('picture'), __DIR__ . '\..\..\public/img/blog/posts/', $check["extension"]);
+                }
+                $this->model->update($id_post, $this->data);
+
+                $dataPost = [];
+                $dataPost["Post_id"] = $id_post;
+                $this->postcategoryModel->delete($id_post, 'Post_id');
+                if (isset($categories)) {
+                    foreach ($categories as $categorie) {
+                        $dataPost["PostCategory_id"] = $categorie;
+                        $this->postcategoryModel->insert($dataPost);
                     }
                 }
-                $this->data['picture'] = $this->uploadImage($this->var->files->get('picture'), __DIR__ . '\..\..\public/img/blog/posts/', $check["extension"]);
-            }
-            $this->model->update($id_post, $this->data);
+                $message = $this->div_alert("Article modifié avec succès.", "success");
+                $success = true;
+                break;
 
-            $dataPost = [];
-            $dataPost["Post_id"] = $id_post;
-            $this->postcategoryModel->delete($id_post, 'Post_id');
-            if (isset($categories)) {
-                foreach ($categories as $categorie) {
-                    $dataPost["PostCategory_id"] = $categorie;
-                    $this->postcategoryModel->insert($dataPost);
-                }
-            }
-            $message = $this->div_alert("Article modifié avec succès.", "success");
-            $success = true;
+            default:
+                $message = $this->div_alert($this->errorMessage, "danger");
+                $success = false;
+                break;
         }
+
+
         $json['success'] = $success;
         $json['message'] = $message;
         $response = new JsonResponse($json);

@@ -62,7 +62,7 @@ class AuthController extends Controller
     {
         switch (SessionController::get('userType', 'login')) {
 
-            case SessionController::hasSession() :
+            case SessionController::hasSession():
                 self::redirect("/error/401");
                 break;
 
@@ -103,30 +103,34 @@ class AuthController extends Controller
 
             $error++;
         }
-
         // Check if email exist
-        if ($this->model->getEmail($this->data['email']) == 1) {
-
-            $user = $this->model->read($this->data['email'], 'email');
-            // Check status user
-            switch ($user['status']) {
-                case 1:
-                    $this->password = $user['password'];
-                    // Check password
-                    if ((empty(password_verify($this->data['password'], $this->password)))) {
-                        $this->errorMessage .= $this->li_alert("L'identifiant ou le mot de passe est incorrect !");
+        switch ($this->model->getEmail($this->data['email'])) {
+            case 1:
+                $user = $this->model->read($this->data['email'], 'email');
+                // Check status user
+                switch ($user['status']) {
+                    case 1:
+                        $this->password = $user['password'];
+                        // Check password
+                        if ((empty(password_verify($this->data['password'], $this->password)))) {
+                            $this->errorMessage .= $this->li_alert("L'identifiant ou le mot de passe est incorrect !");
+                            $error++;
+                        }
+                        break;
+                    default:
+                        $this->errorMessage .= $this->li_alert("Ce compte n'est pas actif. Merci de contacter l'administrateur.");
                         $error++;
-                    }
-                    break;
-                default:
-                    $this->errorMessage .= $this->li_alert("Ce compte n'est pas actif. Merci de contacter l'administrateur.");
-                    $error++;
-                    break;
-            }
-        } else {
-            $error++;
-            $this->errorMessage = $this->li_alert("Ce compte n'existe pas.");
+                        break;
+                }
+                break;
+
+            default:
+                $error++;
+                $this->errorMessage = $this->li_alert("Ce compte n'existe pas.");
+                break;
         }
+
+
         $this->errorMessage = $this->ul_alert($this->errorMessage);
         // Construct and send result JSON
         if ($error > 0) {

@@ -105,27 +105,27 @@ class HomeController extends Controller
     {
         $this->path = '\frontend\post.html.twig';
         $posts = $this->postModel->readPostBySlug($param);
-        // if post exist
-        if ($posts) {
-            $sidebar = false;
-            if (AuthController::is_admin()) {
-                $sidebar = true;
-            }
-            $postsCategory = $this->postcategoryModel->readAllCategoriesByPost($posts['id']);
-            $postsAllCategory = $this->categoryModel->readAll();
-            $recentPosts = $this->postModel->readPostsRecent($posts['id']);
 
-            $commentsParent = $this->commentsModel->readAllCommentsParent($posts['id']);
-            $commentsChild = $this->commentsModel->readAllCommentsChild($posts['id']);
-
-            $this->data = ['head' => ['title' => $posts['title']], 'post' => $posts, 'postsCategory' => $postsCategory, 'postsAllCategory' => $postsAllCategory, 'recentPosts' => $recentPosts, 'commentsParent' => $commentsParent, 'commentsChild' => $commentsChild, 'sidebar' => $sidebar];
-            $this->setResponseHttp(200);
-            $this->render($this->path, $this->data);
-        } else {
+        if (!$posts) {
             // if no post 
             $this->redirect("/error/404");
         }
-        
+
+        // if post exist
+        $sidebar = false;
+        if (AuthController::is_admin()) {
+            $sidebar = true;
+        }
+        $postsCategory = $this->postcategoryModel->readAllCategoriesByPost($posts['id']);
+        $postsAllCategory = $this->categoryModel->readAll();
+        $recentPosts = $this->postModel->readPostsRecent($posts['id']);
+
+        $commentsParent = $this->commentsModel->readAllCommentsParent($posts['id']);
+        $commentsChild = $this->commentsModel->readAllCommentsChild($posts['id']);
+
+        $this->data = ['head' => ['title' => $posts['title']], 'post' => $posts, 'postsCategory' => $postsCategory, 'postsAllCategory' => $postsAllCategory, 'recentPosts' => $recentPosts, 'commentsParent' => $commentsParent, 'commentsChild' => $commentsChild, 'sidebar' => $sidebar];
+        $this->setResponseHttp(200);
+        $this->render($this->path, $this->data);
     }
 
     /**
@@ -163,7 +163,7 @@ class HomeController extends Controller
                 $error["code"] = 401;
                 $error["message"] = "Utilisateur non authentifié.";
                 break;
-            case 403 :
+            case 403:
                 $error["code"] = 403;
                 $error["message"] = "Accès refusé.";
                 break;
@@ -171,11 +171,11 @@ class HomeController extends Controller
                 $error["code"] = 405;
                 $error["message"] = "Méthode de requête non autorisée.";
                 break;
-                case 498:
-                    $error["code"] = 498;
-                    $error["message"] = "Le jeton a expiré ou est invalide.";
-                    break;
-                
+            case 498:
+                $error["code"] = 498;
+                $error["message"] = "Le jeton a expiré ou est invalide.";
+                break;
+
             default:
                 $error["code"] = 404;
                 $error["message"] = "Cette page n'existe pas ou est invalide.";

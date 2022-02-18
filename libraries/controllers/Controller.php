@@ -40,7 +40,7 @@ abstract class Controller
                 'needs_context' => true,
             ]);
         }
-        
+
         if (AuthController::is_login()) {
             $params["logged"] = true;
         }
@@ -50,7 +50,7 @@ abstract class Controller
         return $this->twig->display($view, $params);
     }
 
-    
+
     /**
      * sanitize data
      * 
@@ -107,7 +107,7 @@ abstract class Controller
         return "<ul>" . $message . "</ul>";
     }
 
-    
+
 
 
     /**
@@ -152,11 +152,11 @@ abstract class Controller
             {$data['message']}
         EOT;
 
-        if (!$mail->send()) : $mailResponse=false; endif;
+        if (!$mail->send()) : $mailResponse = false;
+        endif;
 
         return $mailResponse;
         $mail->smtpClose();
-
     }
 
     /**
@@ -192,10 +192,14 @@ abstract class Controller
             $error++;
         }
 
-        if ($error > 0) {
-            $result['success'] = false;
-        } else {
-            $result['success'] = true;
+        switch ($error) {
+            case 0:
+                $result['success'] = true;
+                break;
+
+            default:
+                $result['success'] = false;
+                break;
         }
         $result['message'] = $errorMessage;
         $result['extension'] = $extension;

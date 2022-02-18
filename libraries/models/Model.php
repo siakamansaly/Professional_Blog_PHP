@@ -71,10 +71,14 @@ abstract class Model
     public function flush(string $query, array $params = [])
     {
         $datas = $this->pdo->prepare($query);
-        if (isset($params)) {
-            $datas->execute($params);
-        } else {
-            $datas->execute();
+
+        switch (isset($params)) {
+            case true:
+                $datas->execute($params);
+                break;
+            default:
+                $datas->execute();
+                break;
         }
     }
 
@@ -99,12 +103,15 @@ abstract class Model
     public function read(string $value, string $key = null, $select = "")
     {
         if (isset($key)) {
-            if ($select == "") {
-                $query = "SELECT * FROM {$this->table} WHERE " . $key . " = ?";
-                return $this->row($query, [$value]);
-            } else {
-                $query = "SELECT " . $select . " FROM {$this->table} WHERE " . $key . " = ?";
-                return $this->row($query, [$value]);
+            switch ($select <> "") {
+                case true:
+                    $query = "SELECT " . $select . " FROM {$this->table} WHERE " . $key . " = ?";
+                    return $this->row($query, [$value]);
+                    break;
+                default:
+                    $query = "SELECT * FROM {$this->table} WHERE " . $key . " = ?";
+                    return $this->row($query, [$value]);
+                    break;
             }
         }
 
@@ -144,12 +151,16 @@ abstract class Model
 
         $set = substr_replace($set, '', -2);
 
-        if (isset($key)) {
-            $query = "UPDATE {$this->table} SET " . $set . " WHERE " . $key . " = ?";
-        } else {
-            $query = "UPDATE {$this->table} SET " . $set . " WHERE id = ?";
+        switch (isset($key)) {
+            case true:
+                $query = "UPDATE {$this->table} SET " . $set . " WHERE " . $key . " = ?";
+                break;
+
+            default:
+                $query = "UPDATE {$this->table} SET " . $set . " WHERE id = ?";
+                break;
         }
-        //print_r($query);die;
+
         return $this->flush($query, [$value]);
     }
 
@@ -161,11 +172,14 @@ abstract class Model
      */
     public function delete(int $idItem, ?string $key = ""): void
     {
+        switch (isset($key)) {
+            case true:
+                $query = "DELETE FROM {$this->table} WHERE $key = :val";
+                break;
 
-        if (isset($key)) {
-            $query = "DELETE FROM {$this->table} WHERE $key = :val";
-        } else {
-            $query = "DELETE FROM {$this->table} WHERE id = :val";
+            default:
+                $query = "DELETE FROM {$this->table} WHERE id = :val";
+                break;
         }
         $this->flush($query, ['val' => $idItem]);
     }

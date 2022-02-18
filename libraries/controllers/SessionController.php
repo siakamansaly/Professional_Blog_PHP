@@ -78,10 +78,9 @@ class SessionController extends Controller
             if (isset($_SESSION[$key][$name])) {
                 return $_SESSION[$key][$name];
             }
-        } else {
-            if (isset($_SESSION[$name])) {
-                return $_SESSION[$name];
-            }
+
+            return $_SESSION[$name];
+        
         }
     }
 

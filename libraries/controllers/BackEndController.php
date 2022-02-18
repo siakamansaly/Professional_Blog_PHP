@@ -156,15 +156,16 @@ class BackEndController extends Controller
         $comments = $this->commentsModel->readCommentById($param);
 
 
-        // if post exist
-        if ($comments) {
-            $this->data = ['head' => ['title' => "Modifier un commentaire"], 'comments' => $comments];
-            $this->setResponseHttp(200);
-            $this->render($this->path, $this->data);
-        } else {
-            // if no post   
+        // if no post exist
+        if (!$comments) {
             $this->redirect("/error/404");
-        }
+        } 
+        
+        $this->data = ['head' => ['title' => "Modifier un commentaire"], 'comments' => $comments];
+        $this->setResponseHttp(200);
+        $this->render($this->path, $this->data);
+        
+        
     }
 
     /**

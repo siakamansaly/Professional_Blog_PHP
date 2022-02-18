@@ -96,37 +96,45 @@ class UserController extends Controller
         $error = 0;
         $idUser = "";
         $this->errorMessage = "";
-        if ($this->var->files->get('picture')) {
-            $check = $this->checkImage($this->var->files->get('picture'));
-            if ($check["success"] == false) {
-                $error++;
-                $this->errorMessage .= $check["message"];
-            }            
-        } else {
-            $json['success'] = false;
-            $json['message'] = "Une erreur est survenue au niveau de l'image ...";
+        switch ($this->var->files->get('picture')) {
+            case true:
+                $check = $this->checkImage($this->var->files->get('picture'));
+                if ($check["success"] == false) {
+                    $error++;
+                    $this->errorMessage .= $check["message"];
+                }
+                break;
+
+            default:
+                $json['success'] = false;
+                $json['message'] = "Une erreur est survenue au niveau de l'image ...";
+                break;
         }
 
         $idUser = $this->sanitize($this->var->request->get('id'));
 
         $this->errorMessage = $this->ul_alert($this->errorMessage);
 
-        if ($error > 0) {
-            $message = $this->div_alert($this->errorMessage, "danger");
-            $success = false;
-        } else {
-            $userAccount = $this->model->read($idUser);
-            if ($userAccount['picture'] <> "") {
-                $filename = __DIR__ . '/../../public/img/blog/profiles/' . $userAccount['picture'];
-                if (file_exists($filename)) {
-                    unlink($filename);
+        switch ($error) {
+            case 0:
+                $userAccount = $this->model->read($idUser);
+                if ($userAccount['picture'] <> "") {
+                    $filename = __DIR__ . '/../../public/img/blog/profiles/' . $userAccount['picture'];
+                    if (file_exists($filename)) {
+                        unlink($filename);
+                    }
                 }
-            }
-            $this->data['picture'] = $this->uploadImage($this->var->files->get('picture'), __DIR__ . '\..\..\public/img/blog/profiles/', $check["extension"]);
+                $this->data['picture'] = $this->uploadImage($this->var->files->get('picture'), __DIR__ . '\..\..\public/img/blog/profiles/', $check["extension"]);
 
-            $this->model->update($idUser, $this->data);
-            $message = $this->div_alert("Photo modifiée.", "success");
-            $success = true;
+                $this->model->update($idUser, $this->data);
+                $message = $this->div_alert("Photo modifiée.", "success");
+                $success = true;
+                break;
+
+            default:
+                $message = $this->div_alert($this->errorMessage, "danger");
+                $success = false;
+                break;
         }
         $json['success'] = $success;
         $json['message'] = $message;
@@ -203,26 +211,30 @@ class UserController extends Controller
 
         $countPost = $this->postModel->count('User_id', $id_user);
 
-        if ($countPost == 0) {
+        switch ($countPost) {
+            case 0:
+                $commentsUpdate = $this->commentModel->readAllCommentsByUser($id_user, "comment.id");
 
-            $commentsUpdate = $this->commentModel->readAllCommentsByUser($id_user, "comment.id");
+                // Update child comments user with value 0
+                foreach ($commentsUpdate as $comment) {
+                    $this->commentModel->update($comment['id'], ['parentId' => 0], 'parentId');
+                }
 
-            // Update child comments user with value 0
-            foreach ($commentsUpdate as $comment) {
-                $this->commentModel->update($comment['id'], ['parentId' => 0], 'parentId');
-            }
+                // Delete comments user
+                $this->commentModel->delete($id_user, 'User_id');
 
-            // Delete comments user
-            $this->commentModel->delete($id_user, 'User_id');
+                // Delete user
+                $this->model->delete($id_user, 'id');
+                $message = $this->div_alert("L'utilisateur a bien été supprimé.", "success");
+                $success = true;
+                break;
 
-            // Delete user
-            $this->model->delete($id_user, 'id');
-            $message = $this->div_alert("L'utilisateur a bien été supprimé.", "success");
-            $success = true;
-        } else {
-            $message = $this->div_alert("Merci de réattribuer les articles créés par cet utilisateur avant suppression. <br/>Nombre d'article concerné : <b>$countPost</b>", "danger");
-            $success = false;
+            default:
+                $message = $this->div_alert("Merci de réattribuer les articles créés par cet utilisateur avant suppression. <br/>Nombre d'article concerné : <b>$countPost</b>", "danger");
+                $success = false;
+                break;
         }
+
 
         $json['success'] = $success;
         $json['message'] = $message;
