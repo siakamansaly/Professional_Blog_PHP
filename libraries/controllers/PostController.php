@@ -12,6 +12,7 @@ class PostController extends Controller
     protected $modelName = \Blog\Models\Post::class;
     public $path;
     public $data;
+    public $dataEdit;
     public $errorMessage = "";
     public $post;
     public $slugify;
@@ -114,7 +115,7 @@ class PostController extends Controller
      */
     public function postEdit()
     {
-        $this->data = [];
+        $this->dataEdit = [];
         $json = [];
         $success = "";
         $message = "";
@@ -132,12 +133,12 @@ class PostController extends Controller
         }
 
         $id_post = $this->var->request->get('idPostEdit');
-        $this->data['title'] = $this->sanitize($this->var->request->get('titlePostAdd'));
-        $this->data['chapo'] = $this->sanitize($this->var->request->get('chapoPostAdd'));
-        $this->data['content'] = $this->sanitize($this->var->request->get('contentPostAdd'));
-        $this->data['User_id'] = $this->sanitize($this->var->request->get('authorPostAdd'));
-        $this->data['status'] = $this->sanitize($this->var->request->get('statusPostAdd'));
-        $this->data['slug'] = $id_post . "-" . $this->slugify->slugify($this->data['title']);
+        $this->dataEdit['title'] = $this->sanitize($this->var->request->get('titlePostAdd'));
+        $this->dataEdit['chapo'] = $this->sanitize($this->var->request->get('chapoPostAdd'));
+        $this->dataEdit['content'] = $this->sanitize($this->var->request->get('contentPostAdd'));
+        $this->dataEdit['User_id'] = $this->sanitize($this->var->request->get('authorPostAdd'));
+        $this->dataEdit['status'] = $this->sanitize($this->var->request->get('statusPostAdd'));
+        $this->dataEdit['slug'] = $id_post . "-" . $this->slugify->slugify($this->data['title']);
         $categories = json_encode($this->var->request->get('PostCategory_id'));
         $categories = json_decode($categories, true);
 
@@ -145,7 +146,7 @@ class PostController extends Controller
 
         switch ($error) {
             case 0:
-                $this->data['dateAddPost'] = date('Y-m-d H:i:s');
+                $this->dataEdit['dateAddPost'] = date('Y-m-d H:i:s');
                 if (!empty($this->var->files->get('picture'))) {
                     $reset = $this->model->read($id_post);
                     if ($reset["picture"] <> "") {
@@ -154,9 +155,9 @@ class PostController extends Controller
                             unlink($filename);
                         }
                     }
-                    $this->data['picture'] = $this->uploadImage($this->var->files->get('picture'), __DIR__ . '\..\..\public/img/blog/posts/', $check["extension"]);
+                    $this->dataEdit['picture'] = $this->uploadImage($this->var->files->get('picture'), __DIR__ . '\..\..\public/img/blog/posts/', $check["extension"]);
                 }
-                $this->model->update($id_post, $this->data);
+                $this->model->update($id_post, $this->dataEdit);
 
                 $dataPost = [];
                 $dataPost["Post_id"] = $id_post;
