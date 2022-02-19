@@ -1,54 +1,59 @@
 {% import '/macro/section.html.twig' as section %}
 {% extends "layout.html.twig" %}
-{% block navbar %}{% set urlblog = "" %} {% set url = "/" %}  {{ parent() }}{% endblock %}
+{% block navbar %}{% set urlblog = "" %} {% set url = "/" %} {{ parent() }}{% endblock %}
 {% block content %}
 <header id="blog" class="page-section bg-light border-bottom mb-4 hero">
-    <div class="container">
-        <div class="text-center mt-5">
-            <h1 class="fw-bolder text-light">Bienvenue dans mon Blog !</h1>
-        </div>
+  <div class="container">
+    <div class="text-center mt-5">
+      <h1 class="fw-bolder text-light">Bienvenue dans mon Blog !</h1>
     </div>
+  </div>
 </header>
 <div class="container text-primary">
-    
-    <div class="row ">
-        <div class="col fs-5 m-4 text-primary bg-secondary justify p-4 rounded">
-            A travers ce blog, je vous partage les dernières actualités et publications sur le domaine de l'informatique et en particulier sur le développement web qui m'ont servi et qui pourront vous servir à votre tour. <br/>N'hésitez pas à vous <a href="/#register" class="text-info" data-bs-toggle="modal" data-bs-target="#register"
-            rel="noopener">inscrire</a> pour échanger sur les sujets. Bonne visite !
-        </div>
+
+  <div class="row ">
+    <div class="col fs-5 m-4 text-primary bg-secondary justify p-4 rounded">
+      A travers ce blog, je vous partage les dernières actualités et publications sur le domaine de l'informatique et en
+      particulier sur le développement web qui m'ont servi et qui pourront vous servir à votre tour. <br />N'hésitez pas
+      à vous <a href="/#register" class="text-info" data-bs-toggle="modal" data-bs-target="#register"
+        rel="noopener">inscrire</a> pour échanger sur les sujets. Bonne visite !
     </div>
-    <form method="GET" action="/blog">
-        <div class="row align-items-center mb-4 d-flex justify-content-center">
-          <div class="col-auto my-1">
-            <label class="mr-sm-2 text-primary px-2" for="filterCategory">Filtrer par catégorie</label>
-            <select name="category" class="custom-select p-2 rounded" id="filterCategory" onchange="this.form.submit()">
-              <option value="" selected>Choisissez une catégorie</option>
+  </div>
+  <form method="GET" action="/blog">
+    <div class="row align-items-center mb-4 d-flex justify-content-center">
+      <div class="col-auto my-1">
+        <label class="mr-sm-2 text-primary px-2" for="filterCategory">Filtrer par catégorie</label>
+        <select name="category" class="custom-select p-2 rounded" id="filterCategory" onchange="this.form.submit()">
+          <option value="" selected>Choisissez une catégorie</option>
 
-              {% for postAllCategory in postsAllCategory %}
-                              
-                    <option value="{{postAllCategory.id}}" {% if postAllCategory.id == currentCategory %} selected {% endif %}>{{postAllCategory.name}}</option>
-                    {% endfor %}
-            </select>
-          </div>
-          
-        </div>
-      </form>
-{% include "/core/posts.html.twig" %}
+          {% for postAllCategory in postsAllCategory %}
+          <option value="{{postAllCategory.id}}" {% if postAllCategory.id==currentCategory %} selected {% endif %}>
+            {{postAllCategory.name}}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
 
-<nav aria-label="Page navigation">
-  <ul class="pagination justify-content-center">
-    <li class="page-item {% if currentPage == 1 %} disabled {% endif %}">
-      <a class="page-link" href="/blog?page={{ currentPage - 1 }}" tabindex="-1">Précédente</a>
-    </li>
+    </div>
+  </form>
+  {% include "/core/posts.html.twig" %}
 
-    {% for i in 1..AllPage %}
-    <li class="page-item {% if currentPage == i %} active {% endif %}"><a class="page-link" href="/blog?page={{ i }}">{{ i }}</a></li>
-    {% endfor %}
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      <li class="page-item {% if currentPage == 1 %} disabled {% endif %}">
+        <a class="page-link" href="/blog?page={{ currentPage - 1 }}" tabindex="-1">Précédente</a>
+      </li>
 
-    <li class="page-item {% if currentPage == AllPage %} disabled {% endif %}">
-      <a class="page-link" href="/blog?page={{ currentPage + 1 }}">Suivante</a>
-    </li>
-  </ul>
-</nav>
+      {% for i in 1..AllPage %}
+      <li class="page-item {% if currentPage == i %} active {% endif %}">
+        <a class="page-link" href="/blog?page={{ i }}">{{ i }}</a>
+      </li>
+      {% endfor %}
+
+      <li class="page-item {% if currentPage == AllPage %} disabled {% endif %}">
+        <a class="page-link" href="/blog?page={{ currentPage + 1 }}">Suivante</a>
+      </li>
+    </ul>
+  </nav>
 </div>
 {% endblock %}

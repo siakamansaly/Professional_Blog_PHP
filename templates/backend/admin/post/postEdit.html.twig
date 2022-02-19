@@ -1,42 +1,37 @@
 {% import '/macro/form.html.twig' as form %}
 {% extends "layout.html.twig" %}
-{% block navbar %}{% set urlblog = "/" %} {% set url = "/" %}{{ parent() }}{% endblock
-%}
+{% block navbar %}
+{% set urlblog = "/" %} 
+{% set url = "/" %}
+{{ parent() }}
+{% endblock %}
 {% block content %}
 <header id="adminBlog" class="page-section bg-primary border-bottom mb-4">
   <div class="container">
     <div class="text-center mt-5">
       <h1 class="fw-bolder text-light">Modifier un article</h1>
-
     </div>
   </div>
 </header>
 
 <div class="container my-4 text-primary">
   <div class="mb-4 text-left d-flex justify-content-between">
-    <a href="/postManager" class="btn btn-outline-primary" role="button" rel="noopener"><i
-            class="fas fa-angle-double-left"></i>  Administration des articles</a>
-           
+    <a href="/postManager" class="btn btn-outline-primary" role="button" rel="noopener">
+      <i class="fas fa-angle-double-left"></i>  Administration des articles
+    </a>
 </div>
   <form id="formPostEdit" method="post" enctype="multipart/form-data">
     <div id="alertPostEdit"></div>
     <div id="alertPostDelete"></div>
     <input type="hidden" name="idPostEdit" value="{{posts.id}}"/>
+
     {% include "/backend/admin/post/postForm.html.twig" %}
+
     <div class="row my-4 justify-content-center">
-      <div class="col"><button id="buttonPostEdit" class="btn btn-primary w-100 " type="submit">Enregistrer mes modifications</button>
+      <div class="col">
+        <button id="buttonPostEdit" class="btn btn-primary w-100 " type="submit">Enregistrer mes modifications</button>
       </div>
-     
     </div>
   </form>
-
-    
-
-
 </div>
-
-
-
-
-
 {% endblock %}

@@ -1,64 +1,60 @@
 {% import '/macro/form.html.twig' as form %}
 
-        <div class="row my-2">
-            <div class="col-lg-3"><span class="text-danger">* </span>Prénom : </div>
-            {{ form.input('firstNameProfile','Prénom', {class:'col',other:'pattern="[a-zA-Z]+"
-            maxlength=45 required title="Doit contenir uniquement des lettres"',
-            type:'text', value:user.firstName})}}
-        </div>
-        <div class="row my-2">
-            <div class="col-lg-3"><span class="text-danger">* </span>Nom : </div>
-            {{ form.input('lastNameProfile','Nom', {class:'col',other:'pattern="[a-zA-Z]+"
-            maxlength=45 required title="Doit contenir uniquement des lettres"',
-            type:'text', value:user.lastName})}}
-        </div>
-        <div class="row my-2">
-            <div class="col-lg-3"><span class="text-danger">* </span>E-mail : </div>
-            {{form.input('email','Email', {class:'col',other:'maxlength=255
-            required autocomplete=off', type:'email', value:user.email})}}
-        </div>
-        <div class="row my-2">
-        <label></label>
-        <div class="col-lg-3"><span class="text-danger">* </span>Type : </div>
-        
-        <div class="col"><select name="userType" class="form-select" aria-label="Status selected">
+<div class="row my-2">
+    <div class="col-lg-3"><span class="text-danger">* </span>Prénom : </div>
+    {{ form.input('firstNameProfile','Prénom', {class:'col',other:'pattern="[a-zA-Z]+"
+    maxlength=45 required title="Doit contenir uniquement des lettres"',
+    type:'text', value:user.firstName})}}
+</div>
+<div class="row my-2">
+    <div class="col-lg-3"><span class="text-danger">* </span>Nom : </div>
+    {{ form.input('lastNameProfile','Nom', {class:'col',other:'pattern="[a-zA-Z]+"
+    maxlength=45 required title="Doit contenir uniquement des lettres"',
+    type:'text', value:user.lastName})}}
+</div>
+<div class="row my-2">
+    <div class="col-lg-3"><span class="text-danger">* </span>E-mail : </div>
+    {{form.input('email','Email', {class:'col',other:'maxlength=255
+    required autocomplete=off', type:'email', value:user.email})}}
+</div>
+<div class="row my-2">
+    <label></label>
+    <div class="col-lg-3"><span class="text-danger">* </span>Type : </div>
+
+    <div class="col"><select name="userType" class="form-select" aria-label="Status selected">
             <option value="member" {% if user.userType=='member' %} selected {% endif %}>Membre</option>
             <option value="admin" {% if user.userType=='admin' %} selected {% endif %}>Administrateur</option>
-          </select>
-        </div>
-        </div>
-        <div class="row my-2">
-            <div class="col-lg-3">Téléphone : </div>
-            {{ form.input('phone','Téléphone', {class:'col',other:'pattern="[0-9]+"
-            maxlength=15 title="Doit contenir uniquement des chiffres"',
-            type:'text', value:user.phone})}}
-        </div>
+        </select>
+    </div>
+</div>
+<div class="row my-2">
+    <div class="col-lg-3">Téléphone : </div>
+    {{ form.input('phone','Téléphone', {class:'col',other:'pattern="[0-9]+"
+    maxlength=15 title="Doit contenir uniquement des chiffres"',
+    type:'text', value:user.phone})}}
+</div>
 
-        <div class="row my-2">
-            <div class="col-lg-3">Lien CV : </div>
-            {{ form.input('cvLink','http://', {class:'col',other:'pattern="https?://.+"
-            maxlength=255 title="Doit inclure http://"',
-            type:'text', value:user.cvLink})}}
-        </div>
-        <div class="row my-2">
-            <div class="col-lg-3">Twitter : </div>
-            {{ form.input('twitter','@', {class:'col',other:'pattern="@.+"
-            maxlength=45 title="Doit inclure @"',
-            type:'text', value:user.twitter})}}
-        </div>
-        <div class="row my-2">
-            <div class="col-lg-3">GitHub : </div>
-            {{ form.input('gitHub','', {class:'col',other:'
-            maxlength=45 title=""',
-            type:'text', value:user.gitHub})}}
-        </div>
-        <div class="row my-2">
-            <div class="col-lg-3">LinkedIn : </div>
-            {{ form.input('linkedIn','', {class:'col',other:'
-            maxlength=45 title=""',
-            type:'text', value:user.linkedIn})}}
-        </div>
-
-
-
-
+<div class="row my-2">
+    <div class="col-lg-3">Lien CV : </div>
+    {{ form.input('cvLink','http://', {class:'col',other:'pattern="https?://.+"
+    maxlength=255 title="Doit inclure http://"',
+    type:'text', value:user.cvLink})}}
+</div>
+<div class="row my-2">
+    <div class="col-lg-3">Twitter : </div>
+    {{ form.input('twitter','@', {class:'col',other:'pattern="@.+"
+    maxlength=45 title="Doit inclure @"',
+    type:'text', value:user.twitter})}}
+</div>
+<div class="row my-2">
+    <div class="col-lg-3">GitHub : </div>
+    {{ form.input('gitHub','', {class:'col',other:'
+    maxlength=45 title=""',
+    type:'text', value:user.gitHub})}}
+</div>
+<div class="row my-2">
+    <div class="col-lg-3">LinkedIn : </div>
+    {{ form.input('linkedIn','', {class:'col',other:'
+    maxlength=45 title=""',
+    type:'text', value:user.linkedIn})}}
+</div>

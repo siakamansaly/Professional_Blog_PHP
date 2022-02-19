@@ -15,6 +15,7 @@
     {% if options.label == 'bottom' %}<label for="{{name}}">{{label}}</label>{% endif %}
 </div>
 {% endmacro %}
+
 {% macro button(label, options = []) %}
 <div class="{{options.class | default('col')}}">
     <button class="btn {{options.class_btn  | default('btn-primary w-100')}}"

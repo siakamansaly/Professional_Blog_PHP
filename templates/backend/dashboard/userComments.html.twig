@@ -5,8 +5,9 @@
     aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
-                    aria-label="Close"></button></div>
+            <div class="modal-header border-0">
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
             <div class="modal-body text-center pb-5 mb-5">
                 <div class="container">
                     <div class="row d-flex align-items-center justify-content-center">
@@ -15,18 +16,22 @@
                                 <h5 class="fw-bolder text-primary bg-secondary py-3 rounded">Mes derniers commentaires</h5>
                                 {% for comment in commentsUser %}
                                 <div class="card-body">
-
                                     <div class="d-flex align-items-center justify-content-center">
-                                        <div class="flex-shrink-0">{% if user.picture
-                                            %}<img src="./img/blog/profiles/{{user.picture |lower}}" class="profile_user_50 rounded-circle" />{% else %}<i
-                                                class="fas fa-user-circle fa-2x"></i>{% endif %}</div>
+                                        <div class="flex-shrink-0">
+                                            {% if user.picture %}
+                                            <img src="./img/blog/profiles/{{user.picture |lower}}" class="profile_user_50 rounded-circle" />
+                                            {% else %}
+                                            <i class="fas fa-user-circle fa-2x"></i>
+                                            {% endif %}
+                                        </div>
                                         <div class="ms-3 justify w-100">
                                             <div class="fw-bold">{{comment.title}}</div>
-                                            <div class="font-italic small">Commenté le {{comment.dateAddComment | date("d/m/Y H:i:s")}}</div>
+                                            <div class="font-italic small">
+                                                Commenté le {{comment.dateAddComment | date("d/m/Y H:i:s")}}
+                                            </div>
                                             {{comment.content}}
                                         </div>
                                     </div>
-
                                 </div>
                                 {% endfor %}
                             </div>

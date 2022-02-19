@@ -1,40 +1,41 @@
 {% import '/macro/form.html.twig' as form %}
 {% import '/macro/admin.html.twig' as admin %}
 {% extends "layout.html.twig" %}
-{% block navbar %}{% set urlblog = "/" %} {% set url = "/" %} {{ parent() }}{% endblock
-%}
+{% block navbar %}
+{% set urlblog = "/" %}
+{% set url = "/" %} 
+{{ parent() }}
+{% endblock %}
 {% block content %}
 
 <header id="adminBlog" class="page-section hero_commentManager border-bottom mb-4 ">
   <div class="container">
     <div class="text-center mt-5">
       <h1 class="fw-bolder text-light">Administration des commentaires</h1>
-
     </div>
   </div>
 </header>
 
 <div class="container my-4 text-primary">
-
   <div class="mb-4 text-left d-flex justify-content-between">
-    <a href="/adminBlog" class="btn btn-outline-gray" role="button" rel="noopener"><i
-        class="fas fa-angle-double-left"></i> Administration du Blog</a>
+    <a href="/adminBlog" class="btn btn-outline-gray" role="button" rel="noopener">
+      <i class="fas fa-angle-double-left"></i> Administration du Blog
+    </a>
 
-        <form action="" method="get" class="form-inline">
-          <div class="d-inline-flex justify-content-center align-items-center">
-            <span class="fw-bold mx-4">Filtrer&nbsp;par&nbsp;:&nbsp;&nbsp;</span>
-            <label>Statut</label>
-              <select name="status" id="status" class="form-select mx-2" aria-label="Status selected" onchange="this.form.submit()">
-                <option value="0" {% if status==0 %} selected {% endif %}>En attente de validation</option>
-                <option value="1" {% if status==1 %} selected {% endif %}>Approuvé</option>
-                <option value="2" {% if status==2 %} selected {% endif %}>Désapprouvé</option>
-              </select>
-            
-          </div>
-        </form>
+    <form action="" method="get" class="form-inline">
+      <div class="d-inline-flex justify-content-center align-items-center">
+        <span class="fw-bold mx-4">Filtrer&nbsp;par&nbsp;:&nbsp;&nbsp;</span>
+        <label>Statut</label>
+        <select name="status" id="status" class="form-select mx-2" aria-label="Status selected"
+          onchange="this.form.submit()">
+          <option value="0" {% if status==0 %} selected {% endif %}>En attente de validation</option>
+          <option value="1" {% if status==1 %} selected {% endif %}>Approuvé</option>
+          <option value="2" {% if status==2 %} selected {% endif %}>Désapprouvé</option>
+        </select>
+
+      </div>
+    </form>
   </div>
-
-  
 
   <div id="alertComment"></div>
   <div class="table-responsive ">
@@ -48,7 +49,7 @@
           <th scope="col">Publié le</th>
           <th scope="col">Auteur</th>
           <th scope="col">Statut</th>
-          <th scope="col" colspan="4" >Actions</th>
+          <th scope="col" colspan="4">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -61,37 +62,43 @@
           <td>{{comment.datePublishComment|date("d/m/Y")}}</td>
           <td title="{{ comment.firstName | capitalize ~ " " ~ comment.lastName | capitalize }}">{{ comment.firstName |
             capitalize }}</td>
-          
-            <td>{% if comment.status == 1 %}<span class="badge badge-primary">Approuvé</span>{% elseif comment.status == 0 %}<span class="badge badge-secondary">En attente validation</span>{% else %}<span class="badge badge-danger">Désapprouvé</span>{% endif %}</td>
+
+          <td>{% if comment.status == 1 %}<span class="badge badge-primary">Approuvé</span>{% elseif comment.status == 0
+            %}<span class="badge badge-secondary">En attente validation</span>{% else %}<span
+              class="badge badge-danger">Désapprouvé</span>{% endif %}</td>
           <td>
             {% if comment.status == 0 %}
-            <!--<button class="formCommentValidate btn btn-outline-dark" type="submit" value="{{comment.id}}"
-              title="Valider ce commentaire"><i class="fas fa-check" title="Valider ce commentaire"></i></button>-->
-
-              <button type="button" class="validateButton btn btn-outline-success" href="/#validate" data-bs-toggle="modal" data-bs-target="#validate" data-id="{{comment.id}}" data-title="{{'#' ~ comment.id ~ ' - '~  comment.firstName | capitalize ~ " " ~ comment.lastName | upper }}" value="{{comment.id}}" ><i
-                class="fas fa-check" title="Valider ce commentaire"></i></button>
-              {% endif %}
+            <button type="button" class="validateButton btn btn-outline-success" href="/#validate"
+              data-bs-toggle="modal" data-bs-target="#validate" data-id="{{comment.id}}"
+              data-title="{{'#' ~ comment.id ~ ' - '~  comment.firstName | capitalize ~ " " ~ comment.lastName | upper }}"
+              value="{{comment.id}}">
+              <i class="fas fa-check" title="Valider ce commentaire"></i>
+            </button>
+            {% endif %}
           </td>
           <td>
             {% if comment.status == 0 %}
-            <!--<button class="formCommentDisable btn btn-outline-dark" type="submit" value="{{comment.id}}"
-              title="Désapprouver ce commentaire"><i class="fas fa-ban" title="Désapprouver ce commentaire"></i></button>-->
-
-              <button type="button" class="disableButton btn btn-outline-dark" href="/#disable" data-bs-toggle="modal" data-bs-target="#disable" data-id="{{comment.id}}" data-title="{{'#' ~ comment.id ~ ' - '~  comment.firstName | capitalize ~ " " ~ comment.lastName | upper }}" value="{{comment.id}}" ><i
-                class="fas fa-ban" title="Désapprouver ce commentaire"></i></button>
-              {% endif %}
-          </td>
-          <td><a href="/commentManagerEdit/{{comment.id}}" type="button" class="btn btn-outline-secondary text-center"
-              rel="noopener" title="Modifier ce commentaire"><i class="far fa-edit"
-                title="Modifier cet article"></i></a>
+            <button type="button" class="disableButton btn btn-outline-dark" href="/#disable" data-bs-toggle="modal"
+              data-bs-target="#disable" data-id="{{comment.id}}"
+              data-title="{{'#' ~ comment.id ~ ' - '~  comment.firstName | capitalize ~ " " ~ comment.lastName | upper }}"
+              value="{{comment.id}}">
+              <i class="fas fa-ban" title="Désapprouver ce commentaire"></i>
+            </button>
+            {% endif %}
           </td>
           <td>
-
-            <!--<button class="formCommentDelete btn btn-outline-danger" type="submit" value="{{comment.id}}"
-              title="Supprimer ce commentaire"><i class="far fa-trash-alt" title="Supprimer ce commentaire"></i></button>-->
-
-              <button type="button" class="deleteButton btn btn-outline-danger" href="/#delete" data-bs-toggle="modal" data-bs-target="#delete" data-id="{{comment.id}}" data-title="{{'#' ~ comment.id ~ ' - '~  comment.firstName | capitalize ~ " " ~ comment.lastName | upper }}" value="{{comment.id}}" ><i
-                class="far fa-trash-alt" title="Supprimer ce commentaire"></i></button>
+            <a href="/commentManagerEdit/{{comment.id}}" type="button" class="btn btn-outline-secondary text-center"
+              rel="noopener" title="Modifier ce commentaire">
+              <i class="far fa-edit" title="Modifier cet article"></i>
+            </a>
+          </td>
+          <td>
+            <button type="button" class="deleteButton btn btn-outline-danger" href="/#delete" data-bs-toggle="modal"
+              data-bs-target="#delete" data-id="{{comment.id}}"
+              data-title="{{'#' ~ comment.id ~ ' - '~  comment.firstName | capitalize ~ " " ~ comment.lastName | upper }}"
+              value="{{comment.id}}">
+              <i class="far fa-trash-alt" title="Supprimer ce commentaire"></i>
+            </button>
           </td>
         </tr>
         {% endfor %}
@@ -102,7 +109,6 @@
 
   <div class="d-flex justify-content-between">
     <div>&nbsp;</div>
-
     <nav aria-label="Page navigation">
       <ul class="pagination justify-content-center">
         <li class="page-item {% if currentPage == 1 %} disabled {% endif %}">
@@ -124,11 +130,16 @@
 
 </div>
 
-{{ admin.confirmationModal("delete","Supprimer ce commentaire","Êtes-vous sûr de vouloir supprimer ce commentaire ?", "formCommentDelete","deleteButtonConfirmation", {reponse:"deleteTitleConfirmation"}) }}
+{{ admin.confirmationModal("delete","Supprimer ce commentaire","Êtes-vous sûr de vouloir supprimer ce commentaire ?",
+"formCommentDelete","deleteButtonConfirmation", {reponse:"deleteTitleConfirmation"}) }}
 
-{{ admin.confirmationModal("validate","Valider ce commentaire","Êtes-vous sûr de vouloir valider ce commentaire ?", "formCommentValidate","validateButtonConfirmation", {reponse:"validateTitleConfirmation", bgColor:"text-light bg-success", btn:"success"}) }}
+{{ admin.confirmationModal("validate","Valider ce commentaire","Êtes-vous sûr de vouloir valider ce commentaire ?",
+"formCommentValidate","validateButtonConfirmation", {reponse:"validateTitleConfirmation", bgColor:"text-light
+bg-success", btn:"success"}) }}
 
-{{ admin.confirmationModal("disable","Désapprouver ce commentaire","Êtes-vous sûr de vouloir désapprouver ce commentaire ?", "formCommentDisable","disableButtonConfirmation", {reponse:"disableTitleConfirmation", bgColor:"text-light bg-dark", btn:"dark"}) }}
+{{ admin.confirmationModal("disable","Désapprouver ce commentaire","Êtes-vous sûr de vouloir désapprouver ce commentaire
+?", "formCommentDisable","disableButtonConfirmation", {reponse:"disableTitleConfirmation", bgColor:"text-light bg-dark",
+btn:"dark"}) }}
 
 
 {% endblock %}

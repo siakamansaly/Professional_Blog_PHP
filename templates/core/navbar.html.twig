@@ -1,8 +1,10 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg bg-primary text-uppercase fixed-top p-2" id="mainNav">
         <div class="container">
-                <a class="navbar-brand" href="{{url}}#page-top"><i
-                                class="fas fa-terminal text-secondary"></i>&nbsp;Siaka</a>
+                <a class="navbar-brand" href="{{url}}#page-top">
+                        <i class="fas fa-terminal text-secondary"></i>
+                        &nbsp;Siaka
+                </a>
                 <button class="navbar-toggler text-uppercase font-weight-bold bg-secondary text-white rounded"
                         type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
                         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,44 +13,66 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ms-auto d-md-flex align-items-center">
-                                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-3  rounded"
-                                                href="{{url}}#experiences" rel="noopener">Expériences</a></li>
-                                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-3  rounded"
-                                                href="{{url}}#competences" rel="noopener">Compétences</a></li>
-
-                                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-3  rounded"
-                                                href="{{url}}#portfolio" rel="noopener">Portfolio</a></li>
-
-                                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-3 rounded"
-                                                href="{{urlblog}}#blog" rel="noopener">Blog</a>
+                                <li class="nav-item mx-0 mx-lg-1">
+                                        <a class="nav-link py-2 px-3  rounded" href="{{url}}#experiences"
+                                                rel="noopener">
+                                                Expériences
+                                        </a>
                                 </li>
                                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-3  rounded"
-                                                href="{{url}}#contact" rel="noopener">Contact</a></li>
+                                                href="{{url}}#competences" rel="noopener">
+                                                Compétences
+                                        </a>
+                                </li>
 
+                                <li class="nav-item mx-0 mx-lg-1">
+                                        <a class="nav-link py-2 px-3  rounded" href="{{url}}#portfolio" rel="noopener">
+                                                Portfolio
+                                        </a>
+                                </li>
 
+                                <li class="nav-item mx-0 mx-lg-1">
+                                        <a class="nav-link py-2 px-3 rounded" href="{{urlblog}}#blog" rel="noopener">
+                                                Blog
+                                        </a>
+                                </li>
+                                <li class="nav-item mx-0 mx-lg-1">
+                                        <a class="nav-link py-2 px-3  rounded" href="{{url}}#contact" rel="noopener">
+                                                Contact
+                                        </a>
+                                </li>
 
-                                {% if logged == true %}<li class="nav-item mx-0 mx-lg-1 bg-light rounded text-primary mb-2 mb-lg-0"><a
-                                                class="nav-link py-2 px-3  rounded text-primary" href="/dashboard" rel="noopener" data-bs-target="#dashboard">Mon&nbsp;compte</a>
-                                        
-                                        </li>
-                                                {% if admin == true %}
-                                                <li class="nav-item mx-0 mx-lg-1 bg-light rounded text-primary mb-2 mb-lg-0"><a
-                                                        class="nav-link py-2 px-3  rounded text-primary" href="/adminBlog" rel="noopener" data-bs-target="#adminBlog"><i class="fas fa-users-cog" title="Administrer le Blog"></i></a></li>
-                                                      {% endif %}               
-                                                
-                                <li class="nav-item mx-0 mx-lg-1 bg-light rounded text-primary mb-2 mb-lg-0"><a
-                                                        class="nav-link py-2 px-3  rounded text-primary" href="/logout"
-                                                        rel="noopener">Déconnexion</a></li>
-                                {% else %}
-                                <li class="nav-item mx-0 mx-lg-1 bg-light rounded text-primary mb-2 mb-lg-0"><a
-                                                class="nav-link py-2 px-3  rounded text-primary" href="/#login"
-                                                data-bs-toggle="modal" data-bs-target="#login">Mon&nbsp;compte</a></li>
+                                {% if logged == true %}
+                                <li class="nav-item mx-0 mx-lg-1 bg-light rounded text-primary mb-2 mb-lg-0">
+                                        <a class="nav-link py-2 px-3  rounded text-primary" href="/dashboard"
+                                                rel="noopener" data-bs-target="#dashboard">
+                                                Mon&nbsp;compte
+                                        </a>
+                                </li>
+                                {% if admin == true %}
+                                <li class="nav-item mx-0 mx-lg-1 bg-light rounded text-primary mb-2 mb-lg-0">
+                                        <a class="nav-link py-2 px-3  rounded text-primary" href="/adminBlog"
+                                                rel="noopener" data-bs-target="#adminBlog">
+                                                <i class="fas fa-users-cog" title="Administrer le Blog"></i>
+                                        </a>
+                                </li>
                                 {% endif %}
 
+                                <li class="nav-item mx-0 mx-lg-1 bg-light rounded text-primary mb-2 mb-lg-0">
+                                        <a class="nav-link py-2 px-3  rounded text-primary" href="/logout"
+                                                rel="noopener">
+                                                Déconnexion
+                                        </a>
+                                </li>
+                                {% else %}
+                                <li class="nav-item mx-0 mx-lg-1 bg-light rounded text-primary mb-2 mb-lg-0">
+                                        <a class="nav-link py-2 px-3  rounded text-primary" href="/#login"
+                                                data-bs-toggle="modal" data-bs-target="#login">
+                                                Mon&nbsp;compte
+                                        </a>
+                                </li>
+                                {% endif %}
                         </ul>
                 </div>
         </div>
 </nav>
-
-      
-                                                

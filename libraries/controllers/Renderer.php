@@ -35,12 +35,19 @@ abstract class Renderer
             ]);
         }
         $this->auth = new AuthController;
+        $ENV = new Globals;
+        // Check if user is logged
         if ($this->auth->isLogin()) {
             $params["logged"] = true;
         }
+        // Check if user is admin
         if ($this->auth->isAdmin()) {
             $params["admin"] = true;
         }
+        // Generate meta user
+        $params["author"] = $ENV->env("META_AUTHOR");
+        $params["description"] = $ENV->env("META_DESCRIPTION");
+
         return $this->twig->display($view, $params);
     }
 

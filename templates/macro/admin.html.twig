@@ -1,10 +1,11 @@
 {% macro confirmationModal(name,title,subtitle, class, id_button, option=[]) %}
-<!-- delete post-->
+<!-- {{title}}-->
 <div class="{{name}}-modal modal fade" id="{{name}}" tabindex="-1" aria-labelledby="{{name}}" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
-                    aria-label="Close"></button></div>
+            <div class="modal-header border-0">
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
             <div class="modal-body pb-5 mb-5">
                 <div class="container">
                     <div class="row">
@@ -28,17 +29,20 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col text-center"><button
-                                                    class="{{class}} btn btn-{{option.btn | default('danger')}}"
-                                                    type="submit" id="{{id_button}}" title="{{title}}"
-                                                    value="">Oui</button></div>
+                                            <div class="col text-center">
+                                                <button class="{{class}} btn btn-{{option.btn | default('danger')}}"
+                                                    type="submit" id="{{id_button}}" title="{{title}}" value="">
+                                                    Oui
+                                                </button>
+                                            </div>
 
-                                            <div class="col text-center"><button
-                                                    class="btn btn-outline-{{option.btn | default('danger')}}"
-                                                    type="button" data-bs-dismiss="modal"
-                                                    aria-label="Close">Non</button></div>
+                                            <div class="col text-center">
+                                                <button class="btn btn-outline-{{option.btn | default('danger')}}"
+                                                    type="button" data-bs-dismiss="modal" aria-label="Close">
+                                                    Non
+                                                </button>
+                                            </div>
                                         </div>
-
                                     </form>
                                 </div>
                             </div>

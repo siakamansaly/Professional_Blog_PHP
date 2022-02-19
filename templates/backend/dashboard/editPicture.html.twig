@@ -1,11 +1,12 @@
 {% import '/macro/form.html.twig' as form %}
 
-<!-- Edit Profile-->
+<!-- Edit Picture-->
 <div class="picture-modal modal fade" id="picture" tabindex="-1" aria-labelledby="picture" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
-                    aria-label="Close"></button></div>
+            <div class="modal-header border-0">
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
             <div class="modal-body text-center pb-5 mb-5">
                 <div class="container">
                     <div class="row d-flex align-items-center justify-content-center">
@@ -16,13 +17,10 @@
                                     <form id="formEditPicture" method="post" enctype="multipart/form-data">
                                         <div id="alertEditPicture"></div>
                                         <input type="hidden" name="id" value="{{user.id}}">
-                                        
                                         <div class="row my-2">
                                             {{ form.input('picture','Photo', {class:'col',other:'required accept="image/png, image/jpeg, image/jpg" size=5242880',
                                             type:'file'})}}
                                         </div>
-                                        
-
                                         <div class="row my-4 justify-content-center">
                                             <div class="col"><button id="buttonEditPicture"
                                                     class="btn btn-primary w-100 " type="submit">Enregistrer</button>
@@ -30,7 +28,6 @@
                                         </div>
                                     </form>
                                 </div>
-
                             </div>
                         </div>
                     </div>

@@ -4,7 +4,7 @@
 <head>
 
     {% block head %}
-    <title>{% if head.title %}{{ head.title }} - {%endif %}Siaka MANSALY</title>
+    <title>{% if head.title %}{{ head.title }} - {%endif %}{{author}}</title>
     {% include "/core/head.html.twig" %}
     {% endblock %}
 </head>
@@ -24,8 +24,6 @@
     {% include "/core/register.html.twig" %}
 
     {% include "/core/lostpassword.html.twig" %}
-
-    
 
 </body>
 

@@ -1,33 +1,31 @@
 {% import '/macro/form.html.twig' as form %}
-
-
-
 <div class="row my-2">
-    <div class="col-12 my-2 fw-bold"><span class="text-danger">* </span>Titre de
-        l'article
+    <div class="col-12 my-2 fw-bold">
+        <span class="text-danger">* </span>
+        Titre de l'article
     </div>
     {{ form.input('titlePostAdd','Titre', {class:'col',other:'
     maxlength=70 required title="Titre de l\'article"',
     type:'text',value:posts.title})}}
 </div>
 <div class="row my-2">
-    <div class="col-12 my-2 fw-bold"><span class="text-danger">* </span>Image
-        mis en avant
+    <div class="col-12 my-2 fw-bold">
+        <span class="text-danger">* </span>
+        Image mis en avant
     </div>
-    {% if posts.picture %} <div class="col-12 col-md-6 my-2 text-center">
-        <a href="/img/blog/posts/{{posts.picture}}"
-            target="_blank" rel="noopener"><img src="/img/blog/posts/{{posts.picture}}" class="imgEditPost"/>
-        </a></div>
-    {{ form.input('picture','Photo', {class:'col col-lg-6 d-flex align-items-center',other:'accept="image/png, image/jpeg, image/jpg"
-    size=5242880',
-    type:'file'})}}
+    {% if posts.picture %}
+    <div class="col-12 col-md-6 my-2 text-center">
+        <a href="/img/blog/posts/{{posts.picture}}" target="_blank" rel="noopener">
+            <img src="/img/blog/posts/{{posts.picture}}" class="imgEditPost" />
+        </a>
+    </div>
+    {{ form.input('picture','Photo', {class:'col col-lg-6 d-flex align-items-center',other:'accept="image/png,
+    image/jpeg, image/jpg" size=5242880', type:'file'})}}
 
     {% else %}
 
-    {{ form.input('picture','Photo', {class:'col
-    col-lg-6',other:'required accept="image/png, image/jpeg, image/jpg"
-    size=5242880',
-    type:'file'})}}
+    {{ form.input('picture','Photo', {class:'col col-lg-6',other:'required accept="image/png, image/jpeg, image/jpg"
+    size=5242880', type:'file'})}}
     {% endif %}
 </div>
 
@@ -35,7 +33,6 @@
     <div class="col-12 my-2 fw-bold">Catégories
     </div>
     <div class="col-md-12 my-2">
-
         <select name="PostCategory_id[]" class="form-select" multiple aria-label="multiple select categories">
             {% for categorie in categories %}
             <option value="{{categorie.id}}" {% if categorie.id in postCategory %} selected {% endif %}>{{categorie.name
@@ -46,40 +43,48 @@
 </div>
 
 <div class="row my-2">
-    <div class="col-12 my-2 fw-bold"><span class="text-danger">* </span>Châpo
+    <div class="col-12 my-2 fw-bold">
+        <span class="text-danger">* </span>
+        Châpo
     </div>
-    {{ form.textarea('chapoPostAdd','Châpo', {class:'col mb-3',
-    placeholder:'Tapez votre texte ici...', other:'required',value:posts.chapo})}}
+    {{ form.textarea('chapoPostAdd','Châpo', {class:'col mb-3', placeholder:'Tapez votre texte ici...',
+    other:'required',value:posts.chapo})}}
 </div>
 
 <div class="row my-2">
-    <div class="col-12 my-2 fw-bold"><span class="text-danger">* </span>Contenu
-        de
-        l'article
+    <div class="col-12 my-2 fw-bold">
+        <span class="text-danger">* </span>
+        Contenu de l'article
     </div>
-    {{ form.textarea('contentPostAdd','Contenu', {class:'col mb-3',
-    placeholder:'Tapez votre texte ici...', other:'required', rows:10,value:posts.content})}}
+    {{ form.textarea('contentPostAdd','Contenu', {class:'col mb-3', placeholder:'Tapez votre texte ici...',
+    other:'required', rows:10,value:posts.content})}}
 </div>
 
 <div class="row my-2">
-    <div class="col-12 my-2 fw-bold"><span class="text-danger">* </span>Auteur
+    <div class="col-12 my-2 fw-bold">
+        <span class="text-danger">* </span>
+        Auteur
     </div>
-    <div class="col"><select name="authorPostAdd" id="authorPostAdd" class="form-select"
-            aria-label="Default select example">
+    <div class="col">
+        <select name="authorPostAdd" id="authorPostAdd" class="form-select" aria-label="Default select example">
             {% for user in users %}
             {% if user.id == posts.User_id %}
-            <option selected value="{{user.id}}">{{user.firstName ~ " " ~
-                user.lastName}}</option>
+            <option selected value="{{user.id}}">
+                {{user.firstName ~ " " ~ user.lastName}}
+            </option>
             {% else %}
-            <option value="{{user.id}}">{{user.firstName ~ " " ~ user.lastName}}
+            <option value="{{user.id}}">
+                {{user.firstName ~ " " ~ user.lastName}}
             </option>
             {% endif %}
             {% endfor %}
-        </select></div>
+        </select>
+    </div>
 </div>
 
 <div class="row my-4">
-    <div class="col-12 my-2 fw-bold">Souhaitez-vous publier l'article ?
+    <div class="col-12 my-2 fw-bold">
+        Souhaitez-vous publier l'article ?
     </div>
     <div class="col">
         <div class="form-check form-check-inline">
