@@ -11860,3 +11860,10 @@ html {
   max-width:300px; 
   height:200px;
 }
+.scroll-top {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  display: none;
+  cursor: pointer;
+}
