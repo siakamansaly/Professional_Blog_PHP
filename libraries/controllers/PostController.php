@@ -144,7 +144,7 @@ class PostController extends Controller
 
         switch ($error) {
             case 0:
-                $this->dataEdit['dateAddPost'] = date('Y-m-d H:i:s');
+                $this->dataEdit['dateModifyPost'] = date('Y-m-d H:i:s');
                 if (!empty($this->var->files->get('picture'))) {
                     $reset = $this->model->read($id_post);
                     if ($reset["picture"] <> "") {

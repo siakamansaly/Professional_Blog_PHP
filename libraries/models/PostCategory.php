@@ -12,7 +12,7 @@ class PostCategory extends Model {
      */
     public function readAllCategoriesByPost(int $postid) : array
     {
-        $query = "SELECT postcategory.id, postcategory.name FROM {$this->table} JOIN postcategory on {$this->table}.PostCategory_id = postcategory.id WHERE Post_id = $postid ";
+        $query = "SELECT Post_id, postcategory.id, postcategory.name FROM {$this->table} JOIN postcategory on {$this->table}.PostCategory_id = postcategory.id WHERE Post_id = $postid ";
         return $this->rows($query);
     }
 

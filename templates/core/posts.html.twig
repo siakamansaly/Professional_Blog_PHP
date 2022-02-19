@@ -7,8 +7,13 @@
             {% if option.sidebar is empty %}
             <img src="/img/blog/posts/{{post.picture}}" class="card-img-top w-100" alt="{{post.title}}"
                 style="min-height: 256px;max-height: 256px;min-width:414px">
-            <div class="card-header bg-dark text-light">
-                Featured
+            <div class="card-header bg-primary text-light">
+                {% set categories = post.categories|split(',') %}
+                {% for categorie in categories %}
+                <span class="badge bg-white text-primary">{{ categorie }}</span>
+                
+                {% endfor %}
+                {% if post.categories is empty %}<span>&nbsp;</span>{% endif %}
             </div>
             {% endif %}
             <div class="card-body">
@@ -23,9 +28,9 @@
                 </div>
                 <div class="card-text mb-3 justify">
                     <div class="card-chapo card-text fw-bold mb-3">
-                        {{post.chapo|slice(0, 100) ~ '...'}}
+                        {{post.chapo|slice(0, 200) ~ '...'}}
                     </div>
-                    {{post.content|slice(0, 200) ~ '...'}}
+                    {#post.content|slice(0, 200) ~ '...'#}
                 </div>
                 <div class="d-flex justify-content-center">
                     <a href="/post/{{post.slug}}" class="btn btn-outline-primary w-50">Lire la suite...</a>

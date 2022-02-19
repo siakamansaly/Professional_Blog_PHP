@@ -33,6 +33,16 @@ class HomeController extends Controller
         $this->path = '\frontend\homepage.html.twig';
         $posts = new \Blog\Models\Post;
         $posts = $this->postModel->readPostsRecent();
+        $counter=0;
+        foreach ($posts as $post) {
+            $name="";
+            $categoryPosts = $this->postcategoryModel->readAllCategoriesByPost($post["id"]);
+            foreach ($categoryPosts as $categoryPost) {
+                $name.= $categoryPost["name"].",";
+            }
+            $posts[$counter]["categories"] = substr($name,0,-1);
+            $counter++;
+        }
         $this->data = ['head' => ['title' => 'Home'], 'posts' => $posts];
         $this->setResponseHttp(200);
         $this->render($this->path, $this->data);
@@ -80,7 +90,17 @@ class HomeController extends Controller
             $currentCategory = (int) $this->sanitize(($this->var->query->get('category')));
         }
         $posts = $this->postModel->readAllPostsByCategory("1", $currentCategory, "post.dateAddPost DESC", "$firstPage,$this->itemsByPage");
-
+        $categoryPosts = [];
+        $counter=0;
+        foreach ($posts as $post) {
+            $name="";
+            $categoryPosts = $this->postcategoryModel->readAllCategoriesByPost($post["id"]);
+            foreach ($categoryPosts as $categoryPost) {
+                $name.= $categoryPost["name"].",";
+            }
+            $posts[$counter]["categories"] = substr($name,0,-1);
+            $counter++;
+        }
 
         $postsAllCategory = $this->categoryModel->readAll();
 
