@@ -2,9 +2,6 @@
 /*
     * PDO Database Class
     * Connect to database
-    * Create prepares statements
-    * Bind values
-    * Return rows and results
 */
 namespace Blog;
 

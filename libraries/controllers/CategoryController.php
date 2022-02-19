@@ -2,9 +2,7 @@
 
 namespace Blog\Controllers;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 
 class CategoryController extends Controller
 {
@@ -26,8 +24,7 @@ class CategoryController extends Controller
 
     /**
      * Function add category
-     * 
-     * @return void
+     * @return json
      */
     public function categoryAdd()
     {
@@ -48,8 +45,7 @@ class CategoryController extends Controller
     
     /**
      * Function edit category
-     * 
-     * @return void
+     * @return json
      */
     public function categoryEdit()
     {
@@ -78,8 +74,7 @@ class CategoryController extends Controller
 
     /**
      * Function delete category
-     * 
-     * @return void
+     * @return json
      */
     public function categoryDelete()
     {
@@ -104,8 +99,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show post Manager
-     * 
+     * Show category Manager
      * @return \Twig
      */
     public function categoryManager()
@@ -129,8 +123,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show a comment Manager Edit
-     * 
+     * Show a category Manager Edit
      * @return \Twig
      */
     public function categoryManagerEdit($param)

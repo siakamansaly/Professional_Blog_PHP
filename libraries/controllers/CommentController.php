@@ -2,9 +2,7 @@
 
 namespace Blog\Controllers;
 
-use Symfony\Component\HttpFoundation\Exception\JsonException;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 
 class CommentController extends Controller
@@ -24,9 +22,8 @@ class CommentController extends Controller
     }
 
     /**
-     * Function add Post
-     * 
-     * @return void
+     * Function add comment
+     * @return json
      */
     public function commentAdd()
     {
@@ -57,9 +54,8 @@ class CommentController extends Controller
 
     
     /**
-     * Function delete Post
-     * 
-     * @return void
+     * Function edit comment
+     * @return json
      */
     public function commentEdit()
     {
@@ -87,9 +83,8 @@ class CommentController extends Controller
     }
 
     /**
-     * Function delete Post
-     * 
-     * @return void
+     * Function validate comment
+     * @return json
      */
     public function commentValidate()
     {
@@ -113,9 +108,8 @@ class CommentController extends Controller
     }
 
     /**
-     * Function delete Post
-     * 
-     * @return void
+     * Function disable comment
+     * @return json
      */
     public function commentDisable()
     {
@@ -139,9 +133,8 @@ class CommentController extends Controller
     }
 
     /**
-     * Function delete Post
-     * 
-     * @return void
+     * Function delete comment
+     * @return json
      */
     public function commentDelete()
     {
@@ -165,8 +158,7 @@ class CommentController extends Controller
     }
 
     /**
-     * Show post Manager
-     * 
+     * Show comment Manager
      * @return \Twig
      */
     public function commentManager()
@@ -196,7 +188,6 @@ class CommentController extends Controller
 
     /**
      * Show a comment Manager Edit
-     * 
      * @return \Twig
      */
     public function commentManagerEdit($param)

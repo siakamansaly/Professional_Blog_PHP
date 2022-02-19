@@ -21,14 +21,8 @@ abstract class Renderer
     protected $session;
     protected $response;
 
-
-    public  function __construct()
-    {
-    }
-
     /**
      * Start Twig
-     * 
      * @return \Twig
      */
     public function render(string $view, array $params = [])
@@ -52,8 +46,7 @@ abstract class Renderer
 
     /**
      * Redirect http 
-     * 
-     * @return void
+     * @return mixed
      */
     public function redirect(string $url)
     {
@@ -64,7 +57,6 @@ abstract class Renderer
 
     /**
      * Set HTTP Response 
-     * 
      * @return mixed
      */
     public function setResponseHttp(int $code = 200)
@@ -76,8 +68,7 @@ abstract class Renderer
 
     /**
      * Send message PHP Mailer
-     * 
-     * @return mixed
+     * @return bool
      */
     public static function sendMessage(array $data): bool
     {
@@ -110,8 +101,11 @@ abstract class Renderer
     }
 
 
-
-    public function currentPage(int $AllPage)
+    /**
+     * Select current page
+     * @return int
+     */
+    public function currentPage(int $AllPage) : int
     {
         $currentPage = 1;
         if ($this->var->query->get('page') <> "" && $this->var->query->get('page') > 0 && $this->var->query->get('page') <= $AllPage) {
@@ -119,6 +113,11 @@ abstract class Renderer
         }
         return $currentPage;
     }
+
+    /**
+     * Select first page
+     * @return int
+     */
     public function firstPage(int $currentPage, int $AllPosts, int $AllPostsByPage)
     {
         switch ($AllPosts > $AllPostsByPage) {
@@ -133,6 +132,10 @@ abstract class Renderer
         return $first;
     }
 
+    /**
+     * Check page
+     * @return int
+     */
     public function checkAllPage($AllPage)
     {
         if ($AllPage == 0) {

@@ -35,8 +35,7 @@ class PostController extends Controller
 
     /**
      * Function add Post
-     * 
-     * @return void
+     * @return json
      */
     public function postAdd()
     {
@@ -110,8 +109,7 @@ class PostController extends Controller
 
     /**
      * Function update Post
-     * 
-     * @return void
+     * @return json
      */
     public function postEdit()
     {
@@ -187,8 +185,7 @@ class PostController extends Controller
 
     /**
      * Function delete Post
-     * 
-     * @return void
+     * @return json
      */
     public function postDelete()
     {
@@ -236,7 +233,6 @@ class PostController extends Controller
 
     /**
      * Show post Manager
-     * 
      * @return \Twig
      */
     public function postManager()
@@ -265,7 +261,6 @@ class PostController extends Controller
 
     /**
      * Show archived post
-     * 
      * @return \Twig
      */
     public function postArchived()
@@ -291,8 +286,7 @@ class PostController extends Controller
     }
 
     /**
-     * Show a post Manager
-     * 
+     * Show a post Manager Edit
      * @return \Twig
      */
     public function postManagerEdit($param)

@@ -18,7 +18,6 @@ abstract class Model
 
     /**
      * Return one row data
-     * 
      * @return mixed
      */
     public function row(string $query, ?array $params = [])
@@ -28,6 +27,10 @@ abstract class Model
         return $data->fetch();
     }
 
+    /**
+     * Count rows
+     * @return int
+     */
     public function count(?string $key = "", ?string $value = ""): int
     {
         $query = "SELECT * FROM {$this->table}";
@@ -43,7 +46,6 @@ abstract class Model
 
     /**
      * Return all rows datas
-     * 
      * @return array
      */
     public function rows(string $query, array $params = []): array
@@ -56,7 +58,6 @@ abstract class Model
 
     /**
      * Prepare and execute query
-     * 
      * @return void
      */
     public function flush(string $query, array $params = [])
@@ -88,7 +89,6 @@ abstract class Model
 
     /**
      * Read one row of table
-     * 
      * @return mixed
      */
     public function read(string $value, string $key = null)
@@ -105,7 +105,6 @@ abstract class Model
 
     /**
      * Read all rows of table
-     * 
      * @return array[]
      */
     public function readAll(): array
@@ -115,12 +114,11 @@ abstract class Model
     }
 
     /**
-     * Updates Data with id or  key
+     * Update Data with id or  key
      */
     public function update($value, array $data, string $key = null)
     {
         $set = null;
-
 
         foreach ($data as $dataKey => $dataValue) {
             $set .= $dataKey . ' = "' . $dataValue . '", ';
@@ -144,7 +142,6 @@ abstract class Model
 
     /**
      * Delete a row
-     * 
      * @return void
      */
     public function delete(int $idItem, ?string $key = ""): void

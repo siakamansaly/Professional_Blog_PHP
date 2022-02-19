@@ -8,8 +8,7 @@ class Comment extends Model
     protected $table = "comment";
 
     /**
-     * Read all rows of table
-     * 
+     * Read all comments by status
      * @return array[]
      */
     public function readAllCommentsByStatus(string $status = "1", ?string $order = "comment.dateAddComment DESC", ?string $limit = ""): array
@@ -25,8 +24,7 @@ class Comment extends Model
     }
 
     /**
-     * Read all rows of table
-     * 
+     * Read all comments by user
      * @return array[]
      */
     public function readAllCommentsByUser(int $idUser, ?string $select = "", ?string $limit = ""): array
@@ -47,8 +45,7 @@ class Comment extends Model
     }
 
     /**
-     * Read all rows of table
-     * 
+     * Read lasts comments by user
      * @return array[]
      */
     public function readLastCommentUser(int $idUser, ?string $limit = '10'): array
@@ -60,8 +57,7 @@ class Comment extends Model
     }
 
     /**
-     * Read all rows of table
-     * 
+     * Read parent comments
      * @return array[]
      */
     public function readAllCommentsParent(?int $idPost = 0): array
@@ -77,8 +73,7 @@ class Comment extends Model
     }
 
     /**
-     * Read all rows of table
-     * 
+     * Read child comments
      * @return array[]
      */
     public function readAllCommentsChild(?int $idPost = 0): array
@@ -93,8 +88,7 @@ class Comment extends Model
     }
 
     /**
-     * Read post by id
-     * 
+     * Read comment by id
      * @return mixed
      */
     public function readCommentById(int $idComment)

@@ -2,7 +2,6 @@
 
 namespace Blog\Controllers;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 
@@ -23,9 +22,8 @@ class UserController extends Controller
         $this->auth = new AuthController;
     }
     /**
-     * Function save Profile
-     * 
-     * @return void
+     * Function save Profile user in dashboard
+     * @return json
      */
     public function editProfile()
     {
@@ -83,9 +81,8 @@ class UserController extends Controller
 
 
     /**
-     * Function save Picture
-     * 
-     * @return void
+     * Function save Picture user in dashboard
+     * @return json
      */
     public function editPicture()
     {
@@ -143,9 +140,8 @@ class UserController extends Controller
     }
 
     /**
-     * Function add Post
-     * 
-     * @return void
+     * Function validate user
+     * @return json
      */
     public function userValidate()
     {
@@ -169,9 +165,8 @@ class UserController extends Controller
     }
 
     /**
-     * Function delete Post
-     * 
-     * @return void
+     * Function disable user
+     * @return json
      */
     public function userDisable()
     {
@@ -195,9 +190,8 @@ class UserController extends Controller
     }
 
     /**
-     * Function delete Post
-     * 
-     * @return void
+     * Function delete user
+     * @return json
      */
     public function userDelete()
     {
@@ -244,7 +238,6 @@ class UserController extends Controller
 
     /**
      * Show user Manager
-     * 
      * @return \Twig
      */
     public function userManager()
@@ -279,8 +272,7 @@ class UserController extends Controller
 
 
     /**
-     * Show a comment Manager Edit
-     * 
+     * Show a user Manager Edit
      * @return \Twig
      */
     public function userManagerEdit($param)

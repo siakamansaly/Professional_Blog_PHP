@@ -29,7 +29,6 @@ abstract class Controller extends Renderer
 
     /**
      * sanitize data
-     * 
      * @return mixed
      */
     public function sanitize($data)
@@ -62,7 +61,6 @@ abstract class Controller extends Renderer
 
     /**
      * Return Message with balise 'ul'
-     * @param string
      * @return mixed
      */
     public function ulAlert(string $message)
@@ -72,7 +70,6 @@ abstract class Controller extends Renderer
 
     /**
      * Check uploaded image
-     * 
      * @return array ["success" => true or false, "message"=> string]
      */
     public function checkImage(UploadedFile $file): array
@@ -122,7 +119,7 @@ abstract class Controller extends Renderer
      * Upload image in a directory
      * @return string
      */
-    public function uploadImage(UploadedFile $file, string $fileDir, string $extension)
+    public function uploadImage(UploadedFile $file, string $fileDir, string $extension) : string
     {
         if ($file) {
             $uniqid = uniqid('', false);

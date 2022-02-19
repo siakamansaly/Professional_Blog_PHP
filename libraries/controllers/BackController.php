@@ -28,8 +28,7 @@ class BackController extends Controller
     }
 
     /**
-     * Show index page
-     * 
+     * Show dashboard page
      * @return \Twig
      */
     public function dashboard()
@@ -56,7 +55,6 @@ class BackController extends Controller
 
     /**
      * Show admin blog
-     * 
      * @return \Twig
      */
     public function adminblog()
@@ -86,8 +84,7 @@ class BackController extends Controller
 
     /**
      * Check contact form and send message
-     * 
-     * @return void
+     * @return json
      */
     public function contact()
     {   

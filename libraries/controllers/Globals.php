@@ -5,10 +5,9 @@ namespace Blog\Controllers;
 class Globals 
 {
     /**
-     * Get all Environment variables
-     * @return array
+     * Get Environment variable
+     * @return mixed
      */
-    
     public function env($param = null)
     {
        return getenv($param);

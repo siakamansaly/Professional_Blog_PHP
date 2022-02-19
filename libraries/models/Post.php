@@ -5,54 +5,46 @@ namespace Blog\Models;
 
 class Post extends Model
 {
-
     protected $table = "post";
 
     /**
-     * Read all rows of table
-     * 
+     * Read all posts of table
      * @return array[]
      */
     public function readAllPosts(string $status = "1", ?string $order = "post.dateAddPost DESC", ?string $limit = ""): array
     {
         $query = "SELECT post.id, post.dateAddPost, post.dateModifyPost, post.title, post.chapo, post.slug, post.content, post.picture, post.status, post.User_id, user.firstName, user.lastName FROM {$this->table} JOIN user on {$this->table}.User_id = user.id WHERE post.status IN  ($status)";
-        if($order)
-        {
+        if ($order) {
             $query .= " ORDER BY $order";
         }
-        if($limit)
-        {
+        if ($limit) {
             $query .= " LIMIT $limit";
         }
         return $this->rows($query);
     }
 
     /**
-     * Read all rows of table
-     * 
+     * Read all posts by category
      * @return array[]
      */
     public function readAllPostsByCategory(string $status = "1", int $category = 0, ?string $order = "post.dateAddPost DESC", ?string $limit = ""): array
     {
         $query = "SELECT post.id, post.dateAddPost, post.dateModifyPost, post.title, post.chapo, post.slug, post.content, post.picture, post.status, post.User_id, user.firstName, user.lastName FROM {$this->table}, user, post_postcategory WHERE {$this->table}.User_id = user.id  AND post.id = post_postcategory.Post_id  AND post.status IN  ($status) ";
-        if ($category<>0)
-        {
+        if ($category <> 0) {
             $query .= " AND post_postcategory.PostCategory_id=$category";
         }
-        
-        if($order)
-        {
+
+        if ($order) {
             $query .= " ORDER BY $order";
         }
-        if($limit)
-        {
+        if ($limit) {
             $query .= " LIMIT $limit";
         }
         return $this->rows($query);
     }
+
     /**
      * Read post by slug
-     * 
      * @return mixed
      */
     public function readPostBySlug(string $slug)
@@ -63,7 +55,6 @@ class Post extends Model
 
     /**
      * Read post by id
-     * 
      * @return mixed
      */
     public function readPostById(string $idPost)
@@ -73,11 +64,10 @@ class Post extends Model
     }
 
     /**
-     * Read all rows of table
-     * 
+     * Read all posts recents 
      * @return array[]
      */
-    public function readPostsRecent(string $idPost = "", ?int $status = 1, ?string $order="post.dateAddPost DESC", ?int $limit = 3): array
+    public function readPostsRecent(string $idPost = "", ?int $status = 1, ?string $order = "post.dateAddPost DESC", ?int $limit = 3): array
     {
         $query = "SELECT post.id, post.dateAddPost, post.dateModifyPost, post.title, post.chapo, post.slug, post.content, post.picture, post.status, post.User_id, user.firstName, user.lastName FROM {$this->table} JOIN user on {$this->table}.User_id = user.id WHERE post.status = $status ";
 
@@ -90,7 +80,12 @@ class Post extends Model
         return $this->rows($query);
     }
 
-    public function lastInsertIdPDO()
+
+    /**
+     * Read last insert ID 
+     * @return int
+     */
+    public function lastInsertIdPDO(): int
     {
         $query = "SELECT MAX(id) as lastid FROM {$this->table}";
         $data = $this->pdo->query($query);

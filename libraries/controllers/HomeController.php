@@ -2,8 +2,6 @@
 
 namespace Blog\Controllers;
 
-use Symfony\Component\HttpFoundation\Request;
-
 class HomeController extends Controller
 {
     protected $modelName = \Blog\Models\Contact::class;
@@ -28,7 +26,6 @@ class HomeController extends Controller
 
     /**
      * Show index page
-     * 
      * @return \Twig
      */
     public function index()
@@ -42,7 +39,6 @@ class HomeController extends Controller
     }
     /**
      * Show sitemap page
-     * 
      * @return \Twig
      */
     public function sitemap()
@@ -55,7 +51,6 @@ class HomeController extends Controller
 
     /**
      * Show legal Notice page
-     * 
      * @return \Twig
      */
     public function legalNotice()
@@ -68,7 +63,6 @@ class HomeController extends Controller
 
     /**
      * Show blog page
-     * 
      * @return \Twig
      */
     public function blog()
@@ -97,7 +91,6 @@ class HomeController extends Controller
 
     /**
      * Show a post page
-     * 
      * @return \Twig
      */
     public function post(string $param)
@@ -133,8 +126,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Renew Password user
-     * 
+     * Renew Password user page
      * @return \Twig
      */
     public function renewPassword($param)
@@ -155,7 +147,6 @@ class HomeController extends Controller
 
     /**
      * Show error page
-     * 
      * @return \Twig
      */
     public function errorPage(int $code = 404)

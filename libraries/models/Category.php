@@ -8,7 +8,6 @@ class Category extends Model {
 
     /**
      * Read all rows of table Category
-     * 
      * @return array[]
      */
     public function readAllCategory(?int $first=0, ?int $last=NULL): array

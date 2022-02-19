@@ -77,7 +77,7 @@ class AuthController extends Controller
 
     /**
      * Function allowing (or not) the user to log in
-     * @return json object
+     * @return json
      */
     public function login()
     {
@@ -161,6 +161,11 @@ class AuthController extends Controller
         $response->send();
     }
 
+    /**
+     * Function logout
+     * @return void
+     */
+
     public function logout()
     {
         $this->session->remove('firstName');
@@ -177,8 +182,7 @@ class AuthController extends Controller
 
     /**
      * Function register
-     * 
-     * @return void
+     * @return json
      */
     public function register()
     {
@@ -244,8 +248,7 @@ class AuthController extends Controller
     }
     /**
      * Function lostPassword
-     * 
-     * @return void
+     * @return json
      */
     public function lostPassword()
     {
@@ -300,8 +303,7 @@ class AuthController extends Controller
 
     /**
      * Function lostPassword
-     * 
-     * @return void
+     * @return json
      */
     public function savePassword()
     {
