@@ -91,19 +91,11 @@ abstract class Model
      * 
      * @return mixed
      */
-    public function read(string $value, string $key = null, $select = "")
+    public function read(string $value, string $key = null)
     {
-        if (isset($key)) {
-            switch ($select <> "") {
-                case true:
-                    $query = "SELECT " . $select . " FROM {$this->table} WHERE " . $key . " = ?";
-                    return $this->row($query, [$value]);
-                    break;
-                default:
-                    $query = "SELECT * FROM {$this->table} WHERE " . $key . " = ?";
-                    return $this->row($query, [$value]);
-                    break;
-            }
+        if ($key) {
+            $query = "SELECT * FROM {$this->table} WHERE " . $key . " = ?";
+            return $this->row($query, [$value]);
         }
 
         $query = "SELECT * FROM {$this->table} WHERE id = ?";
@@ -116,15 +108,9 @@ abstract class Model
      * 
      * @return array[]
      */
-    public function readAll(?string $where = "", ?string $order = ""): array
+    public function readAll(): array
     {
         $query = "SELECT * FROM {$this->table}";
-        if ($where) {
-            $query .= " WHERE " . $where;
-        }
-        if ($order) {
-            $query .= " ORDER BY " . $order;
-        }
         return $this->rows($query);
     }
 

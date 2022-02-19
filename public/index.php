@@ -36,11 +36,11 @@ $router->addRoutes(array(
     array('POST', '/postEdit', ROOT_CONTROLLER . 'PostController#postEdit', 'postEdit'),
     array('POST', '/postDelete', ROOT_CONTROLLER . 'PostController#postDelete', 'postDelete'),
 
-    array('GET', '/categoryManager', ROOT_CONTROLLER . 'PostCategoryController#categoryManager', 'categoryManager'),
-    array('GET', '/categoryManagerEdit/[*:id]', ROOT_CONTROLLER . 'PostCategoryController#categoryManagerEdit', 'categoryManagerEdit'),
-    array('POST', '/categoryAdd', ROOT_CONTROLLER . 'PostCategoryController#categoryAdd', 'categoryAdd'),
-    array('POST', '/categoryEdit', ROOT_CONTROLLER . 'PostCategoryController#categoryEdit', 'categoryEdit'),
-    array('POST', '/categoryDelete', ROOT_CONTROLLER . 'PostCategoryController#categoryDelete', 'categoryDelete'),
+    array('GET', '/categoryManager', ROOT_CONTROLLER . 'CategoryController#categoryManager', 'categoryManager'),
+    array('GET', '/categoryManagerEdit/[*:id]', ROOT_CONTROLLER . 'CategoryController#categoryManagerEdit', 'categoryManagerEdit'),
+    array('POST', '/categoryAdd', ROOT_CONTROLLER . 'CategoryController#categoryAdd', 'categoryAdd'),
+    array('POST', '/categoryEdit', ROOT_CONTROLLER . 'CategoryController#categoryEdit', 'categoryEdit'),
+    array('POST', '/categoryDelete', ROOT_CONTROLLER . 'CategoryController#categoryDelete', 'categoryDelete'),
 
     array('POST', '/commentAdd', ROOT_CONTROLLER . 'CommentController#commentAdd', 'commentAdd'),
     array('POST', '/commentEdit', ROOT_CONTROLLER . 'CommentController#commentEdit', 'commentEdit'),

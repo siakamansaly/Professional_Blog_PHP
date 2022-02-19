@@ -251,8 +251,8 @@ class UserController extends Controller
     {
         // Force user login
         $this->auth->forceAdmin();
-        $status = "";
-        $type = "";
+        $status = NULL;
+        $type = NULL;
         $AllUserCounter = $this->model->count();
 
         // Pagination 
@@ -261,22 +261,15 @@ class UserController extends Controller
 
         $firstPage = $this->firstPage($currentPage, $AllUserCounter, $this->itemsByPage);
 
-        $requete = "";
-
         if ($this->var->query->get('status') <> "") {
             $status = $this->sanitize($this->var->query->get('status'));
-            $requete = "status = '$status'";
         }
 
         if ($this->var->query->get('type') <> "") {
             $type = $this->sanitize($this->var->query->get('type'));
-            if ($requete <> "") {
-                $requete .= " AND ";
-            }
-            $requete .= "userType = '$type'";
         }
 
-        $users = $this->model->readAll("$requete", "id ASC LIMIT $firstPage,$this->itemsByPage");
+        $users = $this->model->readAllUsers($firstPage,$this->itemsByPage,$status,$type);
 
         $this->path = '\backend\admin\user\userManager.html.twig';
         $this->data = ['head' => ['title' => 'Administration des utilisateurs'], 'users' => $users, 'AllUserCounter' => $AllUserCounter, 'AllPage' => $AllPage, 'currentPage' => $currentPage, 'status' => $status, 'type' => $type];
@@ -296,7 +289,7 @@ class UserController extends Controller
         $this->auth->forceAdmin();
 
         $this->path = '\backend\admin\user\userEdit.html.twig';
-        $user = $this->model->read($param, 'id');
+        $user = $this->model->read($param);
 
 
         if (!$user) {

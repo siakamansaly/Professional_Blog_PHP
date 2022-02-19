@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 
-class PostCategoryController extends Controller
+class CategoryController extends Controller
 {
     private $postcategoryModel;
     protected $modelName = \Blog\Models\Category::class;
@@ -121,7 +121,7 @@ class PostCategoryController extends Controller
 
         $firstPage = $this->firstPage($currentPage, $AllCategoryCounter, $this->itemsByPage);
 
-        $categories = $this->model->readAll("", "id ASC LIMIT $firstPage,$this->itemsByPage");
+        $categories = $this->model->readAllCategory($firstPage,$this->itemsByPage);
         $this->path = '\backend\admin\category\categoryManager.html.twig';
         $this->data = ['head' => ['title' => 'Administration des catégories'], 'categories' => $categories, 'AllCategoryCounter' => $AllCategoryCounter, 'AllPage' => $AllPage, 'currentPage' => $currentPage];
         $this->setResponseHttp(200);
