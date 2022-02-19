@@ -25,6 +25,15 @@
                                             {% endif %}
                                         </div>
                                         <div class="ms-3 justify w-100">
+                                            {% if comment.status == 0 %}
+                                            <span class="badge bg-secondary">En attente de validation</span>
+                                            {% endif %}
+                                            {% if comment.status == 2 %}
+                                            <span class="badge bg-danger">Commentaire désapprouvé</span>
+                                            {% endif %}
+                                            {% if comment.status == 1 %}
+                                            <span class="badge bg-success">Commentaire Approuvé</span>
+                                            {% endif %}
                                             <div class="fw-bold">{{comment.title}}</div>
                                             <div class="font-italic small">
                                                 Commenté le {{comment.dateAddComment | date("d/m/Y H:i:s")}}

@@ -51,10 +51,10 @@ class HomeController extends Controller
      * Show sitemap page
      * @return \Twig
      */
-    public function sitemap()
+    public function policy()
     {
-        $this->path = '\frontend\sitemap.html.twig';
-        $this->data = ['head' => ['title' => 'Plan du site']];
+        $this->path = '\frontend\policy.html.twig';
+        $this->data = ['head' => ['title' => 'Politique de confidentialité']];
         $this->setResponseHttp(200);
         $this->render($this->path, $this->data);
     }

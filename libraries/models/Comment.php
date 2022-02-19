@@ -65,7 +65,7 @@ class Comment extends Model
         $query = "SELECT comment.id,comment.datePublishComment,comment.dateAddComment,comment.content,comment.status,        comment.parentId,comment.User_id,comment.Post_id,post.title, user.firstName, user.lastName, user.picture FROM {$this->table} JOIN post on {$this->table}.Post_id = post.id JOIN user on comment.User_id = user.id WHERE parentId = 0 AND comment.status = 1";
 
         if ($idPost <> 0) {
-            $query .= " AND  comment.Post_id=$idPost";
+            $query .= " AND  comment.Post_id=$idPost ORDER BY dateAddComment DESC";
             return $this->rows($query);
         }
         $query .= " ORDER BY dateAddComment DESC";
@@ -80,7 +80,7 @@ class Comment extends Model
     {
         $query = "SELECT comment.id,comment.datePublishComment,comment.dateAddComment,comment.content,comment.status,        comment.parentId,comment.User_id,comment.Post_id,post.title, user.firstName, user.lastName, user.picture FROM {$this->table} JOIN post on {$this->table}.Post_id = post.id JOIN user on comment.User_id = user.id WHERE parentId <>0 AND comment.status = 1 ";
         if ($idPost <> 0) {
-            $query .= "AND  comment.Post_id=$idPost";
+            $query .= "AND  comment.Post_id=$idPost ORDER BY parentId ASC, dateAddComment DESC";
             return $this->rows($query);
         }
         $query .= " ORDER BY parentId ASC, dateAddComment DESC";

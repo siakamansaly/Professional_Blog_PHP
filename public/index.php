@@ -20,7 +20,7 @@ $router->addRoutes(array(
     array('GET', '/', ROOT_CONTROLLER . 'HomeController#index', 'home'),
     array('GET', '/blog', ROOT_CONTROLLER . 'HomeController#blog', 'blog'),
     array('GET', '/post/[*:slug]', ROOT_CONTROLLER . 'HomeController#post', 'post'),
-    array('GET', '/sitemap', ROOT_CONTROLLER . 'HomeController#sitemap', 'sitemap'),
+    array('GET', '/policy', ROOT_CONTROLLER . 'HomeController#policy', 'policy'),
     array('GET', '/legalNotice', ROOT_CONTROLLER . 'HomeController#legalNotice', 'legalNotice'),
     array('GET', '/renew/[*:token]', ROOT_CONTROLLER . 'HomeController#renewPassword', 'renewPassword'),
     array('GET', '/error/[*:code]', ROOT_CONTROLLER . 'HomeController#errorPage', 'errorPage'),

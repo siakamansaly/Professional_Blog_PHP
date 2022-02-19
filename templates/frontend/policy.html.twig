@@ -1,0 +1,42 @@
+{% import '/macro/section.html.twig' as section %}
+{% extends "layout.html.twig" %}
+{% block navbar %}{% set urlblog = "/" %}{% set url = "/" %} {{ parent() }}{% endblock %}
+{% block content %}
+
+{{section.sectionstart("Politique de confidentialité",{id:'sitemap'})}}
+<!-- Sitemap Section Content-->
+<div class="row">
+    <div class="col">
+        <p class="lead">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id voluptate, omnis aliquid vitae recusandae at
+            eaque, dolores exercitationem sint magnam, quod porro veritatis delectus possimus ad iure rerum non quo.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Id quod nemo, itaque neque provident error fugit ad
+            molestiae rem recusandae! Culpa eaque iste numquam eum aspernatur est libero. Expedita, incidunt?
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit nesciunt animi molestiae eligendi odit, ullam repudiandae, consequatur reiciendis necessitatibus quasi deleniti deserunt esse sunt debitis iure unde quam ratione ea.<br /><br />
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore dolor doloremque laborum delectus quidem. Sed, est ullam! Autem eum nostrum dolor. Pariatur dolore consectetur illum similique maxime nam modi dolor.
+            <br /><br />
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore dolor doloremque laborum delectus quidem. Sed, est ullam! Autem eum nostrum dolor. Pariatur dolore consectetur illum similique maxime nam modi dolor.
+            <br /><br />
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore dolor doloremque laborum delectus quidem. Sed, est ullam! Autem eum nostrum dolor. Pariatur dolore consectetur illum similique maxime nam modi dolor.
+            <br /><br />
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore dolor doloremque laborum delectus quidem. Sed, est ullam! Autem eum nostrum dolor. Pariatur dolore consectetur illum similique maxime nam modi dolor.
+            <br /><br />
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore dolor doloremque laborum delectus quidem. Sed, est ullam! Autem eum nostrum dolor. Pariatur dolore consectetur illum similique maxime nam modi dolor.
+            <br /><br />
+
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nesciunt numquam error sit eius tempore incidunt
+            libero deserunt expedita itaque molestias. Minima placeat ex nisi consequatur temporibus deserunt
+            consequuntur pariatur at.
+            <br /><br />
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae est sed neque qui voluptas fugit,
+            excepturi, iste eum esse fuga fugiat saepe. Iste enim magni soluta unde eius? Aliquam, ex!
+            <br /><br />
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi vitae dolores praesentium deleniti ipsum,
+            voluptate velit perferendis atque dolorum, cupiditate, eos inventore optio sunt? Libero neque dolorum quae
+            praesentium sit!
+
+        </p>
+    </div>
+</div>
+{{section.sectionend()}}
+{% endblock %}

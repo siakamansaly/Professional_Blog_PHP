@@ -8,17 +8,18 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class CommentController extends Controller
 {
     protected $modelName = \Blog\Models\Comment::class;
-    public $path;
-    public $data;
-    public $errorMessage = "";
-    public $post;
-    public $slugify;
+    private $path;
+    private $data;
     protected $auth;
+    private $userModel;
+    private $commentModel;
 
     public function __construct()
     {
         parent::__construct();
         $this->auth = new AuthController;
+        $this->userModel = new \Blog\Models\User;
+        $this->commentModel = new \Blog\Models\Comment;
     }
 
     /**
@@ -29,30 +30,40 @@ class CommentController extends Controller
     {
         $this->data = [];
         $json = [];
-   
+
         $this->data['parentId'] = $this->sanitize($this->var->request->get('parent_id'));
         $this->data['Post_id'] = $this->sanitize($this->var->request->get('post_id'));
         $this->data['dateAddComment'] = date('Y-m-d H:i:s');
         $this->data['User_id'] = $this->session->get('id');
         $this->data['content'] = $this->sanitize($this->var->request->get('comment'));
         $this->data['status'] = 0;
-        
-        if ($this->session->get('userType')=="admin")
-        {
+
+        if ($this->session->get('userType') == "admin") {
             $this->data['status'] = 1;
         }
 
 
         $this->model->insert($this->data);
-    
+
+        if ($this->data['status'] === 0) {
+            $user = $this->userModel->read($this->data['User_id']);
+            $ENV = new Globals;
+            $titleWebSite = $ENV->env("TITLE_WEBSITE");
+            $this->data['subject'] = $titleWebSite . " - Nouveau commentaire";
+            $this->data['message'] = "Votre commentaire a bien été soumis.\nCelui-ci va être examiné par l'administrateur avant validation.\nBien à vous";
+            $this->data['email'] = $user['email'];
+            $this->data['firstName'] = $user['firstName'];
+            $this->data['lastName'] = $user['lastName'];
+            $this->sendMessage($this->data);
+        }
+
         $json['success'] = true;
         $json['message'] = $this->divAlert("Commentaire ajouté avec succès et en attente de modération par l'administrateur.", "success");
         $response = new JsonResponse($json);
         $response->send();
-
     }
 
-    
+
     /**
      * Function edit comment
      * @return json
@@ -63,7 +74,7 @@ class CommentController extends Controller
         $json = [];
         $success = "";
         $message = "";
-        $id_comment ="";
+        $id_comment = "";
 
         $id_comment = $this->sanitize($this->var->request->get('idCommentEdit'));
         $this->data['content'] = $this->sanitize($this->var->request->get('comment'));
@@ -73,13 +84,12 @@ class CommentController extends Controller
 
         $message = $this->divAlert("Commentaire mis à jour avec succès.", "success");
         $success = true;
-    
+
         $json['success'] = $success;
         $json['message'] = $message;
         $json['status'] = $this->data['status'];
         $response = new JsonResponse($json);
         $response->send();
-
     }
 
     /**
@@ -98,9 +108,20 @@ class CommentController extends Controller
         $this->data['status'] = 1;
         $this->model->update($id_comment, $this->data);
 
+        $comment = $this->commentModel->read($id_comment);
+        $user = $this->userModel->read($comment['User_id']);
+        $ENV = new Globals;
+        $titleWebSite = $ENV->env("TITLE_WEBSITE");
+        $this->data['subject'] = $titleWebSite . " - Commentaire approuvé";
+        $this->data['message'] = "Votre commentaire a bien été approuvé.\nBien à vous";
+        $this->data['email'] = $user['email'];
+        $this->data['firstName'] = $user['firstName'];
+        $this->data['lastName'] = $user['lastName'];
+        $this->sendMessage($this->data);
+
         $message = $this->divAlert("Commentaire validé avec succès.", "success");
         $success = true;
-    
+
         $json['success'] = $success;
         $json['message'] = $message;
         $response = new JsonResponse($json);
@@ -123,9 +144,20 @@ class CommentController extends Controller
         $this->data['status'] = 2;
         $this->model->update($id_comment, $this->data);
 
+        $comment = $this->commentModel->read($id_comment);
+        $user = $this->userModel->read($comment['User_id']);
+        $ENV = new Globals;
+        $titleWebSite = $ENV->env("TITLE_WEBSITE");
+        $this->data['subject'] = $titleWebSite . " - Commentaire désapprouvé";
+        $this->data['message'] = "Votre commentaire a été désapprouvé car il ne répond pas à nos conditions générales d'utilisation.\nBien à vous";
+        $this->data['email'] = $user['email'];
+        $this->data['firstName'] = $user['firstName'];
+        $this->data['lastName'] = $user['lastName'];
+        $this->sendMessage($this->data);
+
         $message = $this->divAlert("Le commentaire a bien été désapprouvé.", "success");
         $success = true;
-    
+
         $json['success'] = $success;
         $json['message'] = $message;
         $response = new JsonResponse($json);
@@ -142,7 +174,7 @@ class CommentController extends Controller
         $json = [];
         $success = "";
         $message = "";
-        
+
         $id_comment = $this->sanitize($this->var->request->get('idCommentDelete'));
 
         $this->model->update($id_comment, ['parentId' => 0], 'parentId');
@@ -150,7 +182,7 @@ class CommentController extends Controller
 
         $message = $this->divAlert("Le commentaire a bien été supprimé.", "success");
         $success = true;
-    
+
         $json['success'] = $success;
         $json['message'] = $message;
         $response = new JsonResponse($json);
