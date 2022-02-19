@@ -11,7 +11,7 @@ class UserController extends Controller
     private $postModel;
     protected $modelName = \Blog\Models\User::class;
     private $data = [];
-    public string $errorMessage;
+    private string $errorMessage;
     protected $auth;
 
     public function __construct()

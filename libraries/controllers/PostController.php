@@ -10,12 +10,11 @@ class PostController extends Controller
     private $comments;
     private $postcategoryModel;
     protected $modelName = \Blog\Models\Post::class;
-    public $path;
-    public $data;
-    public $dataEdit;
-    public $errorMessage = "";
-    public $post;
-    public $slugify;
+    private $path;
+    private $data;
+    private $dataEdit;
+    private $errorMessage = "";
+    private $slugify;
     protected $auth;
     private $userModel;
     private $categoryModel;

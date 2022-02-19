@@ -8,11 +8,8 @@ class CategoryController extends Controller
 {
     private $postcategoryModel;
     protected $modelName = \Blog\Models\Category::class;
-    public $path;
-    public $data;
-    public $errorMessage = "";
-    public $post;
-    public $slugify;
+    private $path;
+    private $data;
     protected $auth;
 
     public function __construct()
