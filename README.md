@@ -10,7 +10,7 @@
   <a href="https://github.com/siakamansaly/Blog_PHP_MVC">
     <img src="public/img/favicon/favicon.ico" alt="Logo">
   </a>
-  <h1 align="center">Blog PHP MVC</h1>
+  <h1 align="center">Professional Blog</h1>
   <p align="center">
     My first blog in PHP
   </p>
@@ -36,7 +36,7 @@ This project carried out in PHP, OOP and adopts an MVC pattern. It is also neces
 
 ## Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+This section list the main frameworks/libraries used to start your project.
 <ul>
   <li><a href="https://startbootstrap.com/" target="_blank">StartBootstrap</a></li>
   <li><a href="https://jquery.com" target="_blank">JQuery</a></li>
@@ -50,8 +50,7 @@ This section should list any major frameworks/libraries used to bootstrap your p
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+To get a local copy up and running follow these simple example steps :
 
 1.Import file **BlogPerso.sql** of folder **database** (you can delete the folder after installation)
 
