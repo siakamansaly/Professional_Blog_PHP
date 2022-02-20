@@ -29,15 +29,16 @@
 ### Built With
 
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-  * [Next.js](https://nextjs.org/)
-  * [React.js](https://reactjs.org/)
-  * [Vue.js](https://vuejs.org/)
-  * [Angular](https://angular.io/)
-  * [Svelte](https://svelte.dev/)
-  * [Laravel](https://laravel.com)
-  * [Bootstrap](https://getbootstrap.com)
-  * [JQuery](https://jquery.com)
+<ul>
+<li>[Next.js](https://nextjs.org/)</li>
+<li>[React.js](https://reactjs.org/)</li>
+<li>[Vue.js](https://vuejs.org/)</li>
+<li>[Angular](https://angular.io/)</li>
+<li>[Svelte](https://svelte.dev/)</li>
+<li>[Laravel](https://laravel.com)</li>
+<li>[Bootstrap](https://getbootstrap.com)</li>
+<li>[JQuery](https://jquery.com)</li>
+</ul>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
