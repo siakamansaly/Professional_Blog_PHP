@@ -6,9 +6,7 @@
   <a href="https://github.com/siakamansaly/Blog_PHP_MVC">
     <img src="public/img/favicon/favicon.ico" alt="Logo">
   </a>
-
   <h1 align="center">Blog PHP MVC</h1>
-
   <p align="center">
     My first blog in PHP
   </p>
@@ -24,25 +22,24 @@
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
 ### Built With
 
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 <ul>
-<li>[Next.js](https://nextjs.org/)</li>
-<li>[React.js](https://reactjs.org/)</li>
-<li>[Vue.js](https://vuejs.org/)</li>
-<li>[Angular](https://angular.io/)</li>
-<li>[Svelte](https://svelte.dev/)</li>
-<li>[Laravel](https://laravel.com)</li>
-<li>[Bootstrap](https://getbootstrap.com)</li>
-<li>[JQuery](https://jquery.com)</li>
+  <li>[StartBootstrap](https://startbootstrap.com/)</li>
+  <li>[Bootstrap](https://getbootstrap.com)</li>
+  <li>[FontAweSome](https://fontawesome.com/)</li>
+  <li>[JQuery](https://jquery.com)</li>
+  <li>[Twig](https://twig.symfony.com/)</li>
+  <li>[HTTP-Foundation](https://symfony.com/doc/current/components/http_foundation.html)</li>
+  <li>[PHPMailer](https://github.com/PHPMailer/PHPMailer)</li>
+  <li>[Slugify](https://github.com/cocur/slugify)</li>
+  <li>[Altorouter](http://altorouter.com/)</li>
+  <li>[PHPdotenv](https://github.com/vlucas/phpdotenv)</li>
+  <li>[Whoops](https://github.com/filp/whoops)</li>
 </ul>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -57,7 +54,6 @@ This is an example of how to list things you need to use the software and how to
   ```sh
   npm install npm@latest -g
   ```
-
 ### Installation
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
@@ -75,10 +71,7 @@ _Below is an example of how you can instruct your audience on installing and set
    ```js
    const API_KEY = 'ENTER YOUR API';
    ```
-
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -88,8 +81,6 @@ Use this space to show useful examples of how a project can be used. Additional 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- ROADMAP -->
 ## Roadmap
@@ -106,8 +97,6 @@ See the [open issues](https://github.com/othneildrew/Best-README-Template/issues
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
 <!-- CONTRIBUTING -->
 ## Contributing
 
@@ -123,8 +112,6 @@ Don't forget to give the project a star! Thanks again!
 5. Open a Pull Request
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- LICENSE -->
 ## License
