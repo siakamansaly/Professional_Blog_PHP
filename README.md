@@ -39,8 +39,9 @@ This project carried out in PHP, OOP and adopts an MVC pattern. It is also neces
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 <ul>
   <li><a href="https://startbootstrap.com/" target="_blank">StartBootstrap</a></li>
-  <li><a href="https://www.php.net/" target="_blank">PHP</a></li>
   <li><a href="https://jquery.com" target="_blank">JQuery</a></li>
+  <li><a href="https://www.php.net/" target="_blank">PHP</a></li>
+  <li><a href="https://www.w3schools.com/php/php_ajax_php.asp">AJAX</a></li>
   <li><a href="https://twig.symfony.com/" target="_blank">Twig</a></li>
 </ul>
 
@@ -52,9 +53,9 @@ This section should list any major frameworks/libraries used to bootstrap your p
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
-1.Import database "BlogPerso.sql"
+1.Import file **BlogPerso.sql** of folder **database** (you can delete the folder after installation)
 
-2.Clone the repo
+2.Clone the repo **Blog_PHP_MVC**
    ```sh
    git clone https://github.com/siakamansaly/Blog_PHP_MVC.git
    ```
@@ -87,13 +88,14 @@ To get a local copy up and running follow these simple example steps.
    php -S localhost:4000 -t public/
    ```
 
-6.For the first connection only:
+6.Log in with the following administrator account :
    ```sh
-   1.Connect with Super Administrator account 
-     -Username : admin@example.fr
-     -Password : password
-   2.Then change the email and password of Super Administrator account  
+   -Username : admin@example.fr
+   -Password : password
    ```
+
+7.Change the **email** and **password** of administrator account ("My Account" section)
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->
