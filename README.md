@@ -23,7 +23,7 @@
     <img src="public/img/Screenshot.png" alt="Screenshot" width="700px">
 </div>
 <p>The goal of this project is to create a blog in my colors to show my talents as PHP developer.
-This project carried out in PHP, OOP and adopts an MVC architecture. It is also necessary to respect PSRs and ensure that there are no security breaches. (Code quality monitoring on Codacy or SymfonyInsight)</p>
+This project carried out in PHP, OOP and adopts an MVC pattern. It is also necessary to respect PHP Standard Recommandation and ensure that there are no security breaches. (Code quality monitoring on Codacy or SymfonyInsight)</p>
 <p>The project contains:</p>
 <ul>
   <li>a connection and registration system</li>
