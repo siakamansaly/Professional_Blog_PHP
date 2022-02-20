@@ -56,7 +56,7 @@ To get a local copy up and running follow these simple example steps.
 
 2.Clone the repo
    ```sh
-   git clone https://github.com/siakamansaly/Maquette_HTML_CSS.git
+   git clone https://github.com/siakamansaly/Blog_PHP_MVC.git
    ```
 3.Install composer packages
    ```sh
