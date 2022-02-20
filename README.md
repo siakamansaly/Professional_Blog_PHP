@@ -67,7 +67,7 @@ To get a local copy up and running follow these simple example steps.
    DB_CONNECTION=mysql
    DB_HOST=localhost
    PORT=3306
-   DB_NAME=database
+   DB_NAME=blogperso
    CHARSET=utf8
    DB_USER=root
    DB_PASSWORD=password
@@ -89,10 +89,10 @@ To get a local copy up and running follow these simple example steps.
 
 6.For the first connection only:
    ```sh
-   1.Create a personal account using the registration system.
-   2.Connect with the initial admin account "admin@example.fr" - Password: "password"
-   3.Then change the profile of your personal account to Administrator
-   4.Delete account "admin@example.fr"  
+   1.Connect with Super Administrator account 
+     -Username : admin@example.fr
+     -Password : password
+   2.Then change the email and password of Super Administrator account  
    ```
 <p align="right">(<a href="#top">back to top</a>)</p>
 
