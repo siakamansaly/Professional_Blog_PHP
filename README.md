@@ -52,15 +52,48 @@ This section should list any major frameworks/libraries used to bootstrap your p
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
-1.Clone the repo
+1.Import database "BlogPerso.sql"
+
+2.Clone the repo
    ```sh
    git clone https://github.com/siakamansaly/Maquette_HTML_CSS.git
    ```
-2.Install composer packages
+3.Install composer packages
    ```sh
    composer install
    ```
+4.Rename **.env.example** to **.env** then you customize variables as needed to run the environment.
+   ```sh
+   DB_CONNECTION=mysql
+   DB_HOST=localhost
+   PORT=3306
+   DB_NAME=database
+   CHARSET=utf8
+   DB_USER=root
+   DB_PASSWORD=password
+   HOST_SMTP=smtp.example.fr
+   PORT_SMTP=587
+   MAIL_FROM=example@example.com
+   MAIL_REPLY=example@example.com
+   MAIL_FIRSTNAME=Siaka
+   MAIL_LASTNAME=MANSALY
+   TITLE_WEBSITE="Blog de Siaka"
+   META_AUTHOR="Siaka MANSALY"
+   META_DESCRIPTION="Siaka MANSALY, Développeur PHP. Retrouvez mon profil, mon CV ainsi que mon blog."
+   ```
 
+5.Run project (Change **4000** by your local port)
+   ```sh
+   php -S localhost:4000 -t public/
+   ```
+
+6.For the first connection only:
+   ```sh
+   1.Create a personal account using the registration system.
+   2.Connect with the initial admin account "admin@example.fr" - Password: "password"
+   3.Then change the profile of your personal account to Administrator
+   4.Delete account "admin@example.fr"  
+   ```
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->
