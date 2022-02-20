@@ -15,6 +15,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/edef2486735e40988f606d41500e2335)](https://app.codacy.com/gh/siakamansaly/Blog_PHP_MVC?utm_source=github.com&utm_medium=referral&utm_content=siakamansaly/Blog_PHP_MVC&utm_campaign=Badge_Grade_Settings)
+
 <div align="center">
     <img src="public/img/Screenshot.png" alt="Screenshot" width="700px">
 </div>
