@@ -155,6 +155,16 @@ class UserController extends Controller
         $this->data['status'] = 1;
         $this->model->update($idUser, $this->data);
 
+        $user = $this->model->read($idUser);
+        $ENV = new Globals;
+        $titleWebSite = $ENV->env("TITLE_WEBSITE");
+        $this->data['subject'] = $titleWebSite . " - Compte activé";
+        $this->data['message'] = "Votre compte a bien été activé.\nBien à vous";
+        $this->data['email'] = $user['email'];
+        $this->data['firstName'] = $user['firstName'];
+        $this->data['lastName'] = $user['lastName'];
+        $this->sendMessage($this->data);
+
         $message = $this->divAlert("Utilisateur validé avec succès.", "success");
         $success = true;
 
@@ -262,7 +272,7 @@ class UserController extends Controller
             $type = $this->sanitize($this->var->query->get('type'));
         }
 
-        $users = $this->model->readAllUsers($firstPage,$this->itemsByPage,$status,$type);
+        $users = $this->model->readAllUsers($firstPage, $this->itemsByPage, $status, $type);
 
         $this->path = '\backend\admin\user\userManager.html.twig';
         $this->data = ['head' => ['title' => 'Administration des utilisateurs'], 'users' => $users, 'AllUserCounter' => $AllUserCounter, 'AllPage' => $AllPage, 'currentPage' => $currentPage, 'status' => $status, 'type' => $type];
