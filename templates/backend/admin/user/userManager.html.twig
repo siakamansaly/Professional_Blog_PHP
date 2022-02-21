@@ -95,6 +95,7 @@
             </a>
           </td>
           <td id="active-{{user.id}}">
+            {% if userId != user.id %}
             {% if user.status == 0 %}
             <button type="button" class="validateButton btn btn-outline-success" href="/#validate"
               data-bs-toggle="modal" data-bs-target="#validate" data-id="{{user.id}}"
@@ -112,6 +113,7 @@
               <i class="fas fa-ban" title="Désactiver cet utilisateur"></i>
             </button>
             {% endif %}
+            {% endif %}
           </td>
 
           <td>
@@ -121,11 +123,13 @@
             </a>
           </td>
           <td>
+            {% if userId != user.id %}
             <button type="button" class="deleteButton btn btn-outline-danger" href="/#delete" data-bs-toggle="modal"
               data-bs-target="#delete" data-id="{{user.id}}"
               data-title="{{ '#' ~ user.id ~ ' - ' ~ user.firstName ~ " " ~ user.lastName }}" value="{{user.id}}">
               <i class="far fa-trash-alt" title="Supprimer cet utilisateur"></i>
             </button>
+            {% endif %}
           </td>
         </tr>
 

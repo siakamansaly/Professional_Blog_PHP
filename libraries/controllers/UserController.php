@@ -273,9 +273,10 @@ class UserController extends Controller
         }
 
         $users = $this->model->readAllUsers($firstPage, $this->itemsByPage, $status, $type);
+        $userId = $this->session->get('id');
 
         $this->path = '\backend\admin\user\userManager.html.twig';
-        $this->data = ['head' => ['title' => 'Administration des utilisateurs'], 'users' => $users, 'AllUserCounter' => $AllUserCounter, 'AllPage' => $AllPage, 'currentPage' => $currentPage, 'status' => $status, 'type' => $type];
+        $this->data = ['head' => ['title' => 'Administration des utilisateurs'], 'users' => $users, 'AllUserCounter' => $AllUserCounter, 'AllPage' => $AllPage, 'currentPage' => $currentPage, 'status' => $status, 'type' => $type, 'userId'=>$userId];
         $this->setResponseHttp(200);
         $this->render($this->path, $this->data);
     }
