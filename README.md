@@ -1,5 +1,5 @@
 <div id="top"></div>
-<div align="center">
+<div align="right">
 
 [![SymfonyInsight](https://insight.symfony.com/projects/30cae1fe-c708-4607-bbc9-c870c385cabe/small.svg)](https://insight.symfony.com/projects/30cae1fe-c708-4607-bbc9-c870c385cabe)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![Codacy Badge](https://app.codacy.com/project/badge/Grade/70faed99b8b44df286c0b985a919e2a5)](https://www.codacy.com/gh/siakamansaly/Blog_PHP_MVC/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=siakamansaly/Blog_PHP_MVC&amp;utm_campaign=Badge_Grade)
 
@@ -10,7 +10,7 @@
   <a href="https://github.com/siakamansaly/Blog_PHP_MVC">
     <img src="public/img/favicon/favicon.ico" alt="Logo">
   </a>
-  <h1 align="center">Professional Blog</h1>
+  <h1 align="center">Professional Blog PHP</h1>
   <p align="center">
     My first blog in PHP
   </p>
@@ -54,9 +54,9 @@ To get a local copy up and running follow these simple example steps :
 
 1.Import file **BlogPerso.sql** of folder **database** (you can delete the folder after installation)
 
-2.Clone the repo **Blog_PHP_MVC**
+2.Clone the repo **Professional_Blog_PHP**
    ```sh
-   git clone https://github.com/siakamansaly/Blog_PHP_MVC.git
+   git clone https://github.com/siakamansaly/Professional_Blog_PHP.git
    ```
 3.Install composer packages
    ```sh
@@ -73,8 +73,8 @@ To get a local copy up and running follow these simple example steps :
    DB_PASSWORD=password
    HOST_SMTP=smtp.example.fr
    PORT_SMTP=587
-   MAIL_FROM=example@example.com
-   MAIL_REPLY=example@example.com
+   MAIL_FROM=admin@example.com
+   MAIL_REPLY=admin@example.com
    MAIL_FIRSTNAME=Siaka
    MAIL_LASTNAME=MANSALY
    TITLE_WEBSITE="Blog de Siaka"
@@ -82,9 +82,9 @@ To get a local copy up and running follow these simple example steps :
    META_DESCRIPTION="Siaka MANSALY, Développeur PHP. Retrouvez mon profil, mon CV ainsi que mon blog."
    ```
 
-5.Run project (Change **4000** by your local port)
+5.Run project (Change **3000** by your local port)
    ```sh
-   php -S localhost:4000 -t public/
+   php -S localhost:3000 -t public/
    ```
 
 6.Log in with the following administrator account :
@@ -107,11 +107,11 @@ Don't forget to give the project a star! Thanks again!
 
 1.Fork the Project
 
-2.Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+2.Create your Feature Branch (`git checkout -b feature/NewFeature`)
 
-3.Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+3.Commit your Changes (`git commit -m 'Add some NewFeature'`)
 
-4.Push to the Branch (`git push origin feature/AmazingFeature`)
+4.Push to the Branch (`git push origin feature/NewFeature`)
 
 5.Open a Pull Request
 
@@ -122,11 +122,13 @@ Don't forget to give the project a star! Thanks again!
 
 Siaka MANSALY - [siaka.mansaly@gmail.com](siaka.mansaly@gmail.com) - [LinkedIn](https://www.linkedin.com/in/siaka-mansaly/)
 
-Project Link: [https://github.com/siakamansaly/Blog_PHP_MVC](https://github.com/siakamansaly/Blog_PHP_MVC)
+Project Link: [https://github.com/siakamansaly/Professional_Blog_PHP](https://github.com/siakamansaly/Professional_Blog_PHP.git)
               
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Acknowledgments
+
+Thanks to my mentor [Hamza](https://github.com/Hamzasakrani) for his guidance and support!
 
 <ul>
   <li><a href="https://symfony.com/doc/current/components/http_foundation.html" target="_blank">HTTPFoundation</a></li>
