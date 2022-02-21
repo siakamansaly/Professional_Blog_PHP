@@ -1,7 +1,7 @@
 <div id="top"></div>
-<div align="right">
+<div align="center">
 
-[![SymfonyInsight](https://insight.symfony.com/projects/30cae1fe-c708-4607-bbc9-c870c385cabe/small.svg)](https://insight.symfony.com/projects/30cae1fe-c708-4607-bbc9-c870c385cabe)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![Codacy Badge](https://app.codacy.com/project/badge/Grade/70faed99b8b44df286c0b985a919e2a5)](https://www.codacy.com/gh/siakamansaly/Blog_PHP_MVC/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=siakamansaly/Blog_PHP_MVC&amp;utm_campaign=Badge_Grade)
+[![SymfonyInsight](https://insight.symfony.com/projects/30cae1fe-c708-4607-bbc9-c870c385cabe/small.svg)](https://insight.symfony.com/projects/30cae1fe-c708-4607-bbc9-c870c385cabe)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![Codacy Badge](https://app.codacy.com/project/badge/Grade/70faed99b8b44df286c0b985a919e2a5)](https://www.codacy.com/gh/siakamansaly/Blog_PHP_MVC/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=siakamansaly/Blog_PHP_MVC&amp;utm_campaign=Badge_Grade)
 
 </div>
 <!-- PROJECT LOGO -->
