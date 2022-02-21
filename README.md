@@ -52,17 +52,17 @@ This section list the main frameworks/libraries used to start your project.
 
 To get a local copy up and running follow these simple example steps :
 
-1.Import file **BlogPerso.sql** of folder **database** (you can delete the folder after installation)
+1.&nbsp;Import file **BlogPerso.sql** of folder **database** (you can delete the folder after installation)
 
-2.Clone the repo **Professional_Blog_PHP**
+2.&nbsp;Clone the repo **Professional_Blog_PHP**
    ```sh
    git clone https://github.com/siakamansaly/Professional_Blog_PHP.git
    ```
-3.Install composer packages
+3.&nbsp;Install composer packages
    ```sh
    composer install
    ```
-4.Rename **.env.example** to **.env** then you customize variables as needed to run the environment.
+4.&nbsp;Rename **.env.example** to **.env** then you customize variables as needed to run the environment.
    ```sh
    DB_CONNECTION=mysql
    DB_HOST=localhost
@@ -82,18 +82,18 @@ To get a local copy up and running follow these simple example steps :
    META_DESCRIPTION="Siaka MANSALY, Développeur PHP. Retrouvez mon profil, mon CV ainsi que mon blog."
    ```
 
-5.Run project (Change **3000** by your local port)
+5.&nbsp;Run project (Change **3000** by your local port)
    ```sh
    php -S localhost:3000 -t public/
    ```
 
-6.Log in with the following administrator account :
+6.&nbsp;Log in with the following administrator account :
    ```sh
    -Username : admin@example.fr
    -Password : password
    ```
 
-7.Change the **email** and **password** of administrator account ("My Account" section)
+7.&nbsp;Change the **email** and **password** of administrator account ("My Account" section)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -105,15 +105,15 @@ Contributions are what make the open source community such an amazing place to l
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
 
-1.Fork the Project
+1.&nbsp;Fork the Project
 
-2.Create your Feature Branch (`git checkout -b feature/NewFeature`)
+2.&nbsp;Create your Feature Branch (`git checkout -b feature/NewFeature`)
 
-3.Commit your Changes (`git commit -m 'Add some NewFeature'`)
+3.&nbsp;Commit your Changes (`git commit -m 'Add some NewFeature'`)
 
-4.Push to the Branch (`git push origin feature/NewFeature`)
+4.&nbsp;Push to the Branch (`git push origin feature/NewFeature`)
 
-5.Open a Pull Request
+5.&nbsp;Open a Pull Request
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
