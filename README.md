@@ -23,7 +23,7 @@
     <img src="public/img/Screenshot.png" alt="Screenshot" width="700px">
 </div>
 <p>The goal of this project is to create a blog in my colors to show my talents as PHP developer.
-This project carried out in PHP, OOP and adopts an MVC pattern. It is also necessary to respect PHP Standard Recommandation and ensure that there are no security breaches. (Code quality monitoring on Codacy or SymfonyInsight)</p>
+This project carried out in PHP, OOP and adopts MVC architecture. It is also necessary to respect PHP Standard Recommandation and ensure that there are no security breaches. (Code quality monitoring on Codacy or SymfonyInsight)</p>
 <p>The project contains:</p>
 <ul>
   <li>a connection and registration system</li>
@@ -52,7 +52,7 @@ This section list the main frameworks/libraries used to start your project.
 
 To get a local copy up and running follow these simple example steps :
 
-1.&nbsp;Import file **BlogPerso.sql** of folder **database** (you can delete the folder after installation)
+1.&nbsp;Import the **BlogPerso.sql** file from the **database** folder into your SQL database (You can delete the **database** folder after installing the database).
 
 2.&nbsp;Clone the repo **Professional_Blog_PHP**
    ```sh
