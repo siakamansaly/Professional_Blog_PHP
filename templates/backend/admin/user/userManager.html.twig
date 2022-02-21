@@ -71,7 +71,7 @@
             {% if user.regitrationDate %}{{user.regitrationDate|date("d/m/Y H:i")}}{% endif %}
           </td>
           <td>
-            {% if user.lastConnectionDate %}{{user.lastConnectionDate|date("d/m/Y H:i")}}{% endif %}
+            {% if user.lastConnectionDate %}{{user.lastConnectionDate|date("d/m/Y H:i")|default('')}}{% endif %}
           </td>
           <td title="{{ user.firstName | capitalize ~ " " ~ user.lastName | capitalize }}">
             {{ user.userType|capitalize }}
@@ -87,8 +87,8 @@
             <a class="userShow btn btn-outline-primary text-center" href="/#userShow" data-bs-toggle="modal"
               data-bs-target="#userShow" data-id="{{user.id}}"
               data-name="{{user.firstName | capitalize ~ " " ~ user.lastName | upper }}" data-type="{{user.userType}}"
-              data-registration="{{user.regitrationDate|date(" d/m/Y H:i")}}"
-              data-connection="{{user.lastConnectionDate|date(" d/m/Y H:i")}}" data-status="{{user.status}}"
+              data-registration="{% if user.regitrationDate %}{{user.regitrationDate|date(" d/m/Y H:i")}}{% endif %}"
+              data-connection="{% if user.lastConnectionDate %}{{user.lastConnectionDate|date(" d/m/Y H:i")}}{% endif %}" data-status="{{user.status}}"
               data-email="{{user.email}}" data-phone="{{user.phone}}" data-cv="{{user.cvLink}}"
               data-twitter="{{user.twitter}}" data-github="{{user.gitHub}}" data-linkedin="{{user.linkedIn}}">
               <i class="far fa-eye" title="Voir cet utilisateur"></i>
