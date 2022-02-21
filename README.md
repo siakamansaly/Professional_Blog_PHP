@@ -120,7 +120,9 @@ Don't forget to give the project a star! Thanks again!
 <!-- CONTACT -->
 ## Contact
 
-Siaka MANSALY - [siaka.mansaly@gmail.com](siaka.mansaly@gmail.com) - [LinkedIn](https://www.linkedin.com/in/siaka-mansaly/)
+Siaka MANSALY : [siaka.mansaly@gmail.com](siaka.mansaly@gmail.com) 
+
+LinkedIn : [https://www.linkedin.com/in/siaka-mansaly/](https://www.linkedin.com/in/siaka-mansaly/)
 
 Project Link: [https://github.com/siakamansaly/Professional_Blog_PHP](https://github.com/siakamansaly/Professional_Blog_PHP.git)
               
