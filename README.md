@@ -133,11 +133,11 @@ Project Link: [https://github.com/siakamansaly/Professional_Blog_PHP](https://gi
 Thanks to my mentor [Hamza](https://github.com/Hamzasakrani) for his guidance and support!
 
 <ul>
-  <li><a href="https://symfony.com/doc/current/components/http_foundation.html" target="_blank">Symfony / HTTP-Foundation</a></li>
-  <li><a href="https://github.com/PHPMailer/PHPMailer" target="_blank">PHPMailer</a></li>
-  <li><a href="https://github.com/cocur/slugify" target="_blank">Slugify</a></li>
-  <li><a href="http://altorouter.com/" target="_blank">Altorouter</a></li>
-  <li><a href="https://github.com/vlucas/phpdotenv" target="_blank">PHPdotenv</a></li>
+  <li><a href="https://symfony.com/doc/current/components/http_foundation.html" target="_blank">symfony/http-foundation</a></li>
+  <li><a href="https://github.com/PHPMailer/PHPMailer" target="_blank">phpmailer/phpmailer</a></li>
+  <li><a href="https://github.com/cocur/slugify" target="_blank">cocur/slugify</a></li>
+  <li><a href="http://altorouter.com/" target="_blank">dannyvankooten/AltoRouter</a></li>
+  <li><a href="https://github.com/vlucas/phpdotenv" target="_blank">vlucas/phpdotenv</a></li>
 </ul>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
