@@ -2,10 +2,12 @@
 <html lang="fr">
 
 <head>
-    {% block head %}
     <title>{% if head.title %}{{ head.title }} - {%endif %}{{author}}</title>
-    {% include "/core/head.html.twig" %}
+    {% block head %}
+    <meta name="author" content="{{author}}" />
+    <meta name="description" content="{{description}}" />
     {% endblock %}
+    {% include "/core/head.html.twig" %}
 </head>
 
 <body id="page-top" class="index">
