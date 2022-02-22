@@ -143,3 +143,164 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- User
+-- -----------------------------------------------------
+INSERT INTO
+    `blogperso`.`user` (
+        `password`,
+        `lastName`,
+        `firstName`,
+        `email`,
+        `status`,
+        `regitrationDate`,
+        `userType`
+    )
+VALUES
+    (
+        "$2y$10$g1SwmrTB8reirRSHjhjQ/uMGiPDk4KMdO09CXYEYWrvw9t8Qvv7fG",
+        "Super",
+        "Admin",
+        "admin@example.fr",
+        1,
+        CURRENT_TIMESTAMP(),
+        "admin"
+    );
+
+-- -----------------------------------------------------
+-- Insertion Post
+-- -----------------------------------------------------
+INSERT INTO
+  `post`(
+    `id`,
+    `dateAddPost`,
+    `title`,
+    `chapo`,
+    `slug`,
+    `content`,
+    `picture`,
+    `status`,
+    `User_id`
+  )
+VALUES
+  (
+    1,
+    CURRENT_TIMESTAMP()-7,
+    'Article 1',
+    'Excepteur elit velit exercitation sit ipsum.',
+    'article1',
+    'Proident esse incididunt laborum adipisicing occaecat qui fugiat occaecat sunt do dolor eiusmod est. Excepteur culpa non sint consectetur duis irure quis sit tempor eiusmod eiusmod cillum pariatur tempor. Velit duis qui aliqua non enim non laboris duis quis et. Sunt excepteur consectetur magna occaecat nulla commodo deserunt aliquip nostrud voluptate.
+
+Nulla dolor do nulla adipisicing elit occaecat eu duis. Esse dolor elit culpa consectetur non ut magna sit irure adipisicing elit excepteur magna et. Amet deserunt anim nulla quis minim eu labore mollit non amet. Ad anim nostrud adipisicing ea anim proident. Commodo magna qui est irure et in ea eiusmod ad esse exercitation excepteur.
+
+Tempor enim quis culpa excepteur deserunt fugiat. Commodo nostrud tempor laboris eiusmod tempor. Sint anim aute nostrud ad enim.
+
+Velit deserunt voluptate elit anim dolor laboris nostrud quis velit dolore commodo mollit non non. Adipisicing aute laboris qui anim sunt dolor. Enim non in fugiat dolor cupidatat sit labore non sit eu amet sint in id. Sint sint anim velit aliquip incididunt reprehenderit fugiat fugiat irure cillum. Deserunt duis voluptate sit id aliqua. Ullamco consequat non reprehenderit nisi tempor veniam aliquip fugiat cillum magna id id eu. Exercitation sit elit exercitation amet esse irure nostrud duis officia.
+
+Eiusmod sunt magna ad aute cupidatat elit id velit eu sit nulla. Cillum dolor eiusmod mollit quis veniam qui sunt excepteur pariatur irure id. Commodo sunt consequat culpa ullamco do Lorem ut ullamco eiusmod cillum laborum ea. Laboris est sint elit cupidatat elit mollit ea cillum sunt id consequat. Cupidatat excepteur qui Lorem occaecat ipsum elit aliqua aliquip do. Aliqua mollit elit id nulla est veniam excepteur laboris culpa quis proident aliqua reprehenderit consequat. Quis ut duis eiusmod ullamco.
+
+Laboris proident deserunt veniam sint minim deserunt nostrud irure fugiat eiusmod enim. Eu pariatur occaecat id incididunt et esse pariatur veniam. Eiusmod minim magna mollit magna consequat. Dolore nostrud duis dolore consequat. Officia id consectetur laboris culpa officia mollit elit officia mollit aute.
+
+Elit enim non est adipisicing eiusmod nulla officia pariatur nostrud et. Nulla quis sit non ipsum nulla consequat culpa nulla nulla ex est incididunt amet aute. Mollit proident aliqua elit enim et nisi veniam minim mollit laborum ullamco dolore nostrud. Eu culpa consequat qui duis cillum fugiat ea magna incididunt ad ea id mollit. Fugiat deserunt minim non sunt commodo proident proident do. Et esse veniam sint cillum laborum exercitation anim velit dolor consectetur commodo magna et. Labore in labore culpa minim.',
+    'cabin.png',
+    1,
+    1
+  ),
+  (
+    2,
+    CURRENT_TIMESTAMP()-4,
+    'Article 2',
+    'Nostrud sint laboris sint cupidatat nulla qui duis laborum fugiat excepteur anim ad.',
+    'article2',
+    'Reprehenderit ipsum cupidatat eiusmod reprehenderit do incididunt qui occaecat irure cupidatat cillum. Elit ut commodo cillum nisi nisi anim aliqua duis. Tempor cupidatat dolor occaecat labore irure mollit velit irure laboris officia pariatur eiusmod tempor anim. Lorem commodo aliqua officia id veniam sit culpa ea anim dolore tempor. Esse fugiat dolor dolore pariatur non non ut. Amet Lorem amet nisi amet. Duis do esse ut ut sunt Lorem consequat sunt adipisicing aliquip nulla elit sit.
+
+Minim do velit in et. Irure aute sint nisi veniam excepteur tempor nisi. Voluptate ipsum quis tempor consequat. Aliqua ut voluptate Lorem nulla quis. Qui enim dolor commodo exercitation aute nostrud id anim. Culpa nulla do do nulla culpa do non ea adipisicing elit laboris mollit.
+
+Ex sunt sit dolor enim enim consectetur labore culpa adipisicing incididunt exercitation in ipsum. Aliqua laboris excepteur dolor labore deserunt in fugiat nostrud culpa ea id et. Laborum id culpa aliqua do eiusmod. Eiusmod aliquip adipisicing qui Lorem velit dolor nisi incididunt veniam proident tempor do non enim. Aliqua sunt ea consectetur ea eu do cillum id officia eiusmod nisi. Elit qui veniam consequat qui non incididunt in eu proident reprehenderit. Excepteur eu ullamco esse ex nostrud dolor et magna.',
+    'cake.png',
+    1,
+    1
+  ),
+  (
+    3,
+    CURRENT_TIMESTAMP(),
+    'Article 3',
+    'Deserunt Lorem irure in tempor est irure anim aute nulla tempor dolor ipsum quis ullamco.',
+    'article3',
+    'Non et laborum sit ut. Ea sint eu nostrud ad pariatur cupidatat fugiat. Consectetur aliqua eiusmod amet aliquip duis aute do quis ut reprehenderit. Qui consectetur pariatur mollit est commodo. Incididunt labore est velit nulla veniam aliqua excepteur mollit proident ex occaecat nulla officia adipisicing.
+
+Pariatur pariatur eu mollit eiusmod excepteur amet. Adipisicing laborum veniam laboris sit quis do. Tempor reprehenderit sunt pariatur elit aliquip est occaecat occaecat anim eu.',
+    'circus.png',
+    1,
+    1
+  );
+
+-- -----------------------------------------------------
+-- Insertion Category
+-- -----------------------------------------------------
+INSERT INTO
+  `postcategory`(`id`, `name`)
+VALUES
+  (1, 'PHP'),
+  (2, 'SQL'),
+  (3, 'Symfony'),
+  (4, 'WordPress'),
+  (5, 'HTML'),
+  (6, 'CSS'),
+  (7, 'Bootstrap');
+
+-- -----------------------------------------------------
+-- Insertion Post_PostCategory
+-- -----------------------------------------------------
+INSERT INTO
+  `post_postcategory`(`Post_id`, `PostCategory_id`)
+VALUES
+  (1, 1),
+  (1, 3),
+  (2, 2),
+  (2, 4),
+  (3, 5),
+  (3, 6);
+
+-- -----------------------------------------------------
+-- Insertion Comment
+-- -----------------------------------------------------
+INSERT INTO
+  `comment`(
+    `id`,
+    `dateAddComment`,
+    `content`,
+    `status`,
+    `parentId`,
+    `User_id`,
+    `Post_id`
+  )
+VALUES
+  (
+    1,
+    CURRENT_TIMESTAMP()-6,
+    'Esse dolore aliqua consequat ad velit adipisicing ad ut ut est pariatur labore quis. Sint labore eiusmod id ullamco ex nostrud. Sunt incididunt nostrud quis ad proident ut dolor nulla voluptate cupidatat sunt in quis. Ut ad sint duis nulla qui aliqua. Minim amet exercitation ex ipsum proident. Veniam voluptate pariatur et commodo tempor in deserunt exercitation. Nulla fugiat incididunt nostrud culpa.',
+    1,
+    0,
+    1,
+    1
+  ),
+  (
+    2,
+    CURRENT_TIMESTAMP()-2,
+    'Esse dolore aliqua consequat ad velit adipisicing ad ut ut est pariatur labore quis. Sint labore eiusmod id ullamco ex nostrud. Sunt incididunt nostrud quis ad proident ut dolor nulla voluptate cupidatat sunt in quis. Ut ad sint duis nulla qui aliqua. Minim amet exercitation ex ipsum proident. Veniam voluptate pariatur et commodo tempor in deserunt exercitation. Nulla fugiat incididunt nostrud culpa.',
+    1,
+    1,
+    1,
+    1
+  ),
+  (
+    3,
+    CURRENT_TIMESTAMP(),
+    'Esse dolore aliqua consequat ad velit adipisicing ad ut ut est pariatur labore quis. Sint labore eiusmod id ullamco ex nostrud. Sunt incididunt nostrud quis ad proident ut dolor nulla voluptate cupidatat sunt in quis. Ut ad sint duis nulla qui aliqua. Minim amet exercitation ex ipsum proident. Veniam voluptate pariatur et commodo tempor in deserunt exercitation. Nulla fugiat incididunt nostrud culpa.',
+    1,
+    0,
+    1,
+    1
+  );
