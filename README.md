@@ -39,12 +39,14 @@ This project carried out in PHP, OOP and adopts MVC architecture. It is also nec
 
 This section list the main frameworks/libraries used to start your project.
 <ul>
-  <li><a href="https://startbootstrap.com/" target="_blank">StartBootstrap</a></li>
+  <li><a href="https://startbootstrap.com/theme/freelancer" target="_blank">Freelancer theme by StartBootstrap</a></li>
+  <li><a href="https://getbootstrap.com/" target="_blank">Bootstrap</a></li>
   <li><a href="https://jquery.com" target="_blank">JQuery</a></li>
   <li><a href="https://www.php.net/" target="_blank">PHP</a></li>
   <li><a href="https://www.mysql.com/fr/">MySQL</a></li>
-  <li><a href="https://www.w3schools.com/php/php_ajax_php.asp">AJAX</a></li>
+  <li><a href="https://www.w3schools.com/php/php_ajax_php.asp">Ajax</a></li>
   <li><a href="https://twig.symfony.com/" target="_blank">Twig</a></li>
+  <li><a href="https://getcomposer.org/" target="_blank">Composer</a></li>
 </ul>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -57,6 +59,7 @@ This is the list of things you need to use the software.
       - PHP: >=7
       - MySQL
       - Apache
+      - Composer
    ```
 <!-- GETTING STARTED -->
 ## Getting Started
