@@ -83,9 +83,9 @@ class Post extends Model
 
     /**
      * Read last insert ID 
-     * @return int
+     * @return mixed
      */
-    public function lastInsertIdPDO(): int
+    public function lastInsertIdPDO()
     {
         $query = "SELECT MAX(id) as lastid FROM {$this->table}";
         $data = $this->pdo->query($query);
