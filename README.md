@@ -52,14 +52,16 @@ This section list the main frameworks/libraries used to start your project.
 
 To get a local copy up and running follow these simple example steps :
 
-1.&nbsp;Import the **BlogPerso.sql** file from the **database** folder into your SQL database (You can delete the **database** folder after installing the database).
-
-2.&nbsp;Clone the repo **Professional_Blog_PHP**
+1.&nbsp;Clone the repo **Professional_Blog_PHP**
    ```sh
    git clone https://github.com/siakamansaly/Professional_Blog_PHP.git
    ```
+
+2.&nbsp;Import the **BlogPerso.sql** file from the **database** folder into your SQL database (You can delete the **database** folder after installing the database).
+
 3.&nbsp;Install composer packages
    ```sh
+   cd Professional_Blog_PHP
    composer install
    ```
 4.&nbsp;Rename **.env.example** to **.env** then you customize variables as needed to run the environment.
@@ -93,7 +95,7 @@ To get a local copy up and running follow these simple example steps :
    -Password : password
    ```
 
-7.&nbsp;Change the **email** and **password** of administrator account ("My Account" section)
+7.&nbsp;Finally, change the **email** and **password** of administrator account ("My Account" section)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
