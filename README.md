@@ -41,7 +41,7 @@ This section list the main frameworks/libraries used to start your project.
 <ul>
   <li><a href="https://startbootstrap.com/" target="_blank">StartBootstrap</a></li>
   <li><a href="https://jquery.com" target="_blank">JQuery</a></li>
-  <li><a href="https://www.php.net/" target="_blank">PHP 7.4.27</a></li>
+  <li><a href="https://www.php.net/" target="_blank">PHP</a></li>
   <li><a href="https://www.mysql.com/fr/">MySQL</a></li>
   <li><a href="https://www.w3schools.com/php/php_ajax_php.asp">AJAX</a></li>
   <li><a href="https://twig.symfony.com/" target="_blank">Twig</a></li>
