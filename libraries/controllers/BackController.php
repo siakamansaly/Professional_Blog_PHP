@@ -1,6 +1,7 @@
 <?php
 
 namespace Blog\Controllers;
+
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Blog\Controllers\Globals;
 
@@ -87,14 +88,14 @@ class BackController extends Controller
      * @return json
      */
     public function contact()
-    {   
+    {
         $ENV = new Globals;
         $titleWebSite = $ENV->env("TITLE_WEBSITE");
-    
+
         $this->data = [];
-        $json=[];
-        $message="";
-        $success="";
+        $json = [];
+        $message = $this->divAlert("Une erreur est survenue ...", "danger");
+        $success = "";
         if (empty($this->var->request->all())) {
             $this->redirect("/error/405");
         }
@@ -104,17 +105,13 @@ class BackController extends Controller
         $this->data['message'] = $this->sanitize($this->var->request->get('message'));
 
         $this->data['subject'] = $titleWebSite . ' - Formulaire de contact';
-        $message = $this->divAlert("Message envoyé avec succès !","success");
-        $success=$this->sendMessage($this->data);
-        $json['success']=$success;
-        $json['message']=$message;
+        $success = $this->sendMessage($this->data);
+        if ($success === true) {
+            $message = $this->divAlert("Message envoyé avec succès !", "success");
+        }
+        $json['success'] = $success;
+        $json['message'] = $message;
         $response = new JsonResponse($json);
         $response->send();
-        
     }
-
-    
-
-    
-    
 }
