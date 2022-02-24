@@ -41,6 +41,7 @@
   --bs-danger: #dc3545;
   --bs-light: #f8f9fa;
   --bs-dark: #212529;
+  --bs-steel: #EA526F;
   --bs-primary-rgb: 15, 5, 107;
   --bs-secondary-rgb: 253, 168, 67;
   --bs-gray-300-rgb: 222,226,230;
@@ -50,6 +51,7 @@
   --bs-danger-rgb: 220, 53, 69;
   --bs-light-rgb: 248, 249, 250;
   --bs-dark-rgb: 33, 37, 41;
+  --bs-steel-rgb: 234, 82, 111;
   --bs-white-rgb: 255, 255, 255;
   --bs-black-rgb: 0, 0, 0;
   --bs-body-color-rgb: 33, 37, 41;
@@ -2134,6 +2136,18 @@ progress {
   border-color: #373b3e;
 }
 
+.table-steel {
+  --bs-table-bg: var(--bs-steel);
+  --bs-table-striped-bg: var(--bs-steel);
+  --bs-table-striped-color: #fff;
+  --bs-table-active-bg: var(--bs-steel);
+  --bs-table-active-color: #fff;
+  --bs-table-hover-bg: var(--bs-steel);
+  --bs-table-hover-color: #fff;
+  color: #fff;
+  border-color: var(--bs-steel);
+}
+
 .table-responsive {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -3082,6 +3096,28 @@ textarea.form-control-lg {
   background-color: var(--bs-primary);
   border-color: var(--bs-primary);
 }
+
+.btn-steel {
+  color: #fff;
+  background-color: var(--bs-steel);
+  border-color: var(--bs-primary);
+}
+.btn-steel:hover {
+  color: #fff;
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+}
+
+.btn-gray {
+  color: var(--bs-primary);
+  background-color: var(--bs-gray-300);
+  border-color: var(--bs-primary);
+}
+.btn-gray:hover {
+  color: var(--bs-light);
+  background-color: var(--bs-primary);
+  border-color: var(--bs-gray-300);
+}
 .btn-check:focus + .btn-secondary, .btn-secondary:focus {
   color: #fff;
   background-color: #253544;
@@ -3301,6 +3337,27 @@ textarea.form-control-lg {
   background-color: var(--bs-primary);
   border-color: var(--bs-primary);
 }
+
+.btn-outline-gray {
+  color: var(--bs-primary-rgb);
+  border-color: var(--bs-primary-rgb);
+}
+.btn-outline-gray:hover {
+  color: var(--bs-primary);
+  background-color: var(--bs-gray-300);
+  border-color: var(--bs-primary);
+}
+
+.btn-outline-steel {
+  color: var(--bs-primary-rgb);
+  border-color: var(--bs-primary-rgb);
+}
+.btn-outline-steel:hover {
+  color: var(--bs-light);
+  background-color: var(--bs-steel);
+  border-color: var(--bs-primary);
+}
+
 .btn-check:focus + .btn-outline-primary, .btn-outline-primary:focus {
   box-shadow: 0 0 0 0.25rem rgba(26, 188, 156, 0.5);
 }
@@ -7874,6 +7931,11 @@ textarea.form-control-lg {
   background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
 }
 
+.bg-steel {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-steel-rgb), var(--bs-bg-opacity)) !important;
+}
+
 .bg-black {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-black-rgb), var(--bs-bg-opacity)) !important;
@@ -11697,7 +11759,17 @@ html {
   background-size: cover;
   position: relative;
 }
-
+.hero_userManager {
+  max-height: 300px;
+  min-height: 300px;
+  background:  linear-gradient(
+      rgba(15, 5, 107, 0.6), 
+      rgba(15, 5, 107, 0.6)
+    ), url('../img/blog/userManager.jpg') no-repeat 50% 50%;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
 .hero_postArchived {
   max-height: 300px;
   min-height: 300px;
@@ -11782,5 +11854,16 @@ html {
   color: var(--bs-dark);
 }
 .pointer{
+  cursor: pointer;
+}
+.imgEditPost{
+  max-width:300px; 
+  height:200px;
+}
+.scroll-top {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  display: none;
   cursor: pointer;
 }

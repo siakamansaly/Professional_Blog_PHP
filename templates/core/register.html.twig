@@ -3,14 +3,16 @@
 <div class="register-modal modal fade" id="register" tabindex="-1" aria-labelledby="register" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
-                    aria-label="Close"></button></div>
+            <div class="modal-header border-0">
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
             <div class="modal-body text-center pb-5 mb-5">
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-8">
                             <!-- Register Section Heading-->
-                            <h2 class="page-section-heading text-center text-uppercase text-primary">Créer un compte
+                            <h2 class="page-section-heading text-center text-uppercase text-primary">
+                                Créer un compte
                             </h2>
                             <!-- Icon Divider-->
                             <div class="divider-custom divider-secondary">
@@ -41,19 +43,23 @@
 
                                     </div>
                                     <div class="row mb-4 justify-content-center">
+                                        {# #}
+
                                         {{ form.input('passwordRegister','Mot de passe',
                                         {class:'col',other:'autocomplete=off required
-                                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{3,}$" title="Doit
-                                        contenir au moins un chiffre et une lettre majuscule et minuscule, et au moins
-                                        12 caractères ou plus"', type:'password'})}}
+                                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$"
+                                        title="Votre mot de passe doit contenir au moins 8 caractères ou plus et respecter la composition suivante : au moins un chiffre, au moins une lettre majuscule, au moins une lettre minuscule et au moins un caractère spécial"', type:'password'})}}
 
                                         {{ form.input('passwordRepeat','Confirmation mot de passe',
                                         {class:'col',other:'autocomplete=off required
-                                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{3,}$" title="Doit
-                                        contenir au moins un chiffre et une lettre majuscule et minuscule, et au moins
-                                        12 caractères ou plus"', type:'password'})}}
+                                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$"
+                                        title="Votre mot de passe doit contenir au moins 8 caractères ou plus et respecter la composition suivante : au moins un chiffre, au moins une lettre majuscule, au moins une lettre minuscule et au moins un caractère spécial"', type:'password'})}}
                                     </div>
-
+                                    <div class="row mx-1 mb-4 justify-content-center">
+                                        <div class="form-group col border border-secondary rounded">
+                                            Votre mot de passe doit contenir <b>au moins 8 caractères ou plus</b> et respecter la composition suivante : <b>au moins un chiffre, au moins une lettre majuscule, au moins une lettre minuscule et au moins un caractère spécial</b>
+                                            </div>
+                                    </div>
                                     <div class="row mb-4 justify-content-center">
                                         {{ form.input('check'," J'accepte les <a href='/legalNotice' target='_blank'
                                             rel='noopener'>conditions générales d'utilisations</a>",
@@ -62,12 +68,14 @@
                                         class_input:'custom-control-input'})}}
                                     </div>
                                     <div class="row mb-4 justify-content-center">
-                                        <button id="buttonRegister" class="btn btn-primary w-100 btn-lg" type="submit">Valider</button>
+                                        <button id="buttonRegister" class="btn btn-primary w-100 btn-lg"
+                                            type="submit">Valider</button>
                                     </div>
-
                                 </form>
-                                <div class="col">Vous avez déjà un compte ? <a href="/#login" data-bs-toggle="modal"
-                                        data-bs-target="#login" rel="noopener">Connexion</a>
+                                <div class="col">Vous avez déjà un compte ?
+                                    <a href="/#login" data-bs-toggle="modal" data-bs-target="#login" rel="noopener">
+                                        Connexion
+                                    </a>
                                 </div>
                             </div>
                         </div>

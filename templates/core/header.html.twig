@@ -1,7 +1,6 @@
 {% import '/macro/section.html.twig' as section %}
 <!-- Masthead-->
 <header class="masthead text-primary text-center">
-    
     <div class="container d-flex align-items-center flex-column">
         <div class="row px-0 mx-0 d-flex align-items-stretch flex-lg-row">
             <div class="col-lg-4 mx-0 mb-5 p-3 bg-primary text-white max-height-hero rounded SlidInLeftAnimation">
@@ -11,9 +10,9 @@
                 <h1 class="masthead-heading text-uppercase mb-0">Siaka MANSALY</h1>
                 <p class="age">{{ section.age('1985','06','05') }}</p>
                 <p><i class="fas fa-map-marker-alt"></i>  Athis-Mons (Ile-de-France)</p>
-                <a href="/img/CV.pdf" target="_blank" role="button" class="btn btn-light btn-block my-2 text-primary"><i
-                        class="fas fa-download"></i>  Mon
-                    CV (version PDF)</a>
+                <a href="/img/CV.pdf" target="_blank" role="button" class="btn btn-light btn-block my-2 text-primary">
+                    <i class="fas fa-download"></i>  
+                    Mon CV (version PDF)</a>
                 <div class="row m-3">
                     <div class="col">
                         {{section.reseauxSociaux()}}

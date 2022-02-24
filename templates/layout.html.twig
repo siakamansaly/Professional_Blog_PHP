@@ -2,16 +2,17 @@
 <html lang="fr">
 
 <head>
-
+    <title>{% if head.title %}{{ head.title }} - {%endif %}{{author}}</title>
     {% block head %}
-    <title>{% if head.title %}{{ head.title }} - {%endif %}Siaka MANSALY</title>
-    {% include "/core/head.html.twig" %}
+    <meta name="author" content="{{author}}" />
+    <meta name="description" content="{{description}}" />
     {% endblock %}
+    {% include "/core/head.html.twig" %}
 </head>
 
 <body id="page-top" class="index">
     {% block navbar %}{% include "/core/navbar.html.twig" %}{% endblock %}
-    
+
 
     {% block content %}{% endblock %}
 
@@ -25,7 +26,9 @@
 
     {% include "/core/lostpassword.html.twig" %}
 
-    
+    <div class="scroll-top px-3 py-2 bg-primary rounded">
+        <i class="fas fa-chevron-up fa-2x text-secondary"></i>
+    </div>
 
 </body>
 

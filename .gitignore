@@ -3,3 +3,5 @@
 /node_modules/
 /.vscode/
 .env
+/public/img/blog/posts/
+/public/img/blog/profiles/

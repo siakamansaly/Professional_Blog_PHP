@@ -1,20 +1,25 @@
 {% import '/macro/form.html.twig' as form %}
 {% extends "layout.html.twig" %}
-{% block navbar %}{% set urlblog = "/" %} {% set url = "/" %}{{ parent() }}{% endblock %}
+{% block navbar %}
+{% set urlblog = "/" %}
+{% set url = "/" %}
+{{ parent() }}
+{% endblock %}
 {% block content %}
-{% if session %}
+
 <header id="dashboard" class="page-section bg-light border-bottom mb-4 hero_dashboard">
     <div class="container">
         <div class="text-center mt-5">
             <h1 class="fw-bolder text-light">Mon compte</h1>
-
         </div>
     </div>
 </header>
 
 <div class="container px-4 my-4 text-primary">
     <div class="row my-4">
-        <div class="col h4">Bienvenue {{user.firstName ~ " " ~ user.lastName ~ ", " }}</div>
+        <div class="col h4">
+            Bienvenue {{user.firstName ~ " " ~ user.lastName ~ ", " }}
+        </div>
     </div>
 
     <div class="row d-flex">
@@ -23,21 +28,25 @@
             <div class="col card text-primary mb-4">
                 <div class="card-body">
                     <div class="row my-2">
-                        <div  class="col d-flex align-items-center justify-content-center">{% if user.picture
-                            %}<img id='image_profile' src="./img/blog/profiles/{{user.picture}}"
-                                class="profile_user rounded-circle" />{% else %}<i
-                                class="fas fa-user-circle fa-9x"></i>{% endif %}</div>
-
+                        <div class="col d-flex align-items-center justify-content-center">
+                            {% if user.picture %}
+                            <img id='image_profile' src="./img/blog/profiles/{{user.picture}}"
+                                class="profile_user rounded-circle" />
+                            {% else %}
+                            <i class="fas fa-user-circle fa-9x"></i>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer bg-primary d-flex align-items-center justify-content-between">
                     <a class="small text-white stretched-link" href="/#picture" data-bs-toggle="modal"
-                        data-bs-target="#picture">Modifier ma photo</a>
+                        data-bs-target="#picture">
+                        Modifier ma photo
+                    </a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
             <div class="card bg-primary text-white mb-4">
-
                 <div class="card-body">
                     <h5 class="card-title mb-4">Mes préférences</h5>
                     <div class="row my-2">
@@ -72,7 +81,6 @@
                         <div class="col">LinkedIn : </div>
                         <div class="col">{{user.linkedIn }}</div>
                     </div>
-
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
                     <a class="small text-white stretched-link" href="/#profile" data-bs-toggle="modal"
@@ -100,9 +108,11 @@
                 <div class="col-12 mb-4">
                     {% if user.userType =='admin' %}
                     <div class="card bg-secondary text-primary px-4">
-                        <div class="card-body">
-                            <h5 class="card-title mb-4">Administrer le blog</h5>
-                                
+                        <div class="card-header h5 d-flex align-items-center justify-content-between"><i
+                                class="fa fa-cog fa-2x"></i>Administrer le blog <span>&nbsp;</span></div>
+                        <div class="card-body text-center">
+                            <p class="card-text mb-1">Gérer les articles, commentaires et utilisateurs de ce blog.</p>
+                            <p class="card-text mb-1">/// Espace réservé aux administrateurs. ///</p>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
                             <a class="small text-primary stretched-link" href="/adminBlog">Administrer</a>
@@ -139,7 +149,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="row px-2">
                 <div class="card text-primary mb-4 border border-secondary">
                     <div class="card-body">
@@ -160,13 +169,8 @@
 
     </div>
 </div>
-
-
 {% include "/backend/dashboard/editProfile.html.twig" %}
 {% include "/backend/dashboard/editPicture.html.twig" %}
 {% include "/backend/dashboard/editPassword.html.twig" %}
 {% include "/backend/dashboard/userComments.html.twig" %}
-
-
-{% endif %}
 {% endblock %}

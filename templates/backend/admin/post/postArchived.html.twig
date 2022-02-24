@@ -1,14 +1,15 @@
 {% import '/macro/form.html.twig' as form %}
 {% extends "layout.html.twig" %}
-{% block navbar %}{% set urlblog = "/" %} {% set url = "/" %} {{ parent() }}{% endblock
-%}
+{% block navbar %}
+{% set urlblog = "/" %}
+{% set url = "/" %}
+{{ parent() }}
+{% endblock %}
 {% block content %}
-{% if session.login.userType == 'admin' %}
 <header id="adminBlog" class="page-section bg-light border-bottom mb-4 hero_postArchived">
   <div class="container">
     <div class="text-center mt-5">
       <h1 class="fw-bolder text-light">Articles archivés</h1>
-
     </div>
   </div>
 </header>
@@ -16,9 +17,8 @@
 <div class="container my-4 text-primary">
 
   <div class="mb-4 text-left d-flex justify-content-between">
-    <a href="/postManager" class="btn btn-outline-primary" role="button" rel="noopener"><i
-        class="fas fa-angle-double-left"></i> Administration des articles</a>
-    
+    <a href="/postManager" class="btn btn-outline-primary" role="button" rel="noopener">
+      <i class="fas fa-angle-double-left"></i> Administration des articles</a>
   </div>
   <div id="alertPostDelete"></div>
   <div class="table-responsive ">
@@ -39,22 +39,31 @@
         <tr>
           <th scope="row">#{{post.id}}</th>
           <td>{{post.title|slice(0, 70)}}</td>
-
           <td>{{post.dateAddPost|date("d/m/Y")}}</td>
           <td>{{post.dateModifyPost|date("d/m/Y")}}</td>
-          <td title="{{ post.firstName | capitalize ~ " " ~ post.lastName | capitalize }}">{{ post.firstName |
-            capitalize }}</td>
-          <td>{% if post.status == 1 %}<span class="badge badge-primary">Publié</span>{% elseif post.status == 0 %}<span class="badge badge-secondary">Brouillon</span>{% else %}<span class="badge badge-light">Archivé</span>{% endif %}</td>
-          <td><a href="/post/{{post.slug}}" type="button" class="btn btn-outline-dark text-center"
-            rel="noopener" target="_blank" title="Voir cet article"><i class="far fa-eye" title="Voir cet article"></i></a>
-        </td>
+          <td title="{{ post.firstName | capitalize ~ " " ~ post.lastName | capitalize }}">
+            {{ post.firstName|capitalize }}
+          </td>
+          <td>
+            {% if post.status == 1 %}
+            <span class="badge badge-primary">Publié</span>
+            {% elseif post.status == 0 %}
+            <span class="badge badge-secondary">Brouillon</span>
+            {% else %}
+            <span class="badge badge-light">Archivé</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="/post/{{post.slug}}" type="button" class="btn btn-outline-dark text-center" rel="noopener"
+              target="_blank" title="Voir cet article">
+              <i class="far fa-eye" title="Voir cet article"></i>
+            </a>
+          </td>
           <td><a href="/postManagerEdit/{{post.id}}" type="button" class="btn btn-outline-secondary text-center"
               rel="noopener" title="Modifier cet article"><i class="far fa-edit" title="Modifier cet article"></i></a>
           </td>
-          
         </tr>
         {% endfor %}
-
       </tbody>
     </table>
   </div>
@@ -66,11 +75,10 @@
         <li class="page-item {% if currentPage == 1 %} disabled {% endif %}">
           <a class="page-link" href="/postArchived?page={{ currentPage - 1 }}" tabindex="-1">Précédente</a>
         </li>
-
         {% for i in 1..AllPage %}
-        <li class="page-item {% if currentPage == i %} active {% endif %}"><a class="page-link" href="/postArchived?page={{ i }}">{{ i }}</a></li>
+        <li class="page-item {% if currentPage == i %} active {% endif %}"><a class="page-link"
+            href="/postArchived?page={{ i }}">{{ i }}</a></li>
         {% endfor %}
-
         <li class="page-item {% if currentPage == AllPage %} disabled {% endif %}">
           <a class="page-link" href="/postArchived?page={{ currentPage + 1 }}">Suivante</a>
         </li>
@@ -81,9 +89,6 @@
 
 </div>
 
-
 {% include "/backend/admin/post/postAdd.html.twig" %}
-
-{% endif %}
 
 {% endblock %}

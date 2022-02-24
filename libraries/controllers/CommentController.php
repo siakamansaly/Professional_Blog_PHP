@@ -2,72 +2,71 @@
 
 namespace Blog\Controllers;
 
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 class CommentController extends Controller
 {
-    private $postModel;
-    private $commentsModel;
-    private $postcategoryModel;
-    private $categoryModel;
-    protected $modelName = \Models\Post::class;
-    public $path;
-    public $data;
-    public $errorMessage = "";
-    public $post;
-    public $slugify;
+    protected $modelName = \Blog\Models\Comment::class;
+    private $path;
+    private $data;
+    protected $auth;
+    private $userModel;
+    private $commentModel;
 
     public function __construct()
     {
-        $this->postModel = new \Blog\Models\Post;
-        $this->commentsModel = new \Blog\Models\Comment;
-        $this->postcategoryModel = new \Blog\Models\Post_PostCategory;
-        $this->categoryModel = new \Blog\Models\PostCategory;
-        $this->post = Request::createFromGlobals();
+        parent::__construct();
+        $this->auth = new AuthController;
+        $this->userModel = new \Blog\Models\User;
+        $this->commentModel = new \Blog\Models\Comment;
     }
 
-
-    
-
     /**
-     * Function add Post
-     * 
-     * @return void
+     * Function add comment
+     * @return json
      */
     public function commentAdd()
     {
         $this->data = [];
         $json = [];
-   
-        $this->data['parentId'] = $this->sanitize($this->post->request->get('parent_id'));
-        $this->data['Post_id'] = $this->sanitize($this->post->request->get('post_id'));
-        $this->data['dateAddComment'] = date('Y-m-d H:i:s');
-        $this->data['User_id'] = SessionController::get('id', 'login');
-        $this->data['content'] = $this->sanitize($this->post->request->get('comment'));
 
-        if (SessionController::get('userType', 'login')=="admin")
-        {
+        $this->data['parentId'] = $this->sanitize($this->var->request->get('parent_id'));
+        $this->data['Post_id'] = $this->sanitize($this->var->request->get('post_id'));
+        $this->data['dateAddComment'] = date('Y-m-d H:i:s');
+        $this->data['User_id'] = $this->session->get('id');
+        $this->data['content'] = $this->sanitize($this->var->request->get('comment'));
+        $this->data['status'] = 0;
+
+        if ($this->session->get('userType') == "admin") {
             $this->data['status'] = 1;
         }
-        else
-        {
-            $this->data['status'] = 0;
+
+
+        $this->model->insert($this->data);
+
+        if ($this->data['status'] === 0) {
+            $user = $this->userModel->read($this->data['User_id']);
+            $ENV = new Globals;
+            $titleWebSite = $ENV->env("TITLE_WEBSITE");
+            $this->data['subject'] = $titleWebSite . " - Nouveau commentaire";
+            $this->data['message'] = "Votre commentaire a bien été soumis.\nCelui-ci va être examiné par l'administrateur avant validation.\nBien à vous";
+            $this->data['email'] = $user['email'];
+            $this->data['firstName'] = $user['firstName'];
+            $this->data['lastName'] = $user['lastName'];
+            $this->sendMessage($this->data);
         }
 
-        $this->commentsModel->insert($this->data);
-    
         $json['success'] = true;
-        $json['message'] = $this->div_alert("Commentaire ajouté avec succès et en attente de modération par l'administrateur.", "success");
-        echo json_encode($json);
-        exit;
+        $json['message'] = $this->divAlert("Commentaire ajouté avec succès et en attente de modération par l'administrateur.", "success");
+        $response = new JsonResponse($json);
+        $response->send();
     }
 
-    
+
     /**
-     * Function delete Post
-     * 
-     * @return void
+     * Function edit comment
+     * @return json
      */
     public function commentEdit()
     {
@@ -75,28 +74,27 @@ class CommentController extends Controller
         $json = [];
         $success = "";
         $message = "";
-        $id_comment ="";
+        $id_comment = "";
 
-        $id_comment = $this->sanitize($this->post->request->get('idCommentEdit'));
-        $this->data['content'] = $this->sanitize($this->post->request->get('comment'));
-        $this->data['status'] = $this->sanitize($this->post->request->get('status'));
+        $id_comment = $this->sanitize($this->var->request->get('idCommentEdit'));
+        $this->data['content'] = $this->sanitize($this->var->request->get('comment'));
+        $this->data['status'] = $this->sanitize($this->var->request->get('status'));
 
-        $this->commentsModel->update($id_comment, $this->data);
+        $this->model->update($id_comment, $this->data);
 
-        $message = $this->div_alert("Commentaire mis à jour avec succès.", "success");
+        $message = $this->divAlert("Commentaire mis à jour avec succès.", "success");
         $success = true;
-    
+
         $json['success'] = $success;
         $json['message'] = $message;
         $json['status'] = $this->data['status'];
-        echo json_encode($json);
-        exit;
+        $response = new JsonResponse($json);
+        $response->send();
     }
 
     /**
-     * Function delete Post
-     * 
-     * @return void
+     * Function validate comment
+     * @return json
      */
     public function commentValidate()
     {
@@ -105,24 +103,34 @@ class CommentController extends Controller
         $success = "";
         $message = "";
 
-        $id_comment = $this->sanitize($this->post->request->get('idCommentValidate'));
+        $id_comment = $this->sanitize($this->var->request->get('idCommentValidate'));
 
         $this->data['status'] = 1;
-        $this->commentsModel->update($id_comment, $this->data);
+        $this->model->update($id_comment, $this->data);
 
-        $message = $this->div_alert("Commentaire validé avec succès.", "success");
+        $comment = $this->commentModel->read($id_comment);
+        $user = $this->userModel->read($comment['User_id']);
+        $ENV = new Globals;
+        $titleWebSite = $ENV->env("TITLE_WEBSITE");
+        $this->data['subject'] = $titleWebSite . " - Commentaire approuvé";
+        $this->data['message'] = "Votre commentaire a bien été approuvé.\nBien à vous";
+        $this->data['email'] = $user['email'];
+        $this->data['firstName'] = $user['firstName'];
+        $this->data['lastName'] = $user['lastName'];
+        $this->sendMessage($this->data);
+
+        $message = $this->divAlert("Commentaire validé avec succès.", "success");
         $success = true;
-    
+
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
-        exit;
+        $response = new JsonResponse($json);
+        $response->send();
     }
 
     /**
-     * Function delete Post
-     * 
-     * @return void
+     * Function disable comment
+     * @return json
      */
     public function commentDisable()
     {
@@ -131,24 +139,34 @@ class CommentController extends Controller
         $success = "";
         $message = "";
 
-        $id_comment = $this->sanitize($this->post->request->get('idCommentDisable'));
+        $id_comment = $this->sanitize($this->var->request->get('idCommentDisable'));
 
         $this->data['status'] = 2;
-        $this->commentsModel->update($id_comment, $this->data);
+        $this->model->update($id_comment, $this->data);
 
-        $message = $this->div_alert("Le commentaire a bien été désapprouvé.", "success");
+        $comment = $this->commentModel->read($id_comment);
+        $user = $this->userModel->read($comment['User_id']);
+        $ENV = new Globals;
+        $titleWebSite = $ENV->env("TITLE_WEBSITE");
+        $this->data['subject'] = $titleWebSite . " - Commentaire désapprouvé";
+        $this->data['message'] = "Votre commentaire a été désapprouvé car il ne répond pas à nos conditions générales d'utilisation.\nBien à vous";
+        $this->data['email'] = $user['email'];
+        $this->data['firstName'] = $user['firstName'];
+        $this->data['lastName'] = $user['lastName'];
+        $this->sendMessage($this->data);
+
+        $message = $this->divAlert("Le commentaire a bien été désapprouvé.", "success");
         $success = true;
-    
+
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
-        exit;
+        $response = new JsonResponse($json);
+        $response->send();
     }
 
     /**
-     * Function delete Post
-     * 
-     * @return void
+     * Function delete comment
+     * @return json
      */
     public function commentDelete()
     {
@@ -157,16 +175,69 @@ class CommentController extends Controller
         $success = "";
         $message = "";
 
-        $id_comment = $this->sanitize($this->post->request->get('idCommentDelete'));
+        $id_comment = $this->sanitize($this->var->request->get('idCommentDelete'));
 
-        $this->commentsModel->delete($id_comment, 'id');
+        $this->model->update($id_comment, ['parentId' => 0], 'parentId');
+        $this->model->delete($id_comment, 'id');
 
-        $message = $this->div_alert("Le commentaire a bien été supprimé.", "success");
+        $message = $this->divAlert("Le commentaire a bien été supprimé.", "success");
         $success = true;
-    
+
         $json['success'] = $success;
         $json['message'] = $message;
-        echo json_encode($json);
-        exit;
+        $response = new JsonResponse($json);
+        $response->send();
+    }
+
+    /**
+     * Show comment Manager
+     * @return \Twig
+     */
+    public function commentManager()
+    {
+        // Force user login
+        $this->auth->forceAdmin();
+        $status = 0;
+
+        if ($this->var->query->get('status')) {
+            $status = $this->sanitize($this->var->query->get('status'));
+        }
+
+        $AllCommentCounter = $this->model->count("comment.status", "$status");
+
+        // Pagination 
+        $AllPage = $this->checkAllPage(ceil($AllCommentCounter / $this->itemsByPage));
+        $currentPage = $this->currentPage($AllPage);
+
+        $firstPage = $this->firstPage($currentPage, $AllCommentCounter, $this->itemsByPage);
+
+        $comments = $this->model->readAllCommentsByStatus("$status", "id DESC", "$firstPage,$this->itemsByPage");
+        $this->path = '\backend\admin\comment\commentManager.html.twig';
+        $this->data = ['head' => ['title' => 'Administration des commentaires'], 'comments' => $comments, 'AllCommentCounter' => $AllCommentCounter, 'AllPage' => $AllPage, 'currentPage' => $currentPage, 'status' => $status];
+        $this->setResponseHttp(200);
+        $this->render($this->path, $this->data);
+    }
+
+    /**
+     * Show a comment Manager Edit
+     * @return \Twig
+     */
+    public function commentManagerEdit($param)
+    {
+        // Force user login
+        $this->auth->forceAdmin();
+
+        $this->path = '\backend\admin\comment\commentEdit.html.twig';
+        $comments = $this->model->readCommentById($param);
+
+
+        // if no post exist
+        if (!$comments) {
+            $this->redirect("/error/404");
+        }
+
+        $this->data = ['head' => ['title' => "Modifier un commentaire"], 'comments' => $comments];
+        $this->setResponseHttp(200);
+        $this->render($this->path, $this->data);
     }
 }

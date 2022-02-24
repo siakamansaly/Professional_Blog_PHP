@@ -11,13 +11,13 @@ abstract class Model
 
     public function __construct()
     {
-        $this->pdo = \Blog\Database::getPdo();
+        $this->pdo = new Database;
+        $this->pdo = $this->pdo->getPdo();
     }
 
 
     /**
      * Return one row data
-     * 
      * @return mixed
      */
     public function row(string $query, ?array $params = [])
@@ -27,38 +27,28 @@ abstract class Model
         return $data->fetch();
     }
 
-    public function count(?string $key="", ?string $value=""): int
+    /**
+     * Count rows
+     * @return int
+     */
+    public function count(?string $key = "", ?string $value = ""): int
     {
-        if(!empty($key))
-        {
-            $query = "SELECT * FROM {$this->table} WHERE $key = '".$value."'";
+        $query = "SELECT * FROM {$this->table}";
+        if ($key) {
+            $query = "SELECT * FROM {$this->table} WHERE $key = '" . $value . "'";
         }
-        else
-        {
-            $query = "SELECT * FROM {$this->table}";
-        }
-        
+
         $data = $this->pdo->query($query);
         $data = $data->rowCount();
         return $data;
     }
 
-    public function lastInsertIdPDO()
-    {
-        $query = "SELECT MAX(id) as lastid FROM {$this->table}";
-        $data = $this->pdo->query($query);
-        $data = $this->row($query);
-        return $data;
-    }
-    
-
 
     /**
      * Return all rows datas
-     * 
      * @return array
      */
-    public function rows(string $query, array $params = []) : array
+    public function rows(string $query, array $params = []): array
     {
         $datas = $this->pdo->query($query);
         $datas->execute($params);
@@ -68,20 +58,20 @@ abstract class Model
 
     /**
      * Prepare and execute query
-     * 
      * @return void
      */
     public function flush(string $query, array $params = [])
     {
         $datas = $this->pdo->prepare($query);
-        if(isset($params))
-        {
-            $datas->execute($params);
+
+        switch (isset($params)) {
+            case true:
+                $datas->execute($params);
+                break;
+            default:
+                $datas->execute();
+                break;
         }
-        else{
-            $datas->execute();
-        }
-        
     }
 
     /**
@@ -95,28 +85,17 @@ abstract class Model
         $query  = "INSERT INTO {$this->table} (" . $keys . ") VALUES (\"" . $values . "\")";
         $this->flush($query, $data);
         return $this;
-
     }
-    
+
     /**
      * Read one row of table
-     * 
      * @return mixed
      */
-    public function read(string $value, string $key = null, $select ="")
+    public function read(string $value, string $key = null)
     {
-        if (isset($key)) {
-            if ($select == "")
-            {
-                $query = "SELECT * FROM {$this->table} WHERE " . $key . " = ?";
-                return $this->row($query, [$value]);
-            }
-            else
-            {
-                $query = "SELECT " . $select . " FROM {$this->table} WHERE " . $key . " = ?";
-                return $this->row($query, [$value]);
-            }
-            
+        if ($key) {
+            $query = "SELECT * FROM {$this->table} WHERE " . $key . " = ?";
+            return $this->row($query, [$value]);
         }
 
         $query = "SELECT * FROM {$this->table} WHERE id = ?";
@@ -126,28 +105,20 @@ abstract class Model
 
     /**
      * Read all rows of table
-     * 
      * @return array[]
      */
-    public function readAll(?string $where = "", ?string $order = ""): array
+    public function readAll(): array
     {
         $query = "SELECT * FROM {$this->table}";
-        if ($where) {
-            $query .= " WHERE " . $where;
-        }
-        if ($order) {
-            $query .= " ORDER BY " . $order;
-        }
         return $this->rows($query);
     }
 
     /**
-     * Updates Data with id or  key
+     * Update Data with id or  key
      */
     public function update($value, array $data, string $key = null)
     {
         $set = null;
-
 
         foreach ($data as $dataKey => $dataValue) {
             $set .= $dataKey . ' = "' . $dataValue . '", ';
@@ -155,29 +126,35 @@ abstract class Model
 
         $set = substr_replace($set, '', -2);
 
-        if (isset($key)) {
-            $query = "UPDATE {$this->table} SET " . $set . " WHERE " . $key . " = ?";
-        } else {
-            $query = "UPDATE {$this->table} SET " . $set . " WHERE id = ?";
+        switch (isset($key)) {
+            case true:
+                $query = "UPDATE {$this->table} SET " . $set . " WHERE " . $key . " = ?";
+                break;
+
+            default:
+                $query = "UPDATE {$this->table} SET " . $set . " WHERE id = ?";
+                break;
         }
-        //print_r($query);die;
+
         return $this->flush($query, [$value]);
     }
 
 
     /**
      * Delete a row
-     * 
      * @return void
      */
-    public function delete(int $id, ?string $key=""): void
+    public function delete(int $idItem, ?string $key = ""): void
     {
-        
-        if (isset($key)) {
-            $query = "DELETE FROM {$this->table} WHERE $key = :val";
-        } else {
-            $query = "DELETE FROM {$this->table} WHERE id = :val";
+        switch (isset($key)) {
+            case true:
+                $query = "DELETE FROM {$this->table} WHERE $key = :val";
+                break;
+
+            default:
+                $query = "DELETE FROM {$this->table} WHERE id = :val";
+                break;
         }
-        $this->flush($query, ['val' => $id]);
+        $this->flush($query, ['val' => $idItem]);
     }
 }

@@ -1,52 +1,56 @@
 {% import '/macro/form.html.twig' as form %}
+{% import '/macro/admin.html.twig' as admin %}
 {% extends "layout.html.twig" %}
-{% block navbar %}{% set urlblog = "/" %} {% set url = "/" %} {{ parent() }}{% endblock
-%}
+{% block navbar %}
+{% set urlblog = "/" %}
+{% set url = "/" %}
+{{ parent() }}
+{% endblock %}
 {% block content %}
-{% if session.login.userType == 'admin' %}
-<header id="adminBlog" class="page-section bg-dark border-bottom mb-4 ">
+
+<header id="adminBlog" class="page-section hero_userManager border-bottom mb-4 ">
   <div class="container">
     <div class="text-center mt-5">
       <h1 class="fw-bolder text-light">Administration des utilisateurs</h1>
-
     </div>
   </div>
 </header>
 
 <div class="container my-4 text-primary">
-
   <div class="mb-4 text-left d-flex justify-content-between">
-    <a href="/adminBlog" class="btn btn-outline-dark" role="button" rel="noopener"><i
-        class="fas fa-angle-double-left"></i> Administration du Blog</a>
-        <form action="" method="get" class="form-inline">
-          <div class="d-inline-flex justify-content-center">
-              <select name="status" id="status" class="form-select mx-2" aria-label="Status selected" onchange="this.form.submit()">
-                <option value="" {% if status=='' %} selected {% endif %}>&nbsp;</option>
-                <option value="1" {% if status=='1' %} selected {% endif %}>Actif</option>
-                <option value="0" {% if status=='0' %} selected {% endif %}>Inactif</option>
-                
+    <a href="/adminBlog" class="btn btn-outline-secondary text-primary" role="button" rel="noopener">
+      <i class="fas fa-angle-double-left"></i>
+      Administration du Blog
+    </a>
+    <form action="" method="get" class="form-inline">
+      <div class="d-inline-flex justify-content-center align-items-center">
+        <span class="fw-bold mx-4">Filtrer&nbsp;par&nbsp;:&nbsp;&nbsp;</span>
+        <label>Statut</label>
+        <select name="status" id="status" class="form-select mx-2" aria-label="Status selected"
+          onchange="this.form.submit()">
+          <option value="" {% if status=='' %} selected {% endif %}>&nbsp;</option>
+          <option value="1" {% if status=='1' %} selected {% endif %}>Actif</option>
+          <option value="0" {% if status=='0' %} selected {% endif %}>Inactif</option>
+        </select>
 
-              </select>
-
-              <select name="type" id="type" class="form-select mx-2" aria-label="Status selected" onchange="this.form.submit()">
-                <option value="" {% if type=='' %} selected {% endif %}>&nbsp;</option>
-                <option value="member" {% if type=='member' %} selected {% endif %}>Membre</option>
-                <option value="admin" {% if type=='admin' %} selected {% endif %}>Administrateur</option>
-                
-
-              </select>
-            
-          </div>
-        </form>
+        <label>Type</label>
+        <select name="type" id="type" class="form-select mx-2" aria-label="Status selected"
+          onchange="this.form.submit()">
+          <option value="" {% if type=='' %} selected {% endif %}>&nbsp;</option>
+          <option value="member" {% if type=='member' %} selected {% endif %}>Membre</option>
+          <option value="admin" {% if type=='admin' %} selected {% endif %}>Administrateur</option>
+        </select>
+      </div>
+    </form>
   </div>
 
-  
+
 
   <div id="alertUser"></div>
   <div class="table-responsive mb-2">
     <table class="table ">
       <thead>
-        <tr class="table-dark text-light">
+        <tr class="table-secondary text-primary">
           <th scope="col">#</th>
           <th scope="col">Utilisateur</th>
           <th scope="col">Email</th>
@@ -54,7 +58,7 @@
           <th scope="col">Dernière connexion</th>
           <th scope="col">Type</th>
           <th scope="col">Statut</th>
-          <th scope="col" colspan="4" >Actions</th>
+          <th scope="col" colspan="4">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -63,39 +67,72 @@
           <th scope="row">#{{user.id}}</th>
           <td>{{ user.firstName|capitalize ~ " " ~ user.lastName|upper }}</td>
           <td>{{user.email}}</td>
-          <td>{% if user.regitrationDate %}{{user.regitrationDate|date("d/m/Y H:i")}}{% endif %}</td>
-          <td>{% if user.lastConnectionDate %}{{user.lastConnectionDate|date("d/m/Y H:i")}}{% endif %}</td>
-          <td title="{{ user.firstName | capitalize ~ " " ~ user.lastName | capitalize }}">{{ user.userType |
-            capitalize }}</td>
-          <td id="status-{{user.id}}">{% if user.status == 1 %}<span class="badge badge-primary">Actif</span>{% else %}<span class="badge badge-danger">Inactif</span>{% endif %}</td>
           <td>
-            <!--<a href="/user/{{user.id}}" type="button" class="btn btn-outline-primary text-center"
-            rel="noopener" target="_blank" title="Voir cet utilisateur"><i class="far fa-eye" title="Voir cet utilisateur"></i></a>-->
-            <a class="userShow btn btn-outline-primary text-center" href="/#userShow-{{user.id}}" data-bs-toggle="modal"
-                        data-bs-target="#userShow-{{user.id}}"><i class="far fa-eye" title="Voir cet utilisateur"></i></a>
-                        {% include "/backend/admin/user/userShow.html.twig" %}
-        </td>
+            {% if user.regitrationDate %}{{user.regitrationDate|date("d/m/Y H:i")}}{% endif %}
+          </td>
+          <td>
+            {% if user.lastConnectionDate %}{{user.lastConnectionDate|date("d/m/Y H:i")|default('')}}{% endif %}
+          </td>
+          <td title="{{ user.firstName | capitalize ~ " " ~ user.lastName | capitalize }}">
+            {{ user.userType|capitalize }}
+          </td>
+          <td id="status-{{user.id}}">
+            {% if user.status == 1 %}
+            <span class="badge badge-primary">Actif</span>
+            {% else %}
+            <span class="badge badge-danger">Inactif</span>
+            {% endif %}
+          </td>
+          <td>
+            <a class="userShow btn btn-outline-primary text-center" href="/#userShow" data-bs-toggle="modal"
+              data-bs-target="#userShow" data-id="{{user.id}}"
+              data-name="{{user.firstName | capitalize ~ " " ~ user.lastName | upper }}" data-type="{{user.userType}}"
+              data-registration="{% if user.regitrationDate %}{{user.regitrationDate|date(" d/m/Y H:i")}}{% endif %}"
+              data-connection="{% if user.lastConnectionDate %}{{user.lastConnectionDate|date(" d/m/Y H:i")}}{% endif %}" data-status="{{user.status}}"
+              data-email="{{user.email}}" data-phone="{{user.phone}}" data-cv="{{user.cvLink}}"
+              data-twitter="{{user.twitter}}" data-github="{{user.gitHub}}" data-linkedin="{{user.linkedIn}}">
+              <i class="far fa-eye" title="Voir cet utilisateur"></i>
+            </a>
+          </td>
           <td id="active-{{user.id}}">
+            {% if userId != user.id %}
             {% if user.status == 0 %}
-            <button class="formUserValidate btn btn-outline-dark" type="submit" value="{{user.id}}"
-              title="Valider cet utilisateur"><i class="fas fa-check" title="Valider cet utilisateur"></i></button>
-              {% else %}
-              <button class="formUserDisable btn btn-outline-dark" type="submit" value="{{user.id}}"
-              title="Désactiver cet utilisateur"><i class="fas fa-ban" title="Désactiver cet utilisateur"></i></button>
-              {% endif %}
+            <button type="button" class="validateButton btn btn-outline-success" href="/#validate"
+              data-bs-toggle="modal" data-bs-target="#validate" data-id="{{user.id}}"
+              data-title="{{'#' ~ user.id ~ ' - ' ~  user.firstName | capitalize ~ " " ~ user.lastName | upper }}"
+              value="{{user.id}}">
+              <i class="fas fa-check" title="Valider cet utilisateur"></i>
+            </button>
+
+            {% else %}
+
+            <button type="button" class="disableButton btn btn-outline-dark" href="/#disable" data-bs-toggle="modal"
+              data-bs-target="#disable" data-id="{{user.id}}"
+              data-title="{{'#' ~ user.id ~ ' - ' ~  user.firstName | capitalize ~ " " ~ user.lastName | upper }}"
+              value="{{user.id}}">
+              <i class="fas fa-ban" title="Désactiver cet utilisateur"></i>
+            </button>
+            {% endif %}
+            {% endif %}
           </td>
-          
-          <td><a href="/userManagerEdit/{{user.id}}" type="button" class="btn btn-outline-secondary text-center"
-              rel="noopener" title="Modifier cet utilisateur"><i class="far fa-edit"
-                title="Modifier cet utilisateur"></i></a>
+
+          <td>
+            <a href="/userManagerEdit/{{user.id}}" type="button" class="btn btn-outline-secondary text-center"
+              rel="noopener" title="Modifier cet utilisateur">
+              <i class="far fa-edit" title="Modifier cet utilisateur"></i>
+            </a>
           </td>
           <td>
-
-            <button class="formUserDelete btn btn-outline-danger" type="submit" value="{{user.id}}"
-              title="Supprimer cet utilisateur"><i class="far fa-trash-alt" title="Supprimer cet utilisateur"></i></button>
+            {% if userId != user.id %}
+            <button type="button" class="deleteButton btn btn-outline-danger" href="/#delete" data-bs-toggle="modal"
+              data-bs-target="#delete" data-id="{{user.id}}"
+              data-title="{{ '#' ~ user.id ~ ' - ' ~ user.firstName ~ " " ~ user.lastName }}" value="{{user.id}}">
+              <i class="far fa-trash-alt" title="Supprimer cet utilisateur"></i>
+            </button>
+            {% endif %}
           </td>
         </tr>
-        
+
         {% endfor %}
 
       </tbody>
@@ -104,7 +141,6 @@
 
   <div class="d-flex justify-content-between">
     <div>&nbsp;</div>
-
     <nav aria-label="Page navigation">
       <ul class="pagination justify-content-center">
         <li class="page-item {% if currentPage == 1 %} disabled {% endif %}">
@@ -112,8 +148,9 @@
             tabindex="-1">Précédente</a>
         </li>
         {% for i in 1..AllPage %}
-        <li class="page-item {% if currentPage == i %} active {% endif %}"><a class="page-link"
-            href="/userManager?page={{ i }}&status={{ status }}">{{ i }}</a></li>
+        <li class="page-item {% if currentPage == i %} active {% endif %}">
+          <a class="page-link" href="/userManager?page={{ i }}&status={{ status }}">{{ i }}</a>
+        </li>
         {% endfor %}
         <li class="page-item {% if currentPage == AllPage %} disabled {% endif %}">
           <a class="page-link" href="/userManager?page={{ currentPage + 1 }}&status={{ status }}">Suivante</a>
@@ -126,7 +163,17 @@
 
 </div>
 
+{{ admin.confirmationModal("delete","Supprimer cet utilisateur","Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
+"formUserDelete","deleteButtonConfirmation", {reponse:"deleteTitleConfirmation"}) }}
 
-{% endif %}
+{{ admin.confirmationModal("validate","Valider cet utilisateur","Êtes-vous sûr de vouloir valider cet utilisateur ?",
+"formUserValidate","validateButtonConfirmation", {reponse:"validateTitleConfirmation", bgColor:"text-light bg-success",
+btn:"success"}) }}
+
+{{ admin.confirmationModal("disable","Désactiver cet utilisateur","Êtes-vous sûr de vouloir désactiver cet utilisateur
+?", "formUserDisable","disableButtonConfirmation", {reponse:"disableTitleConfirmation", bgColor:"text-light bg-dark",
+btn:"dark"}) }}
+{% include "/backend/admin/user/userShow.html.twig" %}
+
 
 {% endblock %}
