@@ -23,7 +23,7 @@
         }
     ],
     "require": {
-        "twig/twig": "3.0",
+        "twig/twig": "^3.0",
         "vlucas/phpdotenv": "^5.4",
         "altorouter/altorouter": "^2.0",
         "symfony/http-foundation": "^5.4",

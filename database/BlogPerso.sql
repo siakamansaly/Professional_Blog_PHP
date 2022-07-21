@@ -148,7 +148,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- User
 -- -----------------------------------------------------
 INSERT INTO
-    `blogperso`.`user` (
+    `blogperso`.`User` (
         `password`,
         `lastName`,
         `firstName`,
@@ -172,7 +172,7 @@ VALUES
 -- Insertion Post
 -- -----------------------------------------------------
 INSERT INTO
-  `post`(
+  `Post`(
     `id`,
     `dateAddPost`,
     `title`,
@@ -240,7 +240,7 @@ Pariatur pariatur eu mollit eiusmod excepteur amet. Adipisicing laborum veniam l
 -- Insertion Category
 -- -----------------------------------------------------
 INSERT INTO
-  `postcategory`(`id`, `name`)
+  `PostCategory`(`id`, `name`)
 VALUES
   (1, 'PHP'),
   (2, 'SQL'),
@@ -254,7 +254,7 @@ VALUES
 -- Insertion Post_PostCategory
 -- -----------------------------------------------------
 INSERT INTO
-  `post_postcategory`(`Post_id`, `PostCategory_id`)
+  `Post_PostCategory`(`Post_id`, `PostCategory_id`)
 VALUES
   (1, 1),
   (1, 3),
@@ -267,7 +267,7 @@ VALUES
 -- Insertion Comment
 -- -----------------------------------------------------
 INSERT INTO
-  `comment`(
+  `Comment`(
     `id`,
     `dateAddComment`,
     `content`,
