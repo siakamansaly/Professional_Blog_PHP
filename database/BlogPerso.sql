@@ -19,11 +19,11 @@ CREATE SCHEMA IF NOT EXISTS `blogperso` DEFAULT CHARACTER SET utf8 ;
 USE `blogperso` ;
 
 -- -----------------------------------------------------
--- Table `blogperso`.`User`
+-- Table `blogperso`.`user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `blogperso`.`User` ;
+DROP TABLE IF EXISTS `blogperso`.`user` ;
 
-CREATE TABLE IF NOT EXISTS `blogperso`.`User` (
+CREATE TABLE IF NOT EXISTS `blogperso`.`user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `password` VARCHAR(60) NULL,
   `lastName` VARCHAR(45) NULL,
@@ -48,11 +48,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `blogperso`.`Post`
+-- Table `blogperso`.`post`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `blogperso`.`Post` ;
+DROP TABLE IF EXISTS `blogperso`.`post` ;
 
-CREATE TABLE IF NOT EXISTS `blogperso`.`Post` (
+CREATE TABLE IF NOT EXISTS `blogperso`.`post` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `dateAddPost` DATETIME NULL,
   `dateModifyPost` DATETIME NULL,
@@ -67,18 +67,18 @@ CREATE TABLE IF NOT EXISTS `blogperso`.`Post` (
   INDEX `fk_Post_User1_idx` (`User_id` ASC) VISIBLE,
   CONSTRAINT `fk_Post_User1`
     FOREIGN KEY (`User_id`)
-    REFERENCES `blogperso`.`User` (`id`)
+    REFERENCES `blogperso`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `blogperso`.`Comment`
+-- Table `blogperso`.`comment`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `blogperso`.`Comment` ;
+DROP TABLE IF EXISTS `blogperso`.`comment` ;
 
-CREATE TABLE IF NOT EXISTS `blogperso`.`Comment` (
+CREATE TABLE IF NOT EXISTS `blogperso`.`comment` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `datePublishComment` DATETIME NULL,
   `dateAddComment` DATETIME NULL,
@@ -92,23 +92,23 @@ CREATE TABLE IF NOT EXISTS `blogperso`.`Comment` (
   INDEX `fk_Comment_Post1_idx` (`Post_id` ASC) VISIBLE,
   CONSTRAINT `fk_Comment_User`
     FOREIGN KEY (`User_id`)
-    REFERENCES `blogperso`.`User` (`id`)
+    REFERENCES `blogperso`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Comment_Post1`
     FOREIGN KEY (`Post_id`)
-    REFERENCES `blogperso`.`Post` (`id`)
+    REFERENCES `blogperso`.`post` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `blogperso`.`PostCategory`
+-- Table `blogperso`.`postcategory`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `blogperso`.`PostCategory` ;
+DROP TABLE IF EXISTS `blogperso`.`postcategory` ;
 
-CREATE TABLE IF NOT EXISTS `blogperso`.`PostCategory` (
+CREATE TABLE IF NOT EXISTS `blogperso`.`postcategory` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   `description` TEXT(100) NULL,
@@ -117,11 +117,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `blogperso`.`Post_PostCategory`
+-- Table `blogperso`.`post_postcategory`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `blogperso`.`Post_PostCategory` ;
+DROP TABLE IF EXISTS `blogperso`.`post_postcategory` ;
 
-CREATE TABLE IF NOT EXISTS `blogperso`.`Post_PostCategory` (
+CREATE TABLE IF NOT EXISTS `blogperso`.`post_postcategory` (
   `Post_id` INT NOT NULL,
   `PostCategory_id` INT NOT NULL,
   PRIMARY KEY (`Post_id`, `PostCategory_id`),
@@ -129,12 +129,12 @@ CREATE TABLE IF NOT EXISTS `blogperso`.`Post_PostCategory` (
   INDEX `fk_Post_has_PostCategory_Post1_idx` (`Post_id` ASC) VISIBLE,
   CONSTRAINT `fk_Post_has_PostCategory_Post1`
     FOREIGN KEY (`Post_id`)
-    REFERENCES `blogperso`.`Post` (`id`)
+    REFERENCES `blogperso`.`post` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Post_has_PostCategory_PostCategory1`
     FOREIGN KEY (`PostCategory_id`)
-    REFERENCES `blogperso`.`PostCategory` (`id`)
+    REFERENCES `blogperso`.`postcategory` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -148,7 +148,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- User
 -- -----------------------------------------------------
 INSERT INTO
-    `blogperso`.`User` (
+    `blogperso`.`user` (
         `password`,
         `lastName`,
         `firstName`,
@@ -172,7 +172,7 @@ VALUES
 -- Insertion Post
 -- -----------------------------------------------------
 INSERT INTO
-  `Post`(
+  `post`(
     `id`,
     `dateAddPost`,
     `title`,
@@ -240,7 +240,7 @@ Pariatur pariatur eu mollit eiusmod excepteur amet. Adipisicing laborum veniam l
 -- Insertion Category
 -- -----------------------------------------------------
 INSERT INTO
-  `PostCategory`(`id`, `name`)
+  `postcategory`(`id`, `name`)
 VALUES
   (1, 'PHP'),
   (2, 'SQL'),
@@ -254,7 +254,7 @@ VALUES
 -- Insertion Post_PostCategory
 -- -----------------------------------------------------
 INSERT INTO
-  `Post_PostCategory`(`Post_id`, `PostCategory_id`)
+  `post_postcategory`(`Post_id`, `PostCategory_id`)
 VALUES
   (1, 1),
   (1, 3),
@@ -267,7 +267,7 @@ VALUES
 -- Insertion Comment
 -- -----------------------------------------------------
 INSERT INTO
-  `Comment`(
+  `comment`(
     `id`,
     `dateAddComment`,
     `content`,
