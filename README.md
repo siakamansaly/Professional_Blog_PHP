@@ -1,6 +1,7 @@
 <div id="top"></div>
 <div align="right">
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/edef2486735e40988f606d41500e2335)](https://app.codacy.com/gh/siakamansaly/Professional_Blog_PHP?utm_source=github.com&utm_medium=referral&utm_content=siakamansaly/Professional_Blog_PHP&utm_campaign=Badge_Grade_Settings)
 [![SymfonyInsight](https://insight.symfony.com/projects/62e9dd05-1336-48d9-92cf-f903a487d8d4/small.svg)](https://insight.symfony.com/projects/62e9dd05-1336-48d9-92cf-f903a487d8d4)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![Codacy Badge](https://app.codacy.com/project/badge/Grade/70faed99b8b44df286c0b985a919e2a5)](https://www.codacy.com/gh/siakamansaly/Blog_PHP_MVC/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=siakamansaly/Blog_PHP_MVC&amp;utm_campaign=Badge_Grade)
 
 </div>
